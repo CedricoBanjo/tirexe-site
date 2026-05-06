@@ -307,35 +307,39 @@ nav {
 
 /* CODE BLOCKS */
 .code-block {
-  border-radius: 14px; overflow: hidden;
-  margin: 28px 0; border: 1px solid var(--line2);
+  border-radius: 12px; overflow: hidden;
+  margin: 28px 0; border: 1px solid #D0D7DE;
+  border-left: 3px solid var(--g);
 }
 .code-header {
-  background: var(--ink2); padding: 10px 20px;
+  background: #F6F8FA; padding: 10px 20px;
   display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #D0D7DE;
 }
 .code-lang {
   font-size: 11px; font-weight: 800; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--g);
+  text-transform: uppercase; color: var(--g-d);
 }
 .code-label {
-  font-size: 11px; color: rgba(255,255,255,.35); font-weight: 500;
+  font-size: 11px; color: var(--softer); font-weight: 500;
 }
 .code-block pre {
-  background: #1a1a2e; margin: 0; padding: 24px 20px;
+  background: #FFFFFF; margin: 0; padding: 24px 20px;
   overflow-x: auto; border-radius: 0;
 }
 .code-block pre code {
-  font-family: 'Courier New', 'Consolas', monospace;
-  font-size: 13px; line-height: 1.8;
-  color: #e2e8f0; background: none; border: none; padding: 0;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 13px; line-height: 1.85;
+  color: #24292F; background: none; border: none; padding: 0;
   white-space: pre;
 }
+.code-block pre code .keyword { color: #CF222E; }
+.code-block pre code .comment { color: #6E7781; font-style: italic; }
 .inline-code {
-  background: var(--g-p); border: 1px solid var(--g-mid);
+  background: #F6F8FA; border: 1px solid #D0D7DE;
   border-radius: 5px; padding: 2px 8px;
-  font-size: 13px; font-family: 'Courier New', monospace;
-  color: var(--g-xd);
+  font-size: 13px; font-family: 'Consolas', 'Courier New', monospace;
+  color: #CF222E;
 }
 
 /* ANIMATIONS */
