@@ -73,23 +73,28 @@ export default function ArticlePage({ params }) {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                      code({ node, className, children, ...props }) {
-                        const codeStr = String(children).replace(/\n$/, '')
-                        if (codeStr.includes('\n')) {
-                          return (
-                            <div className="code-block">
-                              <div className="code-header">
-                                <span className="code-lang">VBA</span>
-                                <span className="code-label">Exemple de code</span>
-                              </div>
-                              <pre>
-                                <code {...props}>{children}</code>
-                              </pre>
+                    code({ node, className, children, ...props }) {
+                      const codeStr = String(children).replace(/\n$/, '')
+                      if (codeStr.includes('\n')) {
+                        return (
+                          <div className="code-block">
+                            <div className="code-header">
+                              <span className="code-lang">VBA</span>
+                              <button
+                                className="copy-btn"
+                                onClick={() => navigator.clipboard.writeText(codeStr)}
+                              >
+                                Copier
+                              </button>
                             </div>
-                          )
-                        }
-                        return <code className="inline-code" {...props}>{children}</code>
-                      },
+                            <pre>
+                              <code {...props}>{children}</code>
+                            </pre>
+                          </div>
+                        )
+                      }
+                      return <code className="inline-code" {...props}>{children}</code>
+                    },
                     h1: ({ children }) => <h2>{children}</h2>,
                     h2: ({ children }) => <h2>{children}</h2>,
                     h3: ({ children }) => <h3>{children}</h3>,
