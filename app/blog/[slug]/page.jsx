@@ -4,6 +4,7 @@ import Footer from '../../../components/Footer'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import CopyButton from '../../../components/CopyButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -82,12 +83,7 @@ export default function ArticlePage({ params }) {
                           <div className="code-block">
                             <div className="code-header">
                               <span className="code-lang">VBA</span>
-                              <button
-                                className="copy-btn"
-                                onClick={() => navigator.clipboard.writeText(codeStr)}
-                              >
-                                Copier
-                              </button>
+                              <CopyButton code={codeStr} />
                             </div>
                             <pre>
                               <code {...props}>{children}</code>
