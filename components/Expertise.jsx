@@ -34,7 +34,7 @@ export default function Expertise() {
     <div className="section" id="expertise">
       <div className="wrap">
         <div className="ey">Expertise</div>
-        <div className="sec-h">Ce que je <em>construis</em> pour vous</h2>
+        <h2 className="sec-h">Ce que je <em>construis</em> pour vous</h2>
         <p className="sec-sub">Des solutions robustes pour des environnements exigeants — du contrôle industriel à la finance de grands groupes.</p>
         <div className="exp-grid">
           {expertises.map((e, i) => (
