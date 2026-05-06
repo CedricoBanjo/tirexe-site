@@ -13,7 +13,7 @@ export default function RecentArticles() {
     <div className="section" id="blog">
       <div className="wrap">
         <div className="ey">Blog</div>
-        <div className="sec-h">Derniers <em>articles</em></div>
+        <div className="sec-h">Derniers <em>articles</em></h2>
         <p className="sec-sub">Tutoriels VBA Excel, bonnes pratiques et retours d'expérience.</p>
         <div className="blog-grid" style={{marginTop:'52px'}}>
           {articles.map((article, i) => (
