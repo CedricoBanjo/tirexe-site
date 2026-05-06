@@ -1,6 +1,30 @@
 export const dynamic = 'force-dynamic'
 
-import { getAllArticles } from '../lib/blog'
+import fs from 'fs'
+import path from 'path'
+
+function getAllArticles() {
+  const blogDir = path.join(process.cwd(), 'content', 'blog')
+  if (!fs.existsSync(blogDir)) return []
+  
+  return fs.readdirSync(blogDir)
+    .filter(f => f.endsWith('.md'))
+    .map(filename => {
+      const content = fs.readFileSync(path.join(blogDir, filename), 'utf8')
+      const match = content.match(/^---\n([\s\S]+?)\n---/m)
+      if (!match) return null
+      const data = {}
+      match[1].split('\n').forEach(line => {
+        const [key, ...val] = line.split(': ')
+        if (key && val.length) {
+          data[key.trim()] = val.join(': ').trim().replace(/^"|"$/g, '')
+        }
+      })
+      return data
+    })
+    .filter(Boolean)
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+}
 
 export default function sitemap() {
   const articles = getAllArticles()
