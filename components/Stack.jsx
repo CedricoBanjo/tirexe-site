@@ -1,5 +1,5 @@
 const outils = [
-  { name: 'VBA Excel', desc: "Macros avancées, modules de classe, API Windows, automatisation complète", level: 'Expert', cls: 'b-exp' },
+  { name: 'VBA Excel', desc: "Macros avancées, automatisation complète, API Windows, gestion d'événements", level: 'Expert', cls: 'b-exp' },
   { name: 'Excel avancé', desc: "Formules matricielles, tableaux croisés, fonctions avancées — maîtrise totale", level: 'Expert', cls: 'b-exp' },
   { name: 'Power Query', desc: "ETL natif Excel, transformations complexes, connexions multi-sources", level: 'Expert', cls: 'b-exp' },
   { name: 'Word & PowerPoint', desc: "Génération automatique de documents et présentations depuis Excel", level: 'Expert', cls: 'b-exp' },
