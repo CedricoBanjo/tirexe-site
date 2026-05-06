@@ -329,6 +329,11 @@ nav {
   transition: color .15s, border-color .15s;
 }
 .copy-btn:hover { color: var(--ink); border-color: var(--ink); }
+.copy-btn-done {
+  color: var(--g-d);
+  border-color: var(--g-mid);
+  background: var(--g-p);
+}
 .code-block pre {
   background: #FFFFFF; margin: 0; padding: 24px 20px;
   overflow-x: auto; border-radius: 0;
