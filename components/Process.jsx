@@ -4,7 +4,7 @@ export default function Process() {
       <div className="wrap">
         <div className="ey">Fonctionnement</div>
         <div className="sec-h">Simple, <em>direct</em>, efficace</div>
-        <p className="sec-sub">En régie, à la journée. Sur site en région PACA ou en full remote partout en France.</p>
+        <p className="sec-sub">En régie, à la journée. Sur site à Martigues, Marseille, Fos-sur-Mer, Vitrolles, Aix-en-Provence, Istres et toute la région PACA — ou en full remote partout en France.</p>
         <div className="proc-wrap">
           <div className="proc-s">
             <div className="proc-n">01</div>
