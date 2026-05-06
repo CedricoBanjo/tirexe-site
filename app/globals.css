@@ -145,7 +145,7 @@ nav {
   display: flex; flex-direction: column;
   transition: border-color .25s, transform .25s, box-shadow .25s;
 }
-.exp-card:hover { border-color: var(--g-mid); transform: translateY(-3px); box-shadow: 0 10px 28px rgba(146,209,79,.1); }
+.exp-card:hover { border-color: var(--g); background: var(--g-p); transform: translateY(-3px); box-shadow: 0 10px 28px rgba(146,209,79,.15); }
 .exp-tag {
   display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
   padding: 4px 12px; border-radius: 100px; margin-bottom: 20px; width: fit-content;
@@ -189,11 +189,11 @@ nav {
 .b-not { background: var(--bg); color: var(--soft); border: 1px solid var(--line2); }
 
 /* PROCESS */
-.proc-wrap { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; margin-top: 52px; }
-.proc-s { padding: 44px 36px; border-right: 1px solid var(--line); background: var(--bg); }
-.proc-s:last-child { border-right: none; }
-.proc-n { font-size: 64px; font-weight: 900; letter-spacing: -4px; line-height: 1; color: var(--g-pp); margin-bottom: 22px; }
-.proc-t { font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+.proc-wrap { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 52px; }
+.proc-s { padding: 32px 28px; background: var(--bg); border: 1px solid var(--line); border-radius: 18px; position: relative; transition: border-color .2s, transform .2s; }
+.proc-s:hover { border-color: var(--g-mid); transform: translateY(-3px); }
+.proc-n { font-size: 52px; font-weight: 900; letter-spacing: -3px; line-height: 1; color: var(--g); margin-bottom: 18px; display: block; }
+.proc-t { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
 .proc-d { font-size: 13px; color: var(--soft); line-height: 1.75; }
 
 /* POURQUOI */
