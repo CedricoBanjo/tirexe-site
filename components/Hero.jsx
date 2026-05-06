@@ -12,7 +12,7 @@ export default function Hero() {
       <p className="hero-desc a a3">
         Je conçois des <strong>outils métier sur mesure</strong> et des{' '}
         <strong>algorithmes de contrôle complexes</strong> pour de grands projets
-        industriels et financiers — en régie, à la journée, partout en France.
+        industriels et financiers — en régie, à la journée. Basé à Martigues, disponible sur toute la région PACA et en remote France entière.
       </p>
       <div className="hero-btns a a4">
         <a href="#contact" className="btn-g">Discutons de votre projet</a>
