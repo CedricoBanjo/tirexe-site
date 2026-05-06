@@ -5,7 +5,6 @@ const outils = [
   { name: 'Word & PowerPoint', desc: "Génération automatique de documents et présentations depuis Excel", level: 'Expert', cls: 'b-exp' },
   { name: 'Outlook VBA', desc: "Automatisation d'envois, gestion d'agenda, traitement de messagerie", level: 'Expert', cls: 'b-exp' },
   { name: 'Access / SQL', desc: "Bases .MDB, .ACCDB, .MDE — requêtes SQL depuis VBA, liaisons multi-tables", level: 'Avancé', cls: 'b-av' },
-  { name: 'Autres langages', desc: "Notions dans d'autres environnements, adaptables selon les besoins", level: 'Notions', cls: 'b-not' },
 ]
 
 export default function Stack() {
