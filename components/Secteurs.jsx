@@ -36,7 +36,7 @@ export default function Secteurs() {
     <div className="section section-alt" id="secteurs">
       <div className="wrap">
         <div className="ey">Secteurs d&apos;intervention</div>
-        <div className="sec-h">Des projets dans des <em>secteurs variés</em></h2>
+        <h2 className="sec-h">Des projets dans des <em>secteurs variés</em></h2>
         <p className="sec-sub">Une expérience bâtie sur des projets réels, dans des environnements où la précision est une priorité.</p>
         <div className="sect-grid">
           {secteurs.map((s, i) => (
