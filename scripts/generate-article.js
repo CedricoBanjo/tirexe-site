@@ -5,6 +5,7 @@ const fs = require('fs')
 const path = require('path')
 
 const TOPICS = [
+  // VBA Excel
   "Comment automatiser un reporting mensuel Excel en VBA",
   "VBA Excel : lire et ecrire dans une base Access depuis une macro",
   "Power Query vs VBA : quand utiliser l'un ou l'autre",
@@ -25,6 +26,45 @@ const TOPICS = [
   "VBA Excel : optimiser les performances de vos macros",
   "Creer un outil de tarification fournisseurs sous Excel",
   "Les dictionnaires VBA Scripting.Dictionary pour la performance",
+  // Formules Excel
+  "RECHERCHEV vs INDEX EQUIV : lequel choisir et pourquoi",
+  "SOMMEPROD : la formule la plus puissante d'Excel expliquee",
+  "Les formules matricielles Excel : guide complet",
+  "Comment utiliser RECHERCHEX la nouvelle formule de recherche Excel",
+  "Formules conditionnelles Excel : IF IFS SWITCH et cas pratiques",
+  "La fonction INDIRECT Excel : utilisation avancee et pieges",
+  "NB.SI et SOMME.SI : formules de comptage et somme conditionnelle",
+  "Les fonctions texte Excel : GAUCHE DROITE STXT CONCATENER",
+  "Formules de dates Excel : DATEDIF MOIS.DECALER FIN.MOIS",
+  "INDEX et EQUIV : la combinaison la plus flexible d'Excel",
+  "La fonction DECALER Excel : dynamiser vos plages de donnees",
+  "EQUIV et GRANDE.VALEUR : classer et extraire des donnees Excel",
+  // Power Query
+  "Power Query : nettoyer et transformer des donnees en 10 minutes",
+  "Fusionner des tables avec Power Query : guide pas a pas",
+  "Power Query : supprimer les doublons et nettoyer les données",
+  "Automatiser l'import de fichiers CSV avec Power Query",
+  "Power Query vs formules Excel : quand utiliser l'un ou l'autre",
+  // Tips et productivite
+  "10 raccourcis Excel indispensables pour gagner du temps",
+  "Les tableaux structures Excel : pourquoi les utiliser systematiquement",
+  "Nommer ses plages Excel : bonnes pratiques et avantages",
+  "Tableaux croises dynamiques : guide complet et bonnes pratiques",
+  "Mise en forme conditionnelle Excel : exemples avances",
+  "Proteger et securiser un classeur Excel : toutes les options",
+  "Validation des donnees Excel : controler les saisies utilisateurs",
+  "Creer un menu deroulant dynamique dans Excel",
+  "Les graphiques Excel avances : sparklines bulles et radar",
+  "Gestion des erreurs dans les formules Excel : SIERREUR ESTNA",
+  // Cas pratiques metier
+  "Creer un tableau de bord de suivi de projet sous Excel",
+  "Modele de suivi budgetaire Excel pour chef de projet",
+  "Tableau de bord RH Excel : indicateurs et automatisation",
+  "Suivi des echeances et relances automatiques sous Excel",
+  "Creer un planning Gantt automatique dans Excel",
+  "Outil de gestion des stocks Excel avec alertes automatiques",
+  "Calculer des indicateurs financiers KPI sous Excel",
+  "Tableau de bord commercial Excel : CA marges et objectifs",
 ]
 
 function slugify(str) {
@@ -91,12 +131,16 @@ async function main() {
   const topic = TOPICS[week % TOPICS.length]
   const date = getTodayISO()
   const slug = slugify(topic)
-  const outputPath = path.join(__dirname, '..', 'content', 'blog', `${date}-${slug}.md`)
+  const blogDir = path.join(__dirname, '..', 'content', 'blog')
 
-  if (fs.existsSync(outputPath)) {
-    console.log(`Article deja existant : ${outputPath}`)
+  const existingFiles = fs.readdirSync(blogDir).filter(f => f.endsWith('.md'))
+  const alreadyExists = existingFiles.some(f => f.includes(slug))
+  if (alreadyExists) {
+    console.log(`Article deja existant pour ce sujet : ${slug}`)
     process.exit(0)
   }
+
+  const outputPath = path.join(blogDir, `${date}-${slug}.md`)
 
   console.log(`Generation : "${topic}"`)
 
@@ -115,6 +159,7 @@ async function main() {
     '- Ecrire des fonctions Function As Type plutot que tout mettre dans des Sub',
     '- Noms de variables explicites, commentaires concis et utiles',
     '- Ne genere du code que si tu es certain qu il est correct',
+    '- Pour les articles sur les formules Excel ou les tips, pas de code VBA — explications claires avec exemples de formules en texte',
     '- Maximum 2 blocs de code par article, chacun 20-40 lignes max',
     '',
     'Regles sur le contenu :',
