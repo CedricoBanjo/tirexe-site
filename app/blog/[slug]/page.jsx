@@ -74,20 +74,22 @@ export default function ArticlePage({ params }) {
                   remarkPlugins={[remarkGfm]}
                   components={{
                     code({ node, inline, className, children, ...props }) {
-                      const isBlock = !inline
-                      if (isBlock) {
-                        return (
-                          <div className="code-block">
-                            <div className="code-header">
-                              <span className="code-lang">VBA</span>
-                              <span className="code-label">Exemple de code</span>
+                        const isBlock = !inline
+                        if (isBlock) {
+                          return (
+                            <div className="code-block">
+                              <div className="code-header">
+                                <span className="code-lang">VBA</span>
+                                <span className="code-label">Exemple de code</span>
+                              </div>
+                              <pre>
+                                <code {...props}>{children}</code>
+                              </pre>
                             </div>
-                            <pre>
-                              <code {...props}>{children}</code>
-                            </pre>
-                          </div>
-                        )
-                      }
+                          )
+                        }
+                        return <code className="inline-code" {...props}>{children}</code>
+                      },
                       return <code className="inline-code" {...props}>{children}</code>
                     },
                     h1: ({ children }) => <h2>{children}</h2>,
