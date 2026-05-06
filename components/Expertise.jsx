@@ -17,7 +17,7 @@ const expertises = [
     tag: 'Automatisation',
     icon: <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
     title: 'Reporting & processus automatisés',
-    desc: "Transformation de tâches manuelles répétitives en processus entièrement automatisés — reporting, consolidation multi-sources, génération de documents Word et PowerPoint, envois Outlook programmés.",
+    desc: "Automatisation complète des processus récurrents — reporting, consolidation multi-sources, génération de documents Word et PowerPoint, envois Outlook programmés. Zéro intervention manuelle sur les tâches répétitives.",
     tags: ['Reporting auto', 'Consolidation données', 'Génération docs', 'Outlook VBA'],
   },
   {
