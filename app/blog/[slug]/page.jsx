@@ -73,9 +73,9 @@ export default function ArticlePage({ params }) {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    code({ node, inline, className, children, ...props }) {
-                        const isBlock = !inline
-                        if (isBlock) {
+                      code({ node, className, children, ...props }) {
+                        const codeStr = String(children).replace(/\n$/, '')
+                        if (codeStr.includes('\n')) {
                           return (
                             <div className="code-block">
                               <div className="code-header">
@@ -90,8 +90,6 @@ export default function ArticlePage({ params }) {
                         }
                         return <code className="inline-code" {...props}>{children}</code>
                       },
-                      return <code className="inline-code" {...props}>{children}</code>
-                    },
                     h1: ({ children }) => <h2>{children}</h2>,
                     h2: ({ children }) => <h2>{children}</h2>,
                     h3: ({ children }) => <h3>{children}</h3>,
