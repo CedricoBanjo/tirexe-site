@@ -1,3 +1,4 @@
+import CtaBand from '../components/CtaBand'
 import RecentArticles from '../components/RecentArticles'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
@@ -17,6 +18,7 @@ export default function Home() {
         <Hero />
         <hr className="sep" />
         <Expertise />
+        <CtaBand />
         <Secteurs />
         <hr className="sep" />
         <Stack />
@@ -24,6 +26,7 @@ export default function Home() {
         <Process />
         <hr className="sep" />
         <Pourquoi />
+        <CtaBand />
         <hr className="sep" />
         <RecentArticles />
         <Contact />
