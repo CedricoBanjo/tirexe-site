@@ -11,6 +11,20 @@ export const metadata = {
     siteName: 'Tirexe',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: 'https://tirexe.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Cédric Femminino — Consultant VBA Excel Senior',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cédric Femminino · Consultant & Développeur VBA Excel Senior',
+    description: 'Consultant et développeur VBA Excel senior. Missions longues en régie, région PACA et remote France.',
+    images: ['https://tirexe.com/og-image.png'],
   },
 }
 
