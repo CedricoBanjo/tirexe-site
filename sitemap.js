@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getAllArticles } from '../lib/blog'
 
 export default function sitemap() {
