@@ -14,7 +14,7 @@ export default function Stack() {
         <div className="stack-wrap">
           <div className="stack-sticky">
             <div className="ey">Outils & technologies</div>
-            <div className="sec-h">Maîtrise <em>complète</em> de l&apos;écosystème Office</h2>
+            <h2 className="sec-h">Maîtrise <em>complète</em> de l&apos;écosystème Office</h2>
             <p className="sec-sub" style={{marginTop:'14px'}}>Des outils construits avec la bonne technologie et l&apos;expérience pour les combiner intelligemment.</p>
           </div>
           <div className="stack-list">
