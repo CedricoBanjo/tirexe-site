@@ -22,7 +22,7 @@ export default function Pourquoi() {
     <div className="section" id="pourquoi">
       <div className="wrap">
         <div className="ey">Pourquoi Tirexe</div>
-        <div className="sec-h">Un expert dédié à votre projet</div>
+        <div className="sec-h">Un expert dédié à votre projet</h2>
         <div className="why-layout">
           <div className="why-panel">
             <div className="why-q">
