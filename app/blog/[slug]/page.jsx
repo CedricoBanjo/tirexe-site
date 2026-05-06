@@ -19,6 +19,9 @@ export async function generateMetadata({ params }) {
   return {
     title: `${article.title} · Tirexe`,
     description: article.description,
+    alternates: {
+      canonical: `https://tirexe.com/blog/${article.slug}`,
+    },
     openGraph: {
       title: article.title,
       description: article.description,
