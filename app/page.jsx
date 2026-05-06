@@ -1,3 +1,4 @@
+import RecentArticles from '../components/RecentArticles'
 import Nav from '../components/Nav'
 import Hero from '../components/Hero'
 import Expertise from '../components/Expertise'
@@ -23,6 +24,8 @@ export default function Home() {
         <Process />
         <hr className="sep" />
         <Pourquoi />
+        <hr className="sep" />
+        <RecentArticles />
         <Contact />
       </main>
       <Footer />
