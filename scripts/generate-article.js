@@ -169,6 +169,7 @@ async function main() {
     '- Entre 700 et 900 mots au total',
     '- Sous-titres H2 uniquement',
     '- Conclusion courte et naturelle',
+    '- Sur la toute derniere ligne de ta reponse, ecris exactement : META: suivi dune description de 150 caracteres max, accrocheuse et optimisee SEO, qui donne envie de cliquer depuis Google',
     '- UNIQUEMENT du Markdown valide sans balises de code autour du resultat',
     '- Commence directement par le titre H1 puis l introduction',
   ].join('\n')
@@ -177,17 +178,21 @@ async function main() {
 
   const titleMatch = content.match(/^#\s+(.+)$/m)
   const title = titleMatch ? titleMatch[1] : topic
+  
+  const metaMatch = content.match(/^META:\s*(.+)$/m)
+  const metaDesc = metaMatch ? metaMatch[1].trim() : `Article sur ${title.toLowerCase()} par Cedric Femminino, consultant VBA Excel senior.`
+  const cleanContent = content.replace(/^META:.*$/m, '').trim()
 
-  const markdown = [
-    '---',
-    `title: "${title.replace(/"/g, '\\"')}"`,
-    `date: "${date}"`,
-    `slug: "${slug}"`,
-    `description: "Article sur ${title.toLowerCase()} par Cedric Femminino, consultant VBA Excel senior."`,
-    '---',
-    '',
-    content,
-  ].join('\n')
+const markdown = [
+  '---',
+  `title: "${title.replace(/"/g, '\\"')}"`,
+  `date: "${date}"`,
+  `slug: "${slug}"`,
+  `description: "${metaDesc.replace(/"/g, '\\"')}"`,
+  '---',
+  '',
+  cleanContent,
+].join('\n')
 
   fs.writeFileSync(outputPath, markdown, 'utf8')
   console.log(`Article genere : ${outputPath}`)
