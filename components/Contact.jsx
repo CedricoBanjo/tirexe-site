@@ -46,21 +46,6 @@ export default function Contact() {
                     <line x1="12" y1="17" x2="12" y2="21"/>
                   </svg>
                 </div>
-                <div className="ci">
-                  <div className="ci-ico">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--g-d)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="ci-l">Zone</div>
-                    <div className="ci-v">PACA · Remote France entière</div>
-                  </div>
-                </div>
-                <div style={{marginTop:'32px',padding:'24px',background:'var(--bg)',border:'1px solid var(--line)',borderRadius:'14px'}}>
-                  <div style={{fontSize:'13px',fontWeight:700,color:'var(--ink)',marginBottom:'8px'}}>Temps de réponse</div>
-                  <div style={{fontSize:'13px',color:'var(--soft)',lineHeight:'1.65'}}>Je lis mes emails quotidiennement et reviens vers vous dans les meilleurs délais.</div>
-                </div>
                 <div>
                   <div className="ci-l">Format</div>
                   <div className="ci-v">Régie · à la journée</div>
