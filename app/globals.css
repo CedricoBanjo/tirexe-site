@@ -308,8 +308,7 @@ nav {
 /* CODE BLOCKS */
 .code-block {
   border-radius: 12px; overflow: hidden;
-  margin: 28px 0; border: 1px solid #D0D7DE;
-  border-left: 3px solid var(--g);
+  margin: 28px 0; border: 1px solid var(--g-mid);
 }
 .code-header {
   background: #F6F8FA; padding: 10px 20px;
