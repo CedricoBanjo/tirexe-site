@@ -1,6 +1,6 @@
 ---
 name: ameliorer-site
-description: Bilan complet puis amélioration de tirexe.com (visuel, SEO, vitesse, accessibilité, confiance, conversion, conformité), par étapes vérifiées avec aperçu Vercel, sans rien mettre en ligne sans le « OK » de Cédric. À utiliser pour « améliore le site », « rends le site parfait », « audit du site », « SEO », « le site est lent / moche / mal référencé ».
+description: Bilan complet puis amélioration de tirexe.com (visuel, SEO, vitesse, accessibilité, confiance, conversion, conformité), par étapes vérifiées avec aperçu Vercel, sans rien mettre en ligne sans le « OK » de Cédric. À utiliser pour « améliore le site », « rends le site parfait », « audit du site », « SEO », « le site est lent / mal référencé ». Pour le visuel seul, voir la compétence `design-ux`.
 ---
 
 # Rendre tirexe.com excellent : visuel, SEO, vitesse, confiance, conversion
@@ -95,7 +95,7 @@ Tu es l'équipe web complète de tirexe.com : directeur artistique, expert SEO, 
 - **Lot 1, les urgences** : conformité des cookies, menu sur téléphone, formulaire fiable, Next.js à jour, robot du blog qui ne s'arrête pas.
 - **Lot 2, invisible mais payant** : SEO technique, données structurées, images de partage des articles, polices, page 404, accessibilité, en-têtes de sécurité.
 - **Lot 3, contenu et conversion** : pages services, cas concrets, FAQ, maillage, appels à l'action, nouvelle liste de sujets pour le blog.
-- **Lot 4, le visuel** : 2 pistes en captures, puis celle que Cédric choisit.
+- **Lot 4, le visuel** : suis la compétence `design-ux` (`.claude/skills/design-ux/SKILL.md`) : audit UX, 2 ou 3 pistes en captures, puis celle que Cédric choisit.
 
 Pour chaque lot : une branche, des commits clairs, `npm run build`, des captures avant/après (ordinateur et téléphone), Lighthouse avant/après, une PR avec un résumé simple et le lien d'aperçu Vercel (Cédric l'ouvre connecté à son compte Vercel). Ensuite, attends le « OK » de Cédric.
 
@@ -106,14 +106,10 @@ Pour chaque lot : une branche, des commits clairs, `npm run build`, des captures
 - Ce qu'il doit faire lui-même (informations à fournir, Search Console, fiche Google, profils).
 - Le lot suivant proposé.
 
-## 7. Points à vérifier en premier (relevés le 6 novembre 2026)
+## 7. Où en est le site (6 novembre 2026, après les lots 1 et 2)
 
-- **Cookies** : Google Analytics est chargé dans `app/layout.jsx` sur toutes les pages, sans bandeau de consentement. Vérifier la conformité CNIL et la phrase sur les cookies de `app/mentions-legales/page.jsx`.
-- **Téléphone** : sous 900 px, le menu disparaît (`.nav-links { display: none; }` dans `app/globals.css`) sans menu de remplacement ; il ne reste que le logo et « Me contacter ».
-- **Formulaire** : « envoyé » s'affiche même si Formspree renvoie une erreur ; pas d'anti-spam ; étiquettes non reliées aux champs.
-- **Articles** : aucune image de partage (leur `openGraph` remplace celui du site, image comprise) ; le titre apparaît deux fois (le Markdown commence par `# Titre`, affiché en h2 sous le h1).
-- **Page 404** : celle de Next.js par défaut, en anglais et sans menu.
-- **Next.js** : `next@14.2.3`, à mettre à jour (npm signale une version corrigée).
-- **Robot du blog** : le sujet dépend du numéro de semaine (`TOPICS[semaine % 55]`). À partir de la semaine 19 de 2027 (10 mai 2027), il ne tombe plus que sur des sujets déjà traités et s'arrête sans rien dire.
-- **Polices** : Google Fonts est chargé par un lien qui bloque l'affichage et envoie l'adresse IP des visiteurs à Google.
-- **Mesure locale** (Lighthouse, mobile) : vitesse 97 à 99, accessibilité 95 à 96 (contrastes, images sans dimensions), bonnes pratiques 96, SEO 100. La technique est déjà bonne : les vrais gains viennent de la conformité, du téléphone, de la confiance, d'un contenu qui attire des clients et du référencement local.
+- **Fait et en ligne** : aucun cookie (Google Analytics retiré, pas de bandeau) et page légale exacte ; menu sur téléphone, articles lisibles ; formulaire qui vérifie la réponse de Formspree, avec anti-spam et mention RGPD ; Next.js 16 sans faille connue ; polices servies par le site ; robot du blog sur Claude Sonnet 5.5, qui prend le premier sujet pas encore traité et ouvre un ticket GitHub assigné à Cédric s'il ne publie rien ; adresses de référence, images de partage des articles, données structurées, page 404 en français, en-têtes de sécurité ; lien LinkedIn.
+- **Mesure locale** (Lighthouse, mobile) : vitesse 96 à 99, accessibilité 100, bonnes pratiques 100, SEO 100.
+- **À vérifier** : le premier vrai passage du robot avec le nouveau modèle (lundi 9 novembre 2026) a bien publié un article.
+- **Reste à faire** : le lot 3 (pages services, cas concrets, FAQ, maillage, sujets du robot tournés vers les décideurs, titres d'articles de 60 caractères au plus) et le lot 4 (le visuel, avec la compétence `design-ux`). Hors du site, avec Cédric : Google Search Console, redirection www vers tirexe.com dans Vercel, profils LinkedIn et Malt qui pointent vers le site.
+- **Il manque, de la part de Cédric** : une photo professionnelle, 2 ou 3 missions racontables sans nom de client, son tarif (ou « sur devis »).
