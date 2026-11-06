@@ -25,7 +25,7 @@ export default function Nav() {
     <nav aria-label="Navigation principale">
       <div className="nav-c">
         <a href="/" className="logo-img">
-          <img src="/logo.png" alt="Tirexe, retour à l'accueil" width="131" height="34" />
+          <img src="/logo-site.webp" alt="Tirexe, retour à l'accueil" width="131" height="34" />
         </a>
         <ul className="nav-links">
           {LIENS.map(([href, texte]) => <li key={href}><a href={href}>{texte}</a></li>)}
