@@ -10,11 +10,15 @@ import Pourquoi from '../components/Pourquoi'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 
+export const metadata = {
+  alternates: { canonical: '/' },
+}
+
 export default function Home() {
   return (
     <>
       <Nav />
-      <main style={{paddingTop: '68px'}}>
+      <main id="contenu" style={{paddingTop: '68px'}}>
         <Hero />
         <hr className="sep" />
         <Expertise />

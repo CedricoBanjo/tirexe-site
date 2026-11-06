@@ -1,20 +1,22 @@
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
+import { metadonneesPage } from '../../lib/seo'
 
-export const metadata = {
-  title: 'Mentions légales · Tirexe',
+export const metadata = metadonneesPage({
+  titre: 'Mentions légales · Tirexe',
   description: 'Mentions légales du site tirexe.com — Cédric Femminino, consultant VBA Excel senior.',
-}
+  chemin: '/mentions-legales',
+})
 
 export default function MentionsLegales() {
   return (
     <>
       <Nav />
-      <main style={{paddingTop:'68px'}}>
+      <main id="contenu" style={{paddingTop:'68px'}}>
         <div className="section">
           <div className="wrap" style={{maxWidth:'720px'}}>
             <div className="ey">Informations légales</div>
-            <div className="sec-h" style={{marginBottom:'52px'}}>Mentions légales</div>
+            <h1 className="sec-h" style={{marginBottom:'52px'}}>Mentions légales</h1>
 
             <div style={{display:'flex',flexDirection:'column',gap:'40px',fontSize:'15px',color:'var(--ink3)',lineHeight:'1.85'}}>
 
@@ -25,8 +27,8 @@ export default function MentionsLegales() {
                 Entreprise individuelle — régime BNC<br/>
                 SIREN : 883 193 054<br/>
                 Martigues, Provence-Alpes-Côte d&apos;Azur, France<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Email :</strong> <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>cedric@tirexe.com</a><br/>
-                <strong style={{color:'var(--ink)'}}>Site :</strong> <a href="https://tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>tirexe.com</a></p>
+                <strong style={{color:'var(--ink)'}}>Email :</strong> <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>cedric@tirexe.com</a><br/>
+                <strong style={{color:'var(--ink)'}}>Site :</strong> <a href="https://tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>tirexe.com</a></p>
               </div>
 
               <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
@@ -34,7 +36,7 @@ export default function MentionsLegales() {
                 <p><strong style={{color:'var(--ink)'}}>Vercel Inc.</strong><br/>
                 440 N Barranca Ave #4133<br/>
                 Covina, CA 91723, États-Unis<br/><br/>
-                <a href="https://vercel.com" style={{color:'var(--g-d)',fontWeight:600}} target="_blank" rel="noreferrer">vercel.com</a></p>
+                <a href="https://vercel.com" style={{color:'var(--g-txt)',fontWeight:600}} target="_blank" rel="noreferrer">vercel.com</a></p>
               </div>
 
               <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
@@ -44,12 +46,12 @@ export default function MentionsLegales() {
 
               <div id="donnees-personnelles" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
                 <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Données personnelles (RGPD)</h2>
-                <p><strong style={{color:'var(--ink)'}}>Responsable :</strong> Cédric Femminino (Tirexe), <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>cedric@tirexe.com</a>.<br/><br/>
+                <p><strong style={{color:'var(--ink)'}}>Responsable :</strong> Cédric Femminino (Tirexe), <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>cedric@tirexe.com</a>.<br/><br/>
                 <strong style={{color:'var(--ink)'}}>Formulaire de contact.</strong> Les informations que vous saisissez (nom, société, e-mail, type de mission, besoin) servent uniquement à répondre à votre demande et à échanger sur une éventuelle mission, à votre initiative. Elles ne sont ni vendues ni cédées.<br/><br/>
                 Le formulaire passe par le service Formspree (Formspree, Inc., États-Unis), qui me transmet votre message par e-mail et en garde une copie dans mon espace Formspree. Vos données sont donc traitées aux États-Unis.<br/><br/>
                 <strong style={{color:'var(--ink)'}}>Durée de conservation :</strong> 3 ans après notre dernier échange, puis suppression.<br/><br/>
                 <strong style={{color:'var(--ink)'}}>Hébergement :</strong> l&apos;hébergeur Vercel enregistre des journaux techniques (dont l&apos;adresse IP) pour la sécurité et le bon fonctionnement du site.<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Vos droits :</strong> vous pouvez demander l&apos;accès à vos données, leur rectification, leur effacement, leur portabilité, ou vous opposer à leur traitement, en écrivant à <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>cedric@tirexe.com</a>. Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" style={{color:'var(--g-d)',fontWeight:600}} target="_blank" rel="noreferrer">cnil.fr</a>).</p>
+                <strong style={{color:'var(--ink)'}}>Vos droits :</strong> vous pouvez demander l&apos;accès à vos données, leur rectification, leur effacement, leur portabilité, ou vous opposer à leur traitement, en écrivant à <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>cedric@tirexe.com</a>. Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" style={{color:'var(--g-txt)',fontWeight:600}} target="_blank" rel="noreferrer">cnil.fr</a>).</p>
               </div>
 
               <div id="cookies" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>

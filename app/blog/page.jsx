@@ -2,11 +2,13 @@ import { getAllArticles } from '../../lib/blog'
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Link from 'next/link'
+import { metadonneesPage } from '../../lib/seo'
 
-export const metadata = {
-  title: 'Blog VBA Excel · Cédric Femminino — Tirexe',
+export const metadata = metadonneesPage({
+  titre: 'Blog VBA Excel · Cédric Femminino — Tirexe',
   description: 'Tutoriels, conseils et exemples concrets sur VBA Excel, automatisation, Access, Power Query — par Cédric Femminino, consultant VBA senior.',
-}
+  chemin: '/blog',
+})
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -18,11 +20,11 @@ export default function BlogPage() {
   return (
     <>
       <Nav />
-      <main style={{paddingTop:'68px'}}>
+      <main id="contenu" style={{paddingTop:'68px'}}>
         <div className="blog-hero">
           <div className="wrap">
             <div className="ey">Blog</div>
-            <div className="sec-h">Tutoriels & <em>conseils VBA Excel</em></div>
+            <h1 className="sec-h">Tutoriels & <em>conseils VBA Excel</em></h1>
             <p className="sec-sub">Cas pratiques, exemples de code, bonnes pratiques — par Cédric Femminino, consultant VBA Excel senior.</p>
           </div>
         </div>
