@@ -10,7 +10,7 @@
 Claude fait un bilan, puis propose les améliorations par étapes, chacune avec un aperçu. Rien n'est mis en ligne sans ton « OK ». Ses consignes : `CLAUDE.md` et `.claude/skills/ameliorer-site/SKILL.md`.
 
 ## Stack
-- Next.js 14 (App Router, export statique)
+- Next.js 16 (App Router, pages statiques générées à chaque mise en ligne)
 - CSS pur (pas de Tailwind)
 - Formspree pour le formulaire de contact
 

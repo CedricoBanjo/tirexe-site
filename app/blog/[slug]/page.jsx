@@ -6,15 +6,16 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import CopyButton from '../../../components/CopyButton'
 
-export const dynamic = 'force-dynamic'
-
+// Les articles sont générés en pages statiques au moment de la construction du site
+// (le robot du blog pousse sur main, ce qui relance la construction sur Vercel).
 export async function generateStaticParams() {
   const articles = getAllArticles()
   return articles.map(a => ({ slug: a.slug }))
 }
 
 export async function generateMetadata({ params }) {
-  const article = getArticleBySlug(params.slug)
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
   if (!article) return {}
   return {
     title: `${article.title} · Tirexe`,
@@ -39,8 +40,9 @@ function formatDate(dateStr) {
   })
 }
 
-export default function ArticlePage({ params }) {
-  const article = getArticleBySlug(params.slug)
+export default async function ArticlePage({ params }) {
+  const { slug } = await params
+  const article = getArticleBySlug(slug)
 
   if (!article) {
     return (
