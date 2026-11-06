@@ -38,6 +38,7 @@ Tu es un designer UX/UI senior et directeur artistique, habitué aux sites de co
 - Pour chaque piste : une intention en une phrase (par exemple « ingénierie précise », « artisan du sur-mesure », « clarté éditoriale »), la palette en jetons avec leurs contrastes vérifiés, l'échelle typographique, le style des composants, le traitement des images (photo, schémas, icônes), et le sort du grand mot vert du titre d'accueil (« Développeur », contraste 1,8 aujourd'hui).
 - Montre chaque piste par un vrai prototype codé, sur une branche à part : le haut de l'accueil et une section, sur ordinateur et sur téléphone, en captures côte à côte. Pas de maquette dans un outil payant.
 - Cédric choisit. Ne passe pas à la suite sans son choix.
+- **Choix fait (6 novembre 2026) : piste C « Tableur »** (barre de formule, grille, cellule sélectionnée, vert #92D14F et or #FFC000 d'Excel, ceux du logo). Ses jetons sont en tête de `app/globals.css`. Lot 4a (système de design et accueil) fait ; restent, lot par lot : blog et articles (sommaire, code VBA en couleur), formulaire de contact, mentions légales et 404 (styles écrits dans les pages à remplacer par des classes), images de partage.
 
 ## 4. Étape 3 : le système de design, puis les pages
 
