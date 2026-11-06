@@ -1,9 +1,18 @@
 #!/usr/bin/env node
+// Robot du blog tirexe.com, lancé chaque lundi par .github/workflows/generate-blog.yml.
+// Il écrit un article dans content/blog/AAAA-MM-JJ-slug.md, avec l'en-tête
+// title, date, slug, description, lu par lib/blog.js. Ne pas changer ce format.
 
-const https = require('https')
 const fs = require('fs')
 const path = require('path')
+const Anthropic = require('@anthropic-ai/sdk')
 
+// Claude Sonnet 4.5 est retiré par Anthropic le 30 novembre 2026 : Sonnet 5.5 le remplace.
+const MODELE = 'claude-sonnet-5-5'
+const BLOG_DIR = path.join(__dirname, '..', 'content', 'blog')
+
+// Le robot prend le premier sujet de la liste qui n'a pas encore d'article.
+// Quand la liste est épuisée, Claude propose un nouveau sujet (le robot ne s'arrête jamais).
 const TOPICS = [
   // VBA Excel
   "Comment automatiser un reporting mensuel Excel en VBA",
@@ -70,79 +79,92 @@ const TOPICS = [
 function slugify(str) {
   return str
     .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .slice(0, 80)
 }
 
-function getWeekNumber() {
-  const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7)
-  const week1 = new Date(d.getFullYear(), 0, 4)
-  return 1 + Math.round(((d.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7)
-}
-
 function getTodayISO() {
   return new Date().toISOString().split('T')[0]
 }
 
-function callClaude(prompt) {
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify({
-      model: 'claude-sonnet-4-5',
-      max_tokens: 3000,
-      messages: [{ role: 'user', content: prompt }],
+function articlesExistants() {
+  return fs.readdirSync(BLOG_DIR)
+    .filter(f => f.endsWith('.md'))
+    .map(fichier => {
+      const contenu = fs.readFileSync(path.join(BLOG_DIR, fichier), 'utf8')
+      const titre = (contenu.match(/^title:\s*"(.*)"\s*$/m) || [])[1] || fichier
+      return { fichier, titre }
     })
+}
 
-    const options = {
-      hostname: 'api.anthropic.com',
-      path: '/v1/messages',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'Content-Length': Buffer.byteLength(body),
-      },
-    }
+function dejaTraite(sujet, existants) {
+  const slug = slugify(sujet)
+  return existants.some(a => a.fichier.includes(slug))
+}
 
-    const req = https.request(options, (res) => {
-      let data = ''
-      res.on('data', chunk => data += chunk)
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data)
-          if (parsed.error) reject(new Error(parsed.error.message))
-          else resolve(parsed.content[0].text)
-        } catch (e) { reject(e) }
-      })
-    })
-    req.on('error', reject)
-    req.write(body)
-    req.end()
+// La clé est lue dans ANTHROPIC_API_KEY (secret GitHub). En cas de surcharge passagère
+// de l'API, le SDK officiel réessaie tout seul.
+const client = new Anthropic({ maxRetries: 4 })
+
+async function demanderClaude(prompt, { maxTokens = 16000, effort = 'medium' } = {}) {
+  const reponse = await client.beta.messages.create({
+    model: MODELE,
+    max_tokens: maxTokens,
+    output_config: { effort },
+    // Si Claude refuse par erreur (du code VBA pris pour un virus, par exemple),
+    // Anthropic réessaie automatiquement avec un modèle de secours.
+    betas: ['server-side-fallback-2026-07-01'],
+    fallbacks: 'default',
+    messages: [{ role: 'user', content: prompt }],
   })
+  if (reponse.stop_reason === 'refusal') {
+    throw new Error(`Claude a refusé d'écrire (catégorie : ${reponse.stop_details?.category || 'inconnue'})`)
+  }
+  if (reponse.stop_reason === 'max_tokens') {
+    throw new Error('Réponse coupée avant la fin (limite de longueur atteinte)')
+  }
+  // La réponse peut commencer par des blocs de réflexion : on ne garde que le texte.
+  const texte = reponse.content.filter(b => b.type === 'text').map(b => b.text).join('').trim()
+  if (!texte) throw new Error('Réponse vide')
+  return texte
+}
+
+async function choisirSujet(existants) {
+  const sujet = TOPICS.find(t => !dejaTraite(t, existants))
+  if (sujet) return sujet
+
+  console.log('Liste de sujets épuisée : Claude propose un nouveau sujet.')
+  const proposition = await demanderClaude([
+    'Tu choisis le sujet du prochain article du blog tirexe.com, tenu par Cedric Femminino, consultant et developpeur VBA Excel senior (missions en regie, region PACA et remote).',
+    'Lecteurs vises : chefs de projet, controleurs de gestion, responsables methodes ou qualite de grands groupes qui ont un besoin Excel, VBA, Power Query, Access ou SQL.',
+    '',
+    'Articles deja publies, a ne pas refaire :',
+    ...existants.map(a => `- ${a.titre}`),
+    '',
+    'Reponds uniquement par le titre du nouvel article, en francais, sur une seule ligne, sans guillemets.',
+  ].join('\n'), { maxTokens: 4000, effort: 'low' })
+  const titre = proposition.split('\n').map(l => l.replace(/^[#\-*\s"«]+|["»\s]+$/g, '').trim()).find(Boolean)
+  if (!titre || !slugify(titre) || dejaTraite(titre, existants)) {
+    throw new Error(`Sujet proposé inutilisable : ${titre || '(vide)'}`)
+  }
+  return titre
 }
 
 async function main() {
-  const week = getWeekNumber()
-  const topic = TOPICS[week % TOPICS.length]
+  if (!process.env.ANTHROPIC_API_KEY) {
+    throw new Error('Clé ANTHROPIC_API_KEY absente (elle doit être dans les secrets GitHub du dépôt)')
+  }
+  const existants = articlesExistants()
+  const topic = await choisirSujet(existants)
   const date = getTodayISO()
   const slug = slugify(topic)
-  const blogDir = path.join(__dirname, '..', 'content', 'blog')
+  const outputPath = path.join(BLOG_DIR, `${date}-${slug}.md`)
+  const restants = TOPICS.filter(t => t !== topic && !dejaTraite(t, existants)).length
 
-  const existingFiles = fs.readdirSync(blogDir).filter(f => f.endsWith('.md'))
-  const alreadyExists = existingFiles.some(f => f.includes(slug))
-  if (alreadyExists) {
-    console.log(`Article deja existant pour ce sujet : ${slug}`)
-    process.exit(0)
-  }
-
-  const outputPath = path.join(blogDir, `${date}-${slug}.md`)
-
-  console.log(`Generation : "${topic}"`)
+  console.log(`Generation : "${topic}" (ensuite, ${restants} sujet(s) restant(s) dans la liste)`)
 
   const prompt = [
     'Tu es un expert VBA Excel senior avec 10 ans experience sur des projets industriels complexes.',
@@ -174,28 +196,35 @@ async function main() {
     '- Commence directement par le titre H1 puis l introduction',
   ].join('\n')
 
-  const content = await callClaude(prompt)
+  const content = await demanderClaude(prompt)
 
   const titleMatch = content.match(/^#\s+(.+)$/m)
-  const title = titleMatch ? titleMatch[1] : topic
-  
+  const title = titleMatch ? titleMatch[1].trim() : topic
+
   const metaMatch = content.match(/^META:\s*(.+)$/m)
   const metaDesc = metaMatch ? metaMatch[1].trim() : `Article sur ${title.toLowerCase()} par Cedric Femminino, consultant VBA Excel senior.`
   const cleanContent = content.replace(/^META:.*$/m, '').trim()
 
-const markdown = [
-  '---',
-  `title: "${title.replace(/"/g, '\\"')}"`,
-  `date: "${date}"`,
-  `slug: "${slug}"`,
-  `description: "${metaDesc.replace(/"/g, '\\"')}"`,
-  '---',
-  '',
-  cleanContent,
-].join('\n')
+  // Garde-fou : on ne publie pas un article vide ou tronqué
+  const nbMots = cleanContent.split(/\s+/).filter(Boolean).length
+  if (nbMots < 400) throw new Error(`Article trop court (${nbMots} mots) : rien n'est publié`)
+
+  const markdown = [
+    '---',
+    `title: "${title.replace(/"/g, '\\"')}"`,
+    `date: "${date}"`,
+    `slug: "${slug}"`,
+    `description: "${metaDesc.replace(/"/g, '\\"')}"`,
+    '---',
+    '',
+    cleanContent,
+  ].join('\n')
 
   fs.writeFileSync(outputPath, markdown, 'utf8')
-  console.log(`Article genere : ${outputPath}`)
+  console.log(`Article genere : ${outputPath} (${nbMots} mots)`)
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `Article publié : **${title}** (${nbMots} mots, ${restants} sujet(s) restant(s) dans la liste)\n`)
+  }
 }
 
 main().catch(err => {

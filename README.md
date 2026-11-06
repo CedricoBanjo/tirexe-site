@@ -62,9 +62,11 @@ npm run dev
 1. Dans GitHub → Settings → Secrets → Actions, ajouter :
    - `ANTHROPIC_API_KEY` : ta clé API Anthropic
 
-2. Le workflow `.github/workflows/generate-blog.yml` tourne automatiquement chaque lundi à 7h (Paris)
+2. Le workflow `.github/workflows/generate-blog.yml` tourne automatiquement chaque lundi à 7h (Paris). Il écrit l'article avec Claude Sonnet 5.5 (`scripts/generate-article.js`).
 
 3. Pour tester manuellement : GitHub → Actions → "Générer article blog" → Run workflow
 
+4. Si un lundi le robot échoue ou ne publie rien, il ouvre un ticket GitHub qui t'est assigné : tu reçois un e-mail.
+
 ### Ajouter des sujets
-Dans `scripts/generate-article.js`, ajoute tes sujets dans le tableau `TOPICS`.
+Dans `scripts/generate-article.js`, ajoute tes sujets dans le tableau `TOPICS`. Le robot prend le premier sujet de la liste qui n'a pas encore d'article ; quand la liste est épuisée, Claude propose lui-même un nouveau sujet.

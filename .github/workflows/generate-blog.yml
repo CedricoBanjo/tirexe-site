@@ -6,9 +6,18 @@ on:
     - cron: '0 6 * * 1'
   workflow_dispatch: # permet de lancer manuellement depuis GitHub
 
+permissions:
+  contents: write # pousser le nouvel article
+  issues: write   # ouvrir un ticket si le robot échoue
+
+concurrency:
+  group: robot-blog
+  cancel-in-progress: false
+
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -20,16 +29,49 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci --no-audit --no-fund
 
       - name: Générer l'article
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/generate-article.js
 
-      - name: Commit et push si nouvel article
+      - name: Commit et push du nouvel article
         run: |
           git config user.name "Tirexe Blog Bot"
           git config user.email "cedric@tirexe.com"
           git add content/blog/
-          git diff --staged --quiet || git commit -m "blog: article automatique $(date +%Y-%m-%d)"
-          git push
+          if git diff --staged --quiet; then
+            echo "Aucun nouvel article : le robot n'a rien publié." >&2
+            exit 1
+          fi
+          git commit -m "blog: article automatique $(date +%Y-%m-%d)"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+
+      # Un ticket GitHub assigné à Cédric = un e-mail de GitHub pour le prévenir.
+      - name: Prévenir Cédric si le robot a échoué
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          TITRE="Robot du blog : aucun article publié"
+          CORPS="Le robot du blog n'a pas publié d'article le $(date +%d/%m/%Y).
+
+          Détail technique : $RUN_URL
+
+          Que faire : ouvre Claude (onglet Code, dépôt tirexe-site) et dis « le robot du blog a échoué ». Pour le relancer à la main : GitHub, onglet Actions, « Générer article blog », bouton Run workflow.
+
+          Ce ticket a été ouvert automatiquement par le robot."
+          NUM=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$TITRE\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$NUM" ]; then
+            gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "$CORPS"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITRE" --body "$CORPS" --assignee "$OWNER" \
+              || gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITRE" --body "$CORPS"
+          fi
