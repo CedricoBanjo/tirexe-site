@@ -1,3 +1,5 @@
+import { LINKEDIN_URL } from '../lib/site'
+
 export default function Footer() {
   return (
     <footer>
@@ -10,6 +12,7 @@ export default function Footer() {
           <li><a href="/#process">Fonctionnement</a></li>
           <li><a href="/blog">Blog</a></li>
           <li><a href="/#contact">Contact</a></li>
+          <li><a href={LINKEDIN_URL} target="_blank" rel="me noopener">LinkedIn</a></li>
           <li><a href="/mentions-legales">Mentions légales</a></li>
         </ul>
         <div className="foot-copy">© 2026 Tirexe · Cédric · SIREN 883 193 054</div>

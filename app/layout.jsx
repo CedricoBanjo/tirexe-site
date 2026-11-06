@@ -1,4 +1,14 @@
 import './globals.css'
+import { Manrope } from 'next/font/google'
+import { LINKEDIN_URL } from '../lib/site'
+
+// Police servie par le site lui-même (téléchargée une fois à la construction) :
+// aucun appel à Google Fonts depuis le navigateur des visiteurs, et pas de blocage de l'affichage.
+const manrope = Manrope({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-manrope',
+})
 
 export const metadata = {
   title: 'Cédric Femminino · Consultant & Développeur VBA Excel Senior',
@@ -30,12 +40,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr">
+    <html lang="fr" className={manrope.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
@@ -44,6 +51,7 @@ export default function RootLayout({ children }) {
           "url": "https://tirexe.com",
           "email": "cedric@tirexe.com",
           "worksFor": { "@type": "Organization", "name": "Tirexe" },
+          "sameAs": [LINKEDIN_URL],
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Martigues",
@@ -53,13 +61,6 @@ export default function RootLayout({ children }) {
           },
           "knowsAbout": ["VBA", "Excel", "Power Query", "Access", "SQL", "Automatisation", "Algorithmes de contrôle", "Reporting"]
         })}} />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKT4NR5C8T"></script>
-        <script dangerouslySetInnerHTML={{__html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-TKT4NR5C8T');
-        `}} />
       </head>
       <body>{children}</body>
     </html>

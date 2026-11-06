@@ -42,15 +42,20 @@ export default function MentionsLegales() {
                 <p>L&apos;ensemble du contenu de ce site — textes, structure, logo, visuels — est la propriété exclusive de Cédric Femminino. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle.</p>
               </div>
 
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Données personnelles & RGPD</h2>
-                <p>Les données transmises via le formulaire de contact (nom, email, société, description du besoin) sont collectées dans le seul but de répondre à votre demande. Elles ne sont ni stockées dans une base de données, ni cédées ni revendues à des tiers.<br/><br/>
-                Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d&apos;un droit d&apos;accès, de rectification, de suppression et de portabilité de vos données. Pour exercer ces droits, contactez : <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>cedric@tirexe.com</a></p>
+              <div id="donnees-personnelles" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
+                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Données personnelles (RGPD)</h2>
+                <p><strong style={{color:'var(--ink)'}}>Responsable :</strong> Cédric Femminino (Tirexe), <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>cedric@tirexe.com</a>.<br/><br/>
+                <strong style={{color:'var(--ink)'}}>Formulaire de contact.</strong> Les informations que vous saisissez (nom, société, e-mail, type de mission, besoin) servent uniquement à répondre à votre demande et à échanger sur une éventuelle mission, à votre initiative. Elles ne sont ni vendues ni cédées.<br/><br/>
+                Le formulaire passe par le service Formspree (Formspree, Inc., États-Unis), qui me transmet votre message par e-mail et en garde une copie dans mon espace Formspree. Vos données sont donc traitées aux États-Unis.<br/><br/>
+                <strong style={{color:'var(--ink)'}}>Durée de conservation :</strong> 3 ans après notre dernier échange, puis suppression.<br/><br/>
+                <strong style={{color:'var(--ink)'}}>Hébergement :</strong> l&apos;hébergeur Vercel enregistre des journaux techniques (dont l&apos;adresse IP) pour la sécurité et le bon fonctionnement du site.<br/><br/>
+                <strong style={{color:'var(--ink)'}}>Vos droits :</strong> vous pouvez demander l&apos;accès à vos données, leur rectification, leur effacement, leur portabilité, ou vous opposer à leur traitement, en écrivant à <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-d)',fontWeight:600}}>cedric@tirexe.com</a>. Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" style={{color:'var(--g-d)',fontWeight:600}} target="_blank" rel="noreferrer">cnil.fr</a>).</p>
               </div>
 
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
+              <div id="cookies" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
                 <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Cookies</h2>
-                <p>Ce site ne dépose aucun cookie de traçage, publicitaire ou analytique. Aucune donnée de navigation n&apos;est collectée à des fins commerciales.</p>
+                <p>Ce site ne dépose aucun cookie et n&apos;utilise aucun outil de mesure d&apos;audience ni de publicité : aucun suivi de votre navigation.<br/><br/>
+                Les polices de caractères sont hébergées par le site lui-même : leur affichage ne fait appel à aucun service tiers.</p>
               </div>
 
               <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
