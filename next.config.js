@@ -24,5 +24,9 @@ const nextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: ENTETES_SECURITE }]
   },
+  // /services seul n'a pas de page : on renvoie vers la liste des expertises de l'accueil
+  async redirects() {
+    return [{ source: '/services', destination: '/#expertise', permanent: false }]
+  },
 }
 module.exports = nextConfig
