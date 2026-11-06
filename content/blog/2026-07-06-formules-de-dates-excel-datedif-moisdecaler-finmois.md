@@ -1,6 +1,7 @@
 ---
 title: "Formules de dates Excel : DATEDIF, MOIS.DECALER et FIN.MOIS"
 date: "2026-07-06"
+updated: "2026-11-06"
 slug: "formules-de-dates-excel-datedif-moisdecaler-finmois"
 description: "Maîtrisez DATEDIF, MOIS.DECALER et FIN.MOIS pour des calculs de dates Excel professionnels. Exemples concrets et pièges à éviter."
 ---
@@ -131,4 +132,4 @@ Ces formules évitent la maintenance de macros pour des besoins qui relèvent de
 
 ## Conclusion
 
-DATEDIF, MOIS.DECALER et FIN.MOIS constituent le triptyque indispensable pour manipuler les dates dans Excel sans recourir systématiquement à VBA. Leur maîtrise améliore la maintenabilité de vos fichiers et réduit les risques d'erreurs dans les calculs temporels critiques. Gardez ces syntaxes à portée de main : elles résoudront 80% de vos problématiques de dates dans les projets industriels.
+DATEDIF, MOIS.DECALER et FIN.MOIS constituent le triptyque indispensable pour manipuler les dates dans Excel sans recourir systématiquement à VBA. Leur maîtrise améliore la maintenabilité de vos fichiers et réduit les risques d'erreurs dans les calculs temporels critiques. Gardez ces syntaxes à portée de main : elles résoudront la plupart de vos problématiques de dates dans les projets industriels.

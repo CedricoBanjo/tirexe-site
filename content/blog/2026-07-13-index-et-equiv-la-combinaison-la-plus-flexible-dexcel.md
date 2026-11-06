@@ -1,6 +1,7 @@
 ---
 title: "INDEX et EQUIV : la combinaison la plus flexible d'Excel"
 date: "2026-07-13"
+updated: "2026-11-06"
 slug: "index-et-equiv-la-combinaison-la-plus-flexible-dexcel"
 description: "INDEX et EQUIV : découvrez pourquoi cette combinaison remplace RECHERCHEV dans tous les projets Excel industriels. Flexibilité et performance garanties."
 ---
@@ -21,7 +22,7 @@ La syntaxe de base :
 =INDEX(plage_retour; EQUIV(valeur_cherchée; plage_recherche; 0))
 ```
 
-Le troisième argument de EQUIV à 0 force la correspondance exacte. C'est ce que vous utiliserez dans 95% des cas en milieu industriel.
+Le troisième argument de EQUIV à 0 force la correspondance exacte. C'est ce que vous utiliserez dans la grande majorité des cas.
 
 Exemple concret : vous avez une liste de références produits en colonne A et des prix en colonne D. Pour trouver le prix de la référence "REF-2547" :
 
@@ -55,7 +56,7 @@ C'est cette capacité qui fait d'INDEX/EQUIV le choix naturel pour tous les tabl
 
 ## Gestion des erreurs en environnement industriel
 
-Dans un contexte de pilotage où des données peuvent manquer temporairement, il faut gérer les erreurs proprement. Voici la formule robuste que j'utilise systématiquement :
+Dans un contexte de pilotage où des données peuvent manquer temporairement, il faut gérer les erreurs proprement. Voici une formule robuste :
 
 ```
 =SIERREUR(INDEX(plage_retour; EQUIV(valeur; plage_recherche; 0)); "Donnée manquante")

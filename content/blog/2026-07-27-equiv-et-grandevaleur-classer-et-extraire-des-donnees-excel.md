@@ -1,11 +1,12 @@
 ---
-title: "EQUIV et GRANDE.VALEUR : classer et extraire des données Excel"
+title: "EQUIV et GRANDE.VALEUR : classer et extraire des données"
 date: "2026-07-27"
+updated: "2026-11-06"
 slug: "equiv-et-grandevaleur-classer-et-extraire-des-donnees-excel"
 description: "Maîtrisez GRANDE.VALEUR et EQUIV pour créer des classements Excel automatiques. Guide technique avec exemples concrets pour extraire les top N."
 ---
 
-# EQUIV et GRANDE.VALEUR : classer et extraire des données Excel
+# EQUIV et GRANDE.VALEUR : classer et extraire des données
 
 Quand on gère des tableaux de bord industriels ou des rapports de production, on a régulièrement besoin d'extraire les N meilleures valeurs d'un ensemble de données : top 5 des ventes, 10 meilleurs scores qualité, 3 retards les plus importants. Excel propose pour cela deux fonctions puissantes mais souvent mal comprises : GRANDE.VALEUR et EQUIV. Combinées intelligemment, elles permettent d'automatiser ces extractions sans VBA, directement dans les formules.
 
@@ -77,7 +78,7 @@ Solutions possibles :
 
 **Solution formule** : ajouter un critère secondaire de départage, ou accepter cette limite si vos données ne contiennent pas de doublons.
 
-**Solution VBA** : pour des besoins plus sophistiqués avec gestion intelligente des ex-aequo, un code VBA devient pertinent. Mais pour 80% des cas d'usage industriels, la combinaison GRANDE.VALEUR + EQUIV + INDEX suffit largement.
+**Solution VBA** : pour des besoins plus sophistiqués avec gestion intelligente des ex-aequo, un code VBA devient pertinent. Mais pour la plupart des cas d'usage industriels, la combinaison GRANDE.VALEUR + EQUIV + INDEX suffit largement.
 
 Pensez aussi à encadrer vos formules avec SIERREUR pour gérer les cas où le rang demandé dépasse le nombre de valeurs :
 

@@ -1,6 +1,7 @@
 ---
 title: "Mise en forme conditionnelle Excel : exemples avancés"
 date: "2026-10-05"
+updated: "2026-11-06"
 slug: "mise-en-forme-conditionnelle-excel-exemples-avances"
 description: "Pilotez la mise en forme conditionnelle Excel en VBA pour automatiser le déploiement de règles complexes et gérer efficacement les gros volumes de données."
 ---
@@ -13,9 +14,9 @@ Cet article présente deux approches avancées : la création de règles de mise
 
 ## Pourquoi piloter la mise en forme conditionnelle en VBA
 
-Sur un tableau de suivi de production avec 50 000 lignes et 15 colonnes, j'ai vu Excel devenir inutilisable avec seulement 8 règles de MFC natives. Chaque modification déclenchait un recalcul global. La solution : supprimer toutes les règles et formater directement les cellules selon les critères métier en VBA, avec recalcul manuel déclenché au besoin.
+Sur un tableau de suivi de production de plusieurs dizaines de milliers de lignes, quelques règles de MFC natives suffisent à rendre Excel très lent. Chaque modification déclenchait un recalcul global. La solution : supprimer toutes les règles et formater directement les cellules selon les critères métier en VBA, avec recalcul manuel déclenché au besoin.
 
-Autre cas concret : un outil de planification où les règles de coloration dépendent du profil utilisateur connecté. Impossible avec la MFC native, trivial en VBA en interrogeant la base de droits puis en appliquant les règles correspondantes.
+Autre exemple : un outil de planification où les règles de coloration dépendent du profil utilisateur connecté. Impossible avec la MFC native, trivial en VBA en interrogeant la base de droits puis en appliquant les règles correspondantes.
 
 Le pilotage VBA permet aussi de versionner les règles de formatage dans le code source, de les documenter proprement, et de les déployer automatiquement sur de nouveaux classeurs via des modèles.
 
@@ -138,7 +139,7 @@ ErrorHandler:
 End Sub
 ```
 
-Cette approche est jusqu'à 50 fois plus rapide sur 20 000 lignes. Inconvénient : le format n'est pas dynamique, il faut relancer la macro après modification des données.
+Cette approche est bien plus rapide sur de gros volumes. Inconvénient : le format n'est pas dynamique, il faut relancer la macro après modification des données.
 
 ## Choisir la bonne approche
 

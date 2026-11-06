@@ -1,15 +1,16 @@
 ---
-title: "Les tableaux structurés Excel : pourquoi les utiliser systématiquement"
+title: "Tableaux structurés Excel : pourquoi les utiliser toujours"
 date: "2026-09-14"
+updated: "2026-11-06"
 slug: "les-tableaux-structures-excel-pourquoi-les-utiliser-systematiquement"
 description: "Tableaux structurés Excel en VBA : pourquoi cette fonctionnalité transforme la maintenance et les performances de vos macros industrielles."
 ---
 
-# Les tableaux structurés Excel : pourquoi les utiliser systématiquement
+# Tableaux structurés Excel : pourquoi les utiliser toujours
 
 Quand on développe des outils Excel en VBA pour l'industrie, on traite souvent des milliers de lignes de données. Commandes, stocks, productions, relevés de capteurs... La tentation est forte de travailler directement sur des plages de cellules classiques. Erreur. Les tableaux structurés (ListObject) changent radicalement la donne, tant pour la maintenance que pour les performances.
 
-Après dix ans à nettoyer du code legacy où les plages en dur pullulent (`Range("A2:G500")`), je ne reviens plus en arrière. Voici pourquoi vous devriez systématiquement convertir vos données en tableaux structurés.
+Dans un code où les plages en dur pullulent (`Range("A2:G500")`), chaque ligne ajoutée aux données est une source d'erreur. Voici pourquoi vous devriez systématiquement convertir vos données en tableaux structurés.
 
 ## La fin des références fragiles
 

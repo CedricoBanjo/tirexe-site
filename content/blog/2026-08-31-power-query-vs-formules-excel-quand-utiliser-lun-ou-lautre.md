@@ -1,15 +1,16 @@
 ---
-title: "Power Query vs formules Excel : quand utiliser l'un ou l'autre"
+title: "Power Query vs formules Excel : que choisir et quand ?"
 date: "2026-08-31"
+updated: "2026-11-06"
 slug: "power-query-vs-formules-excel-quand-utiliser-lun-ou-lautre"
 description: "Power Query ou formules Excel ? Découvrez les critères précis pour choisir la bonne approche selon votre volumétrie et vos besoins métier."
 ---
 
-# Power Query vs formules Excel : quand utiliser l'un ou l'autre
+# Power Query vs formules Excel : que choisir et quand ?
 
 Vous êtes responsable technique d'un projet où les données s'accumulent. Vos utilisateurs créent des formules RECHERCHEV à rallonge, et le fichier rame. Faut-il migrer vers Power Query ? Ou rester sur des formules classiques, voire modernes comme XLOOKUP ?
 
-La réponse dépend de trois critères : la volumétrie, la fréquence de rafraîchissement, et la complexité des transformations. Après 10 ans sur des projets industriels, j'ai vu des équipes s'embourber dans Power Query pour des besoins simples, et d'autres s'épuiser à maintenir des formules matricielles sur des bases de 200 000 lignes.
+La réponse dépend de trois critères : la volumétrie, la fréquence de rafraîchissement, et la complexité des transformations. Un mauvais choix, c'est s'embourber dans Power Query pour un besoin simple, ou s'épuiser à maintenir des formules matricielles sur des centaines de milliers de lignes.
 
 Voici comment trancher, concrètement.
 

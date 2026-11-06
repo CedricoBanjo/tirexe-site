@@ -1,11 +1,12 @@
 ---
-title: "Tableaux croisés dynamiques : guide complet et bonnes pratiques"
+title: "Tableaux croisés dynamiques : guide et bonnes pratiques"
 date: "2026-09-28"
+updated: "2026-11-06"
 slug: "tableaux-croises-dynamiques-guide-complet-et-bonnes-pratiques"
 description: "Guide VBA pour automatiser les tableaux croisés dynamiques Excel : création robuste, gestion du cache, performance et pièges à éviter."
 ---
 
-# Tableaux croisés dynamiques : guide complet et bonnes pratiques
+# Tableaux croisés dynamiques : guide et bonnes pratiques
 
 Les tableaux croisés dynamiques (TCD) sont souvent créés manuellement, mais leur automatisation via VBA devient indispensable dès qu'on traite des rapports récurrents ou des volumes conséquents. Je vais vous montrer comment piloter ces objets efficacement, en évitant les pièges classiques qui plombent la maintenance.
 

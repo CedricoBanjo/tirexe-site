@@ -1,11 +1,12 @@
 ---
-title: "Protéger et sécuriser un classeur Excel : toutes les options"
+title: "Protéger et sécuriser un classeur Excel : les options"
 date: "2026-10-12"
+updated: "2026-11-06"
 slug: "proteger-et-securiser-un-classeur-excel-toutes-les-options"
 description: "Protection Excel : comment sécuriser vos classeurs, feuilles et code VBA avec les bonnes options. Guide complet pour projets professionnels."
 ---
 
-# Protéger et sécuriser un classeur Excel : toutes les options
+# Protéger et sécuriser un classeur Excel : les options
 
 La sécurisation d'un classeur Excel est rarement une priorité... jusqu'au jour où un utilisateur écrase vos formules critiques ou modifie une structure de données que vous aviez mise des semaines à bâtir. Sur des projets industriels complexes, la protection n'est pas une option : c'est une nécessité.
 

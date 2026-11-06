@@ -1,13 +1,14 @@
 ---
 title: "Fusionner des tables avec Power Query : guide pas à pas"
 date: "2026-08-10"
+updated: "2026-11-06"
 slug: "fusionner-des-tables-avec-power-query-guide-pas-a-pas"
-description: "Fusionner des tables Excel avec Power Query : tutoriel complet pour automatiser vos consolidations de données et gagner 70% de temps sur vos reportings."
+description: "Fusionner des tables Excel avec Power Query : types de jointure, étapes pas à pas et pièges à éviter pour fiabiliser vos consolidations de données."
 ---
 
 # Fusionner des tables avec Power Query : guide pas à pas
 
-Power Query s'impose comme l'outil de référence pour fusionner des données dans Excel, dépassant largement RECHERCHEV ou INDEX/EQUIV en termes de performance et de maintenabilité. Sur des projets industriels impliquant des dizaines de milliers de lignes et de multiples sources, j'ai constaté que Power Query réduit les temps de traitement de 70% tout en garantissant la traçabilité des transformations.
+Power Query s'impose comme l'outil de référence pour fusionner des données dans Excel, dépassant largement RECHERCHEV ou INDEX/EQUIV en termes de performance et de maintenabilité. Sur des projets industriels impliquant des dizaines de milliers de lignes et de multiples sources, Power Query réduit nettement les temps de traitement, tout en gardant la trace de chaque transformation.
 
 La vraie valeur de Power Query réside dans sa capacité à créer des flux reproductibles : une fois le processus de fusion configuré, il suffit d'actualiser pour intégrer les nouvelles données. C'est particulièrement pertinent quand vos chefs de projet vous demandent des rapports mensuels consolidés à partir de fichiers dispersés.
 
@@ -21,7 +22,7 @@ Avant de manipuler l'interface, il faut maîtriser la logique des jointures. Pow
 
 **Full Outer** : conserve tout de toutes les tables. Rare en production, mais utile pour identifier les écarts entre deux systèmes d'information.
 
-Le piège classique ? Choisir Inner par habitude et perdre 15% de vos données sans vous en rendre compte. Toujours valider le nombre de lignes avant et après fusion.
+Le piège classique ? Choisir Inner par habitude et perdre une partie de vos données sans vous en rendre compte. Toujours valider le nombre de lignes avant et après fusion.
 
 ## Le processus de fusion étape par étape
 
@@ -51,7 +52,7 @@ Sur les projets industriels, vous fusionnez rarement deux tables seulement. Voic
 
 **Filtrez avant de fusionner** : si vous ne traitez que 2024, éliminez les autres années avant la jointure. Power Query applique le filtre en amont, réduisant la volumétrie des opérations suivantes.
 
-**��vitez les fusions sur des requêtes avec des calculs lourds** : créez une requête intermédiaire simplifiée contenant uniquement la clé de jointure et les colonnes nécessaires. J'ai divisé par trois le temps de rafraîchissement d'un reporting en appliquant cette règle.
+**Évitez les fusions sur des requêtes avec des calculs lourds** : créez une requête intermédiaire simplifiée contenant uniquement la clé de jointure et les colonnes nécessaires. Le rafraîchissement du reporting s'en trouve nettement accéléré.
 
 **Attention aux relations Many-to-Many** : si votre clé de jointure n'est pas unique dans la seconde table, Power Query crée des doublons. Vérifiez l'unicité avec "Supprimer les doublons" dans une étape de test, puis supprimez cette étape si elle ne change rien.
 
