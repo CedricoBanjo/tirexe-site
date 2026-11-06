@@ -1,9 +1,13 @@
 'use client'
 // Le logo Tirexe en sable fin et en volume, à côté du texte du haut de l'accueil.
 // - Au chargement, le sable s'assemble de gauche à droite.
-// - On le fait tourner en 3D en glissant (souris, ou doigt de gauche à droite sur téléphone) :
-//   le logo a une épaisseur ; chaque face prend la lumière selon l'angle, celles vues de dos pâlissent.
-// - Au survol, la souris écarte le sable, qui revient à sa place.
+// - On le fait tourner en 3D en glissant, dans tous les sens : le logo a une épaisseur ; chaque face
+//   prend la lumière selon l'angle, celles vues de dos pâlissent.
+// - La souris écarte le sable au survol, et fait tourner le logo quand on glisse en tenant le bouton.
+//   Au doigt, c'est pareil : un glissé rapide fait tourner le logo ; un doigt posé écarte le sable,
+//   et si on le promène après l'avoir posé un court instant, il trace son chemin dans le sable.
+//   Le sable revient à sa place. Même vitesse de rotation partout, à proportion de la taille du logo.
+//   Sur téléphone, un glissé vertical fait toujours défiler la page.
 // Le dessin vient de public/logo-sable.svg : le logo « tirexe. » redessiné en vectoriel (traits d'épaisseur
 // constante, vrais arcs de cercle), avec une couleur de repérage par calque : lettres, griffes, étoile.
 // public/logo-tirexe.svg est le même logo aux vraies couleurs.
@@ -113,13 +117,14 @@ export default function LogoSable() {
     const petit = window.innerWidth < 760
     const [vueX, vueY] = VUE
 
-    let N = 0, W = 0, H = 0, DW = 0, DH = 0, dpr = 1, img = null, pix = null, opacite = 1, anim = 0, visible = true, pret = false, introFaite = false
+    let N = 0, W = 0, H = 0, DW = 0, DH = 0, dpr = 1, img = null, pix = null, opacite = 1, anim = 0, visible = false, pret = false, introFaite = false
     let px, py, pz, vx, vy, vz, tx, ty, tz, depart, cote, ventX, ventY, sx, sy, ss, ordre, groupes = []
-    let rotX = vueX, rotY = vueY, vitX = 0, vitY = 0, glisse = null, dernierGeste = 0, souris = null, envol = 0
+    let rotX = vueX, rotY = vueY, vitX = 0, vitY = 0, glisse = null, dernierGeste = 0, souris = null, envol = 0, largeurLogo = 560
     const logo = new Image()
 
-    function construire() {
-      const pts = formeLogo(W, H, petit ? 22000 : 52000, logo)
+    // en deux temps, pour ne pas bloquer un téléphone lent : d'abord le dessin du logo en points, puis l'installation des grains
+    const echantillonner = () => formeLogo(W, H, petit ? 22000 : 52000, logo)
+    function construire(pts = echantillonner()) {
       N = pts.length
       px = new Float32Array(N); py = new Float32Array(N); pz = new Float32Array(N)
       vx = new Float32Array(N); vy = new Float32Array(N); vz = new Float32Array(N)
@@ -139,6 +144,7 @@ export default function LogoSable() {
       pts.forEach((p, i) => { ordre[place[cle(p)]++] = i })
       let xmin = Infinity, xmax = -Infinity
       for (const p of pts) { if (p[0] < xmin) xmin = p[0]; if (p[0] > xmax) xmax = p[0] }
+      if (xmax > xmin) largeurLogo = xmax - xmin
       introFaite = false
       for (let i = 0; i < N; i++) {
         const p = pts[i]
@@ -220,7 +226,8 @@ export default function LogoSable() {
       const ca = Math.cos(rotY), sa = Math.sin(rotY), cb = Math.cos(rotX), sb = Math.sin(rotX)
       if (!reduit) {
         let R2 = 0, mx = 0, my = 0
-        if (souris && !glisse) { const Rr = petit ? 40 : 56; R2 = Rr * Rr; mx = souris.x; my = souris.y }
+        // la souris ou le doigt écarte le sable, sauf pendant qu'on fait tourner le logo
+        if (souris && !(glisse && glisse.mode === 'tourne')) { const Rr = petit ? 44 : 56; R2 = Rr * Rr; mx = souris.x; my = souris.y }
         for (let i = 0; i < N; i++) {
           if (t < depart[i]) {
             vx[i] *= 0.9; vy[i] *= 0.9; vz[i] *= 0.9
@@ -233,7 +240,7 @@ export default function LogoSable() {
           if (R2) {
             const dx = sx[i] - mx, dy = sy[i] - my, d2 = dx * dx + dy * dy
             if (d2 < R2) {
-              // poussée de la souris, ramenée dans le repère du logo tourné
+              // poussée de la souris ou du doigt, ramenée dans le repère du logo tourné
               const k = ((1 - d2 / R2) * 3.2) / (Math.sqrt(d2) + 1), fx = dx * k, fy = dy * k
               vx[i] += fx * ca + fy * sb * sa; vy[i] += fy * cb; vz[i] += fx * sa - fy * sb * ca
             }
@@ -251,22 +258,35 @@ export default function LogoSable() {
       else if (!doit && anim) { cancelAnimationFrame(anim); anim = 0 }
     }
 
+    const position = e => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top } }
+    // un geste au doigt commence « en attente » : il devient une rotation s'il part vite (10 px en moins
+    // de 180 ms), sinon un jeu avec le sable ; à la souris, appuyer puis glisser fait toujours tourner
     const appui = e => {
-      glisse = { x: e.clientX, y: e.clientY, type: e.pointerType }; dernierGeste = performance.now()
+      const doigt = e.pointerType !== 'mouse'
+      glisse = { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now(), mode: doigt ? 'attente' : 'tourne' }
+      dernierGeste = performance.now()
+      if (doigt) souris = position(e) // le doigt écarte le sable dès qu'il se pose
       try { canvas.setPointerCapture(e.pointerId) } catch {}
     }
     const bouge = e => {
-      const r = canvas.getBoundingClientRect()
-      souris = { x: e.clientX - r.left, y: e.clientY - r.top }
+      // la souris suit toujours le pointeur ; le doigt, sauf pendant qu'il fait tourner le logo
+      if (!glisse || glisse.mode !== 'tourne' || e.pointerType === 'mouse') souris = position(e)
       if (!glisse) return
+      dernierGeste = performance.now()
+      if (glisse.mode === 'attente') {
+        if (Math.hypot(e.clientX - glisse.x0, e.clientY - glisse.y0) < 10) return
+        glisse.mode = performance.now() - glisse.t0 < 180 ? 'tourne' : 'sable'
+        if (glisse.mode === 'tourne') souris = null // le sable revient pendant que le logo tourne
+      }
+      if (glisse.mode === 'sable') return
       const dx = e.clientX - glisse.x, dy = e.clientY - glisse.y
-      const sensibilite = glisse.type === 'touch' ? 0.0042 : 0.006
-      vitY = dx * sensibilite; vitX = glisse.type === 'touch' ? 0 : -dy * sensibilite
+      // même sensation à la souris et au doigt : un glissé de la largeur du logo le fait tourner d'environ 200°
+      const sensibilite = 3.4 / largeurLogo
+      vitY = dx * sensibilite; vitX = -dy * sensibilite
       rotY += vitY; rotX += vitX
       glisse.x = e.clientX; glisse.y = e.clientY
-      dernierGeste = performance.now()
     }
-    const lache = () => { glisse = null; dernierGeste = performance.now() }
+    const lache = e => { glisse = null; dernierGeste = performance.now(); if (e.pointerType !== 'mouse') souris = null }
     const quitte = () => { souris = null; glisse = null }
     canvas.addEventListener('pointerdown', appui)
     canvas.addEventListener('pointermove', bouge, { passive: true })
@@ -274,7 +294,15 @@ export default function LogoSable() {
     canvas.addEventListener('pointercancel', quitte)
     canvas.addEventListener('pointerleave', quitte)
 
-    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; relancer() })
+    // le sable n'est préparé qu'une fois le logo chargé ET à moitié à l'écran : sur téléphone, où le logo est plus
+    // bas que le premier écran, l'assemblage se joue sous les yeux du visiteur quand il arrive dessus, comme sur ordinateur
+    let logoCharge = false, prevu = false, aMoitieVisible = false
+    const essayer = () => { if (logoCharge && aMoitieVisible && !pret && !prevu) { prevu = true; attendre(demarrer) } }
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting
+      if (e.intersectionRatio >= 0.5) aMoitieVisible = true
+      essayer(); relancer()
+    }, { threshold: [0, 0.5] })
     io.observe(canvas)
     document.addEventListener('visibilitychange', relancer)
     let attente
@@ -282,16 +310,20 @@ export default function LogoSable() {
     window.addEventListener('resize', redim)
 
     let annule = false
-    const demarrer = () => {
+    function demarrer() {
       if (annule) return
       dimensionner()
-      construire()
-      pret = true
-      canvas.dataset.grains = String(N) // utile aux vérifications automatiques
-      relancer()
+      const pts = echantillonner()
+      attendre(() => {
+        if (annule) return
+        construire(pts)
+        pret = true
+        canvas.dataset.grains = String(N) // utile aux vérifications automatiques
+        relancer()
+      })
     }
-    const attendre = window.requestIdleCallback ? cb => window.requestIdleCallback(cb, { timeout: 700 }) : cb => setTimeout(cb, 150)
-    logo.onload = () => attendre(demarrer)
+    function attendre(cb) { if (window.requestIdleCallback) window.requestIdleCallback(cb, { timeout: 700 }); else setTimeout(cb, 150) }
+    logo.onload = () => { logoCharge = true; essayer() }
     logo.src = '/logo-sable.svg'
 
     return () => {
