@@ -5,6 +5,7 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import CopyButton from '../../../components/CopyButton'
+import { LINKEDIN_URL } from '../../../lib/site'
 
 // Les articles sont générés en pages statiques au moment de la construction du site
 // (le robot du blog pousse sur main, ce qui relance la construction sur Vercel).
@@ -116,6 +117,7 @@ export default async function ArticlePage({ params }) {
                 <div className="sidebar-card" style={{marginTop:'16px'}}>
                   <div className="sidebar-title">À propos</div>
                   <p className="sidebar-desc">Cédric Femminino, consultant & développeur VBA Excel senior. 10+ ans d&apos;expérience sur des projets industriels et financiers.</p>
+                  <a href={LINKEDIN_URL} target="_blank" rel="me noopener" className="sidebar-link">Mon profil LinkedIn →</a>
                 </div>
               </aside>
             </div>

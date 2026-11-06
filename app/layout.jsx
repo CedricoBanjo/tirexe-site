@@ -1,6 +1,6 @@
 import './globals.css'
 import { Manrope } from 'next/font/google'
-import CookieConsent from '../components/CookieConsent'
+import { LINKEDIN_URL } from '../lib/site'
 
 // Police servie par le site lui-même (téléchargée une fois à la construction) :
 // aucun appel à Google Fonts depuis le navigateur des visiteurs, et pas de blocage de l'affichage.
@@ -51,6 +51,7 @@ export default function RootLayout({ children }) {
           "url": "https://tirexe.com",
           "email": "cedric@tirexe.com",
           "worksFor": { "@type": "Organization", "name": "Tirexe" },
+          "sameAs": [LINKEDIN_URL],
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Martigues",
@@ -61,10 +62,7 @@ export default function RootLayout({ children }) {
           "knowsAbout": ["VBA", "Excel", "Power Query", "Access", "SQL", "Automatisation", "Algorithmes de contrôle", "Reporting"]
         })}} />
       </head>
-      <body>
-        {children}
-        <CookieConsent />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

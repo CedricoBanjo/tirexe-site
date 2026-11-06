@@ -1,6 +1,5 @@
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
-import CookieSettingsButton from '../../components/CookieSettingsButton'
 
 export const metadata = {
   title: 'Mentions légales · Tirexe',
@@ -54,12 +53,9 @@ export default function MentionsLegales() {
               </div>
 
               <div id="cookies" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Cookies et mesure d&apos;audience</h2>
-                <p>Ce site utilise Google Analytics (Google Ireland Limited) pour compter les visites : pages vues, provenance des visiteurs, type d&apos;appareil. <strong style={{color:'var(--ink)'}}>Il n&apos;est activé que si vous cliquez sur « Accepter »</strong> dans le bandeau. Sans votre accord, aucun cookie de mesure n&apos;est déposé.<br/><br/>
-                Si vous acceptez, Google Analytics dépose les cookies <code>_ga</code> et <code>_ga_…</code>, conservés 13 mois au plus. Google peut traiter ces données aux États-Unis (Google LLC adhère au Data Privacy Framework UE–États-Unis).<br/><br/>
-                Votre choix est mémorisé 6 mois dans votre navigateur, puis la question vous est reposée. Vous pouvez changer d&apos;avis à tout moment avec le lien « Gérer les cookies » en bas de chaque page, ou ici :</p>
-                <CookieSettingsButton className="legal-btn">Modifier mon choix</CookieSettingsButton>
-                <p style={{marginTop:'20px'}}>Les polices de caractères sont hébergées par le site lui-même : leur affichage ne fait appel à aucun service tiers.</p>
+                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Cookies</h2>
+                <p>Ce site ne dépose aucun cookie et n&apos;utilise aucun outil de mesure d&apos;audience ni de publicité : aucun suivi de votre navigation.<br/><br/>
+                Les polices de caractères sont hébergées par le site lui-même : leur affichage ne fait appel à aucun service tiers.</p>
               </div>
 
               <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>

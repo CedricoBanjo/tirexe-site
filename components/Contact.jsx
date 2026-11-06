@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { EMAIL, LINKEDIN_URL } from '../lib/site'
 
 const FORMSPREE_URL = 'https://formspree.io/f/xzdoeylz'
-const EMAIL = 'cedric@tirexe.com'
 
 export default function Contact() {
   // 'attente' | 'envoi' | 'envoye' | 'erreur'
@@ -28,8 +28,6 @@ export default function Contact() {
       if (!reponse.ok) throw new Error(`Formspree a répondu ${reponse.status}`)
       form.reset()
       setEtat('envoye')
-      // Compte la demande comme conversion, seulement si le visiteur a accepté la mesure d'audience
-      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_name: 'contact' })
     } catch {
       setEtat('erreur')
     }
@@ -67,6 +65,19 @@ export default function Contact() {
                 <div>
                   <div className="ci-l">Format</div>
                   <div className="ci-v">Régie · à la journée</div>
+                </div>
+              </div>
+              <div className="ci">
+                <div className="ci-ico">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--g-d)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="ci-l">LinkedIn</div>
+                  <div className="ci-v"><a href={LINKEDIN_URL} target="_blank" rel="me noopener">Cédric Femminino</a></div>
                 </div>
               </div>
             </div>
