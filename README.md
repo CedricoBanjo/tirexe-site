@@ -1,5 +1,14 @@
 # Tirexe — Site vitrine
 
+## Améliorer le site avec Claude
+
+1. Ouvre l'application Claude (ou claude.ai/code dans le navigateur), onglet **Code**.
+2. Environnement : **Default** (sous Cloud).
+3. Dépôt : **CedricoBanjo/tirexe-site**, seul.
+4. Écris « améliore le site », ou ce que tu veux changer, avec tes mots.
+
+Claude fait un bilan, puis propose les améliorations par étapes, chacune avec un aperçu. Rien n'est mis en ligne sans ton « OK ». Ses consignes : `CLAUDE.md` et `.claude/skills/ameliorer-site/SKILL.md`.
+
 ## Stack
 - Next.js 14 (App Router, export statique)
 - CSS pur (pas de Tailwind)
