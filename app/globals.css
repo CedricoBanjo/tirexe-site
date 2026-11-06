@@ -154,7 +154,11 @@ nav {
 /* Le logo en sable (décor, dessiné par components/LogoSable.jsx) : il déborde de sa colonne pour que le sable ait de la place.
    Pas de mode d'emploi : l'assemblage du départ donne envie d'y toucher. */
 .hero-visuel { position: relative; min-width: 0; padding-top: 232px; }
-.sable-forme { position: absolute; top: -40px; left: -48px; width: calc(100% + 96px); height: 320px; cursor: grab; touch-action: pan-y; }
+.sable-forme {
+  position: absolute; top: -40px; left: -48px; width: calc(100% + 96px); height: 320px; cursor: grab;
+  touch-action: pan-y; /* au doigt : glisser sur le côté pour le logo, glisser vers le haut ou le bas pour la page */
+  -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
+}
 .sable-forme:active { cursor: grabbing; }
 
 /* L'éditeur VBA « En bref » : vrai texte, colorié comme du code */
