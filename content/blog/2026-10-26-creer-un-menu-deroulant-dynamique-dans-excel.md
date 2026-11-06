@@ -1,6 +1,7 @@
 ---
 title: "Créer un menu déroulant dynamique dans Excel"
 date: "2026-10-26"
+updated: "2026-11-06"
 slug: "creer-un-menu-deroulant-dynamique-dans-excel"
 description: "Menu déroulant dynamique Excel : guide complet VBA et formules pour automatiser vos listes de validation sans maintenance manuelle."
 ---
@@ -15,7 +16,7 @@ Je vais vous montrer deux approches : l'une sans code pour les cas simples, l'au
 
 ## Pourquoi dynamiser vos menus déroulants
 
-Dans les projets que j'ai menés, les menus statiques créent trois problèmes récurrents :
+Les menus statiques créent trois problèmes récurrents :
 
 **La maintenance chronophage** : chaque modification de la liste impose de mettre à jour la validation de données sur toutes les feuilles concernées. Sur des fichiers multi-onglets avec des dizaines d'utilisateurs, c'est la garantie d'oublier une référence.
 

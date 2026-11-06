@@ -1,11 +1,12 @@
 ---
-title: "NB.SI et SOMME.SI : formules de comptage et somme conditionnelle"
+title: "NB.SI et SOMME.SI : comptage et somme conditionnelle"
 date: "2026-06-22"
+updated: "2026-11-06"
 slug: "nbsi-et-sommesi-formules-de-comptage-et-somme-conditionnelle"
 description: "Maîtrisez NB.SI et SOMME.SI dans Excel : syntaxe, exemples concrets, pièges à éviter et variantes multi-critères pour analyser vos données."
 ---
 
-# NB.SI et SOMME.SI : formules de comptage et somme conditionnelle
+# NB.SI et SOMME.SI : comptage et somme conditionnelle
 
 Vous manipulez quotidiennement des tableaux de données dans Excel et vous passez encore du temps à filtrer manuellement pour compter ou sommer des valeurs ? Les fonctions NB.SI et SOMME.SI sont probablement les deux formules les plus rentables à maîtriser pour gagner en productivité. Elles permettent d'analyser instantanément vos données selon des critères précis, sans VBA, sans tableau croisé dynamique, et avec une flexibilité redoutable.
 

@@ -1,13 +1,14 @@
 ---
-title: "Les dictionnaires VBA Scripting.Dictionary pour la performance"
+title: "Dictionnaires VBA : Scripting.Dictionary pour la performance"
 date: "2026-05-04"
+updated: "2026-11-06"
 slug: "les-dictionnaires-vba-scriptingdictionary-pour-la-performance"
-description: "Article sur les dictionnaires vba scripting.dictionary pour la performance par Cedric Femminino, consultant VBA Excel senior."
+description: "Scripting.Dictionary en VBA : des recherches et dédoublonnages quasi instantanés sur de gros volumes, à la place des boucles imbriquées. Exemples de code."
 ---
 
-# Les dictionnaires VBA Scripting.Dictionary pour la performance
+# Dictionnaires VBA : Scripting.Dictionary pour la performance
 
-Quand vous traitez des dizaines de milliers de lignes sous Excel, chaque milliseconde compte. J'ai vu trop de projets industriels ralentis par des boucles imbriquées utilisant `Find` ou `Match` sur des plages de cellules. La solution ? Le `Scripting.Dictionary`, un objet souvent méconnu qui transforme des traitements de plusieurs minutes en quelques secondes.
+Quand vous traitez des dizaines de milliers de lignes sous Excel, chaque milliseconde compte. Trop de traitements sont ralentis par des boucles imbriquées utilisant `Find` ou `Match` sur des plages de cellules. La solution ? Le `Scripting.Dictionary`, un objet souvent méconnu qui transforme des traitements de plusieurs minutes en quelques secondes.
 
 Le dictionnaire VBA fonctionne comme une table de hachage : il stocke des paires clé-valeur avec un accès quasi-instantané, peu importe le volume de données. Là où une recherche dans un tableau nécessite de parcourir potentiellement toutes les lignes, le dictionnaire retrouve une valeur en temps constant. Pour les responsables techniques qui doivent optimiser des processus métier, c'est un levier de performance incontournable.
 
@@ -17,7 +18,7 @@ Les méthodes classiques comme `Application.Match` ou les boucles `For` avec com
 
 Le `Scripting.Dictionary` utilise une fonction de hachage interne qui accède directement à l'emplacement mémoire de la clé recherchée. Concrètement, chercher une valeur parmi 10 lignes ou 100 000 lignes prend le même temps. Cette performance constante change radicalement l'approche des traitements massifs.
 
-J'ai mesuré sur un projet de consolidation de données multi-sites : passage de 8 minutes à 12 secondes pour traiter 80 000 lignes avec recherches et dédoublonnages. L'investissement en refactorisation a été amorti dès la première exécution.
+Sur une consolidation de plusieurs dizaines de milliers de lignes, avec recherches et dédoublonnages, l'écart avec des boucles imbriquées se compte en minutes à chaque exécution.
 
 ## Cas d'usage concrets en environnement industriel
 
@@ -83,7 +84,7 @@ End Function
 
 ## Utilisation pratique pour enrichissement de données
 
-Cette procédure illustre un cas réel : enrichir une liste de commandes avec les noms clients stockés ailleurs, sans `VLOOKUP` :
+Cette procédure illustre un cas courant : enrichir une liste de commandes avec les noms clients stockés ailleurs, sans `VLOOKUP` :
 
 ```vba
 Sub EnrichirCommandesAvecClients()

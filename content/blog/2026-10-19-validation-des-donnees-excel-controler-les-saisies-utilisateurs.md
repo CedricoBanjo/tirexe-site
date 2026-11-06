@@ -1,13 +1,14 @@
 ---
-title: "Validation des données Excel : contrôler les saisies utilisateurs"
+title: "Validation des données Excel : contrôler les saisies"
 date: "2026-10-19"
+updated: "2026-11-06"
 slug: "validation-des-donnees-excel-controler-les-saisies-utilisateurs"
 description: "Maîtrisez la validation des données Excel : techniques natives et VBA pour contrôler les saisies et éliminer les erreurs dans vos projets pro."
 ---
 
-# Validation des données Excel : contrôler les saisies utilisateurs
+# Validation des données Excel : contrôler les saisies
 
-La validation des données Excel est souvent mal exploitée. Pourtant, c'est votre première ligne de défense contre les erreurs de saisie qui pollueront vos tableaux de bord et vos analyses. Dans les projets industriels, j'ai vu trop de fichiers où les utilisateurs saisissent "O" au lieu de "Oui", "Non applicable" au lieu de "N/A", ou pire : des dates au format texte. Le résultat ? Des heures perdues à nettoyer les données.
+La validation des données Excel est souvent mal exploitée. Pourtant, c'est votre première ligne de défense contre les erreurs de saisie qui pollueront vos tableaux de bord et vos analyses. Dans beaucoup de fichiers, les utilisateurs saisissent "O" au lieu de "Oui", "Non applicable" au lieu de "N/A", ou pire : des dates au format texte. Le résultat ? Des heures perdues à nettoyer les données.
 
 Cet article vous montre comment implémenter une validation robuste, en combinant les fonctionnalités natives d'Excel et du VBA lorsque c'est nécessaire.
 

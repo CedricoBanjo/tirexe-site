@@ -1,6 +1,7 @@
 ---
 title: "Nommer ses plages Excel : bonnes pratiques et avantages"
 date: "2026-09-21"
+updated: "2026-11-06"
 slug: "nommer-ses-plages-excel-bonnes-pratiques-et-avantages"
 description: "Plages nommées Excel : pourquoi et comment les utiliser efficacement en VBA. Bonnes pratiques, exemples de code et pièges à éviter."
 ---
@@ -9,7 +10,7 @@ description: "Plages nommées Excel : pourquoi et comment les utiliser efficacem
 
 Vous avez hérité d'un fichier Excel avec des formules comme `=SOMME(C15:C247)` ou `=SI(Feuil2!$G$3="OUI";D5*0.2;0)` ? Bon courage pour comprendre ce que ça fait réellement. Maintenant imaginez `=SOMME(CA_Mensuel)` ou `=SI(Taux_TVA_Applicable;Montant_HT*Coef_Reduc;0)`. La différence est immédiate.
 
-Nommer ses plages n'est pas un gadget cosmétique. C'est une pratique industrielle qui réduit les erreurs, facilite la maintenance et améliore drastiquement la lisibilité du code VBA comme des formules. Pourtant, elle reste sous-utilisée dans les projets que j'audite. Cet article couvre les avantages concrets et les règles à suivre pour nommer efficacement vos plages.
+Nommer ses plages n'est pas un gadget cosmétique. C'est une pratique industrielle qui réduit les erreurs, facilite la maintenance et améliore drastiquement la lisibilité du code VBA comme des formules. Pourtant, elle reste sous-utilisée. Cet article couvre les avantages concrets et les règles à suivre pour nommer efficacement vos plages.
 
 ## Pourquoi nommer vos plages
 

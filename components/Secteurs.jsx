@@ -41,8 +41,8 @@ export default function Secteurs() {
         <div className="sect-grid">
           {secteurs.map((s, i) => (
             <div className="sect-c" key={i}>
-              <div className="sect-ico">{s.icon}</div>
-              <div className="sect-n">{s.name}</div>
+              <div className="sect-ico" aria-hidden="true">{s.icon}</div>
+              <h3 className="sect-n">{s.name}</h3>
               <div className="sect-d">{s.desc}</div>
             </div>
           ))}

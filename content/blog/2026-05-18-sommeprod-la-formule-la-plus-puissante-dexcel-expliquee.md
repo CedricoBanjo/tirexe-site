@@ -1,13 +1,14 @@
 ---
 title: "SOMMEPROD : la formule la plus puissante d'Excel expliquée"
 date: "2026-05-18"
+updated: "2026-11-06"
 slug: "sommeprod-la-formule-la-plus-puissante-dexcel-expliquee"
 description: "SOMMEPROD Excel : guide complet de la formule conditionnelle la plus puissante. Exemples concrets, pièges à éviter, cas d'usage industriels."
 ---
 
 # SOMMEPROD : la formule la plus puissante d'Excel expliquée
 
-La plupart des utilisateurs d'Excel connaissent SOMME.SI ou NB.SI.ENS. Mais peu maîtrisent réellement SOMMEPROD, cette formule discrète qui surclasse pratiquement toutes les autres en termes de flexibilité et de puissance. Après dix ans sur des projets industriels complexes, je peux affirmer que SOMMEPROD est la solution à 80% des problèmes de calculs conditionnels avancés.
+La plupart des utilisateurs d'Excel connaissent SOMME.SI ou NB.SI.ENS. Mais peu maîtrisent réellement SOMMEPROD, cette formule discrète qui surclasse pratiquement toutes les autres en termes de flexibilité et de puissance. Bien maîtrisée, elle règle la plupart des problèmes de calculs conditionnels avancés.
 
 ## Pourquoi SOMMEPROD est différent
 
@@ -91,7 +92,7 @@ Autre avantage : pas de formule matricielle héritée. Les anciennes formules ma
 
 ## Quand passer à autre chose
 
-SOMMEPROD atteint ses limites sur les tableaux dépassant 50 000 lignes avec recalculs fréquents, ou quand vous cumulez plus de sept conditions. À ce stade, les solutions VBA avec tableaux en mémoire ou Power Query deviennent plus pertinentes. Mais pour 90% des besoins métiers quotidiens, SOMMEPROD reste imbattable en rapport efficacité/simplicité.
+SOMMEPROD atteint ses limites sur de très gros tableaux recalculés souvent, ou quand les conditions s'accumulent. À ce stade, les solutions VBA avec tableaux en mémoire ou Power Query deviennent plus pertinentes. Mais pour la plupart des besoins métiers quotidiens, SOMMEPROD reste imbattable en rapport efficacité/simplicité.
 
 ## Conclusion
 

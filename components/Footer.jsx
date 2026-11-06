@@ -1,8 +1,15 @@
 import { LINKEDIN_URL } from '../lib/site'
+import { SERVICES } from '../lib/services'
 
 export default function Footer() {
   return (
     <footer>
+      <div className="foot-services">
+        <span className="foot-services-t">Services</span>
+        <ul>
+          {SERVICES.map(s => <li key={s.slug}><a href={`/services/${s.slug}`}>{s.titreCourt}</a></li>)}
+        </ul>
+      </div>
       <div className="foot">
         <div className="foot-logo">tirexe<b>.</b></div>
         <ul className="foot-nav">

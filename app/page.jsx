@@ -7,6 +7,7 @@ import Secteurs from '../components/Secteurs'
 import Stack from '../components/Stack'
 import Process from '../components/Process'
 import Pourquoi from '../components/Pourquoi'
+import Faq from '../components/Faq'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 
@@ -30,6 +31,7 @@ export default function Home() {
         <Process />
         <hr className="sep" />
         <Pourquoi />
+        <Faq />
         <CtaBand />
         <hr className="sep" />
         <RecentArticles />

@@ -68,7 +68,7 @@ Tu es un designer UX/UI senior et directeur artistique, habitué aux sites de co
 - Une photo professionnelle, ou son accord pour une séance simple : fond neutre, lumière du jour.
 - 3 sites qu'il trouve beaux, et ce qu'il n'aime pas.
 - Les références qu'il a le droit de citer (logos, noms), avec l'accord des clients. Sinon, rien.
-- 2 ou 3 missions racontables sans nom de client, pour des schémas « avant / après ».
+- Pas de missions : Cédric ne souhaite pas les raconter (ne pas les lui demander). Un schéma « avant / après » montre un cas type, présenté comme un exemple et jamais comme une mission réelle.
 
 ## 7. Le compte rendu à Cédric
 

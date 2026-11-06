@@ -1,11 +1,12 @@
 ---
-title: "Comment utiliser RECHERCHEX : la nouvelle formule de recherche Excel"
+title: "Comment utiliser RECHERCHEX, la nouvelle formule Excel"
 date: "2026-06-01"
+updated: "2026-11-06"
 slug: "comment-utiliser-recherchex-la-nouvelle-formule-de-recherche-excel"
 description: "RECHERCHEX remplace RECHERCHEV : syntaxe, avantages et exemples concrets pour des fichiers Excel robustes et performants. Guide technique complet."
 ---
 
-# Comment utiliser RECHERCHEX : la nouvelle formule de recherche Excel
+# Comment utiliser RECHERCHEX, la nouvelle formule Excel
 
 RECHERCHEV, c'est fini. Depuis Excel 365 et Excel 2021, Microsoft a déployé RECHERCHEX (XLOOKUP en anglais), une fonction qui corrige enfin les limitations historiques de sa devancière. Pour les responsables techniques qui gèrent des fichiers de gestion complexes, cette évolution change la donne : terminées les colonnes auxiliaires, les INDEX/EQUIV imbriqués et les performances dégradées sur de gros volumes.
 

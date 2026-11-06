@@ -1,15 +1,16 @@
 ---
-title: "Formules conditionnelles Excel : IF, IFS, SWITCH et cas pratiques"
+title: "Formules conditionnelles Excel : IF, IFS, SWITCH en pratique"
 date: "2026-06-08"
+updated: "2026-11-06"
 slug: "formules-conditionnelles-excel-if-ifs-switch-et-cas-pratiques"
 description: "IF, IFS ou SWITCH ? Comparatif détaillé des formules conditionnelles Excel avec cas pratiques production, logistique et finance. Lisibilité et performance."
 ---
 
-# Formules conditionnelles Excel : IF, IFS, SWITCH et cas pratiques
+# Formules conditionnelles Excel : IF, IFS, SWITCH en pratique
 
-Les formules conditionnelles sont au cœur de tout tableau de bord industriel digne de ce nom. Après dix ans à déboguer des fichiers de production mal ficelés, je peux vous dire qu'utiliser la bonne fonction conditionnelle au bon endroit fait la différence entre un outil maintenable et une usine à gaz. IF, IFS et SWITCH ont chacune leur domaine d'excellence, et les confondre coûte cher en lisibilité et en performance.
+Les formules conditionnelles sont au cœur de tout tableau de bord industriel digne de ce nom. Utiliser la bonne fonction conditionnelle au bon endroit fait la différence entre un outil maintenable et une usine à gaz. IF, IFS et SWITCH ont chacune leur domaine d'excellence, et les confondre coûte cher en lisibilité et en performance.
 
-Cet article détaille quand utiliser quelle fonction, avec des cas réels rencontrés en production, qualité et logistique. Pas de théorie creuse : uniquement ce qui marche sur le terrain.
+Cet article détaille quand utiliser quelle fonction, avec des cas pratiques en production, qualité et logistique. Pas de théorie creuse : uniquement ce qui marche sur le terrain.
 
 ## IF : la base incontournable mais limitée
 
@@ -21,7 +22,7 @@ La fonction IF reste le couteau suisse des conditions simples. Sa syntaxe `=IF(c
 =IF(B2<=10; "Conforme"; "Non conforme")
 ```
 
-Le problème surgit avec les IF imbriqués. J'ai vu des formules avec 7 niveaux d'imbrication pour gérer des catégories de prix. Résultat : impossibles à maintenir, erreurs de parenthèses garanties, et performances dégradées sur 50 000 lignes.
+Le problème surgit avec les IF imbriqués. Une formule à 7 niveaux d'imbrication pour gérer des catégories de prix devient impossible à maintenir : erreurs de parenthèses garanties, et recalcul plus lent sur de gros volumes.
 
 **Limite concrète** : au-delà de 2 niveaux d'imbrication, IF devient contre-productif. C'est exactement là qu'IFS ou SWITCH prennent le relais.
 
@@ -55,7 +56,7 @@ SWITCH compare une expression à une liste de valeurs et retourne le résultat c
 =SWITCH(D2; "M01"; "Découpe"; "M02"; "Pliage"; "M03"; "Soudure"; "M04"; "Peinture"; "Non affecté")
 ```
 
-L'avantage décisif : SWITCH est optimisé pour les correspondances exactes. Sur 100 000 lignes avec 15 codes possibles, j'ai mesuré un gain de 30% par rapport à une série de IF ou IFS.
+L'avantage décisif : SWITCH est fait pour les correspondances exactes. La valeur testée n'est écrite qu'une fois, là où une série de IF ou IFS la répète à chaque condition : la formule reste courte et lisible.
 
 **Autre exemple finance** : calcul de primes selon le service.
 
@@ -75,10 +76,10 @@ Pour résumer concrètement :
 - **IFS** : 3 à 10 conditions avec comparaisons (>, <, >=), seuils numériques, hiérarchies.
 - **SWITCH** : correspondances exactes sur codes/catégories, 5 à 50 valeurs possibles, performance critique.
 
-**Erreur fréquente** : utiliser IFS pour des correspondances exactes alors que SWITCH est plus adapté. J'ai remplacé des `=IFS(A2="PARIS"; 75; A2="LYON"; 69; ...)` par des SWITCH et divisé par deux le temps de recalcul.
+**Erreur fréquente** : utiliser IFS pour des correspondances exactes alors que SWITCH est plus adapté. Remplacez `=IFS(A2="PARIS"; 75; A2="LYON"; 69; ...)` par `=SWITCH(A2; "PARIS"; 75; "LYON"; 69; ...)` : la formule est plus courte, et A2 n'est écrit qu'une fois.
 
 **Astuce terrain** : dans un contexte multilingue ou avec des référentiels évolutifs, préférez une vraie table de correspondance avec RECHERCHEX plutôt que de multiplier les SWITCH. Au-delà de 15-20 valeurs, la maintenance devient laborieuse.
 
 ## Conclusion
 
-Choisir la bonne fonction conditionnelle n'est pas qu'une question d'élégance : c'est un enjeu de maintenabilité et de performance sur les gros volumes. IF pour le simple, IFS pour les seuils multiples, SWITCH pour les codes fixes. Après des années à reprendre des tableaux de bord catastrophiques, je constate que cette distinction simple évite 80% des formules illisibles. Testez, chronométrez sur vos volumes réels, et privilégiez toujours la clarté : dans six mois, c'est vous ou votre successeur qui devrez comprendre cette formule en trois secondes.
+Choisir la bonne fonction conditionnelle n'est pas qu'une question d'élégance : c'est un enjeu de maintenabilité et de performance sur les gros volumes. IF pour le simple, IFS pour les seuils multiples, SWITCH pour les codes fixes. Cette distinction simple évite la plupart des formules illisibles. Testez, chronométrez sur vos volumes réels, et privilégiez toujours la clarté : dans six mois, c'est vous ou votre successeur qui devrez comprendre cette formule en trois secondes.

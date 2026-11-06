@@ -1,6 +1,7 @@
 ---
 title: "Les fonctions texte Excel : GAUCHE, DROITE, STXT, CONCATENER"
 date: "2026-06-29"
+updated: "2026-11-06"
 slug: "les-fonctions-texte-excel-gauche-droite-stxt-concatener"
 description: "Maîtrisez GAUCHE, DROITE, STXT et CONCATENER pour découper et recomposer vos données texte Excel comme un pro. Guide pratique avec exemples réels."
 ---
@@ -113,4 +114,4 @@ Cette formule est complexe, mais elle illustre la puissance de combiner nettoyag
 
 ## Conclusion
 
-Ces quatre fonctions sont votre couteau suisse pour le traitement texte dans Excel. Elles couvrent 80% des besoins de découpe et reconstruction de chaînes avant toute automatisation VBA. Maîtrisez-les, combinez-les avec TROUVE, SUBSTITUE et NBCAR, et vous gagnerez un temps considérable sur vos imports et exports de données.
+Ces quatre fonctions sont votre couteau suisse pour le traitement texte dans Excel. Elles couvrent l'essentiel des besoins de découpe et reconstruction de chaînes avant toute automatisation VBA. Maîtrisez-les, combinez-les avec TROUVE, SUBSTITUE et NBCAR, et vous gagnerez un temps considérable sur vos imports et exports de données.

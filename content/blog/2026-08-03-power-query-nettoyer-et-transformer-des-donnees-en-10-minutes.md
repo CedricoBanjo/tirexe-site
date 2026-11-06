@@ -1,11 +1,12 @@
 ---
-title: "Power Query : nettoyer et transformer des données en 10 minutes"
+title: "Power Query : nettoyer et transformer des données en 10 min"
 date: "2026-08-03"
+updated: "2026-11-06"
 slug: "power-query-nettoyer-et-transformer-des-donnees-en-10-minutes"
 description: "Power Query nettoie vos données Excel en minutes. Guide pratique pour responsables techniques : transformations essentielles et intégration VBA."
 ---
 
-# Power Query : nettoyer et transformer des données en 10 minutes
+# Power Query : nettoyer et transformer des données en 10 min
 
 Power Query, c'est l'outil qu'on aurait dû avoir depuis 20 ans dans Excel. Fini les macros de 300 lignes pour nettoyer des exports CSV mal fichés, fini les formules imbriquées sur 15 niveaux pour dédoublonner ou pivoter. Power Query fait ça en quelques clics, de manière reproductible, et surtout sans toucher aux données sources.
 
@@ -13,9 +14,9 @@ Pour les responsables de projets industriels qui manipulent quotidiennement des 
 
 ## Pourquoi Power Query plutôt que VBA
 
-J'écris du VBA depuis des années, et pourtant je vous recommande Power Query pour 80% des traitements de nettoyage. Voici pourquoi :
+J'écris du VBA depuis des années, et pourtant je vous recommande Power Query pour la plupart des traitements de nettoyage. Voici pourquoi :
 
-**Performance** : Power Query charge les données en mémoire et applique les transformations de manière optimisée. Pas de Select, pas de boucles cellule par cellule. Pour un fichier de 50 000 lignes, on passe de plusieurs minutes en VBA à quelques secondes.
+**Performance** : Power Query charge les données en mémoire et applique les transformations de manière optimisée. Pas de Select, pas de boucles cellule par cellule. Sur des dizaines de milliers de lignes, l'écart avec une macro qui boucle cellule par cellule est flagrant.
 
 **Traçabilité** : chaque étape de transformation est visible, nommée, modifiable. Un collègue reprend votre fichier six mois plus tard ? Il comprend immédiatement ce qui se passe. Avec une macro, il faut décortiquer le code.
 

@@ -33,13 +33,13 @@ export default function Pourquoi() {
           <div className="why-rows">
             {raisons.map((r, i) => (
               <div className="why-r" key={i}>
-                <div className="why-check">
+                <div className="why-check" aria-hidden="true">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--g-d)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 </div>
                 <div>
-                  <div className="why-t">{r.title}</div>
+                  <h3 className="why-t">{r.title}</h3>
                   <div className="why-d">{r.desc}</div>
                 </div>
               </div>

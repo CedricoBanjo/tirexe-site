@@ -1,6 +1,7 @@
 ---
 title: "Les formules matricielles Excel : guide complet"
 date: "2026-05-25"
+updated: "2026-11-06"
 slug: "les-formules-matricielles-excel-guide-complet"
 description: "Maîtrisez les formules matricielles Excel pour traiter efficacement vos données. Guide complet avec exemples pratiques et pièges à éviter."
 ---
@@ -91,4 +92,4 @@ Les formules matricielles excellent pour les tableaux de bord dynamiques consult
 
 ## Conclusion
 
-Les formules matricielles, particulièrement avec Excel 365, éliminent les colonnes auxiliaires et simplifient radicalement les modèles complexes. Elles réduisent la maintenance et améliorent la lisibilité pour les équipes techniques. Maîtrisez `FILTRE()`, `UNIQUE()` et `TRIER()` : ces trois fonctions couvrent 80% des besoins métier en reporting industriel.
+Les formules matricielles, particulièrement avec Excel 365, éliminent les colonnes auxiliaires et simplifient radicalement les modèles complexes. Elles réduisent la maintenance et améliorent la lisibilité pour les équipes techniques. Maîtrisez `FILTRE()`, `UNIQUE()` et `TRIER()` : ces trois fonctions couvrent l'essentiel des besoins métier en reporting industriel.

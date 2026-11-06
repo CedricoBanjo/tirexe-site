@@ -55,8 +55,8 @@ Tu es l'équipe web complète de tirexe.com : directeur artistique, expert SEO, 
 
 ### Contenu et référencement local
 - Une page par service qui vend (à valider avec Cédric, par exemple : reprise et fiabilisation de macros existantes, automatisation de reporting, outils de contrôle, Power Query, Access et SQL), avec les mots que tapent les clients : « consultant VBA », « développeur VBA freelance », « expert Excel VBA Marseille / Aix / PACA », « automatisation Excel ».
-- Des cas concrets anonymisés (problème, solution, résultat), validés par Cédric.
-- Une FAQ visible : tarif à la journée ou sur devis, délais, remote, confidentialité, maintenance. Pas de balisage FAQ pour Google, qui ne l'affiche plus pour ce type de site, mais elle sert aux visiteurs et aux moteurs à IA.
+- Pas de cas concrets : Cédric ne souhaite pas raconter ses missions (ne pas les lui redemander). À la place, des exemples présentés comme des cas types, jamais comme vécus.
+- Une FAQ visible : tarif (sur devis), délais, remote, confidentialité, maintenance. Pas de balisage FAQ pour Google, qui ne l'affiche plus pour ce type de site, mais elle sert aux visiteurs et aux moteurs à IA.
 - Maillage : chaque article renvoie vers le service lié et vers le contact ; l'accueil met en avant les services et les cas.
 - Signes d'expérience réelle : auteur identifié, parcours, secteurs, exemples de code sérieux.
 - Hors du site, à faire avec Cédric : Google Search Console (avec envoi du plan du site), Bing Webmaster Tools, fiche Google Business Profile si elle a du sens, profils LinkedIn et Malt qui pointent vers le site, et inversement.
@@ -94,7 +94,7 @@ Tu es l'équipe web complète de tirexe.com : directeur artistique, expert SEO, 
 
 - **Lot 1, les urgences** : conformité des cookies, menu sur téléphone, formulaire fiable, Next.js à jour, robot du blog qui ne s'arrête pas.
 - **Lot 2, invisible mais payant** : SEO technique, données structurées, images de partage des articles, polices, page 404, accessibilité, en-têtes de sécurité.
-- **Lot 3, contenu et conversion** : pages services, cas concrets, FAQ, maillage, appels à l'action, nouvelle liste de sujets pour le blog.
+- **Lot 3, contenu et conversion** : pages services, FAQ, maillage, appels à l'action, nouvelle liste de sujets pour le blog.
 - **Lot 4, le visuel** : suis la compétence `design-ux` (`.claude/skills/design-ux/SKILL.md`) : audit UX, 2 ou 3 pistes en captures, puis celle que Cédric choisit.
 
 Pour chaque lot : une branche, des commits clairs, `npm run build`, des captures avant/après (ordinateur et téléphone), Lighthouse avant/après, une PR avec un résumé simple et le lien d'aperçu Vercel (Cédric l'ouvre connecté à son compte Vercel). Ensuite, attends le « OK » de Cédric.
@@ -106,10 +106,12 @@ Pour chaque lot : une branche, des commits clairs, `npm run build`, des captures
 - Ce qu'il doit faire lui-même (informations à fournir, Search Console, fiche Google, profils).
 - Le lot suivant proposé.
 
-## 7. Où en est le site (6 novembre 2026, après les lots 1 et 2)
+## 7. Où en est le site (6 novembre 2026, lots 1, 2 et 3)
 
-- **Fait et en ligne** : aucun cookie (Google Analytics retiré, pas de bandeau) et page légale exacte ; menu sur téléphone, articles lisibles ; formulaire qui vérifie la réponse de Formspree, avec anti-spam et mention RGPD ; Next.js 16 sans faille connue ; polices servies par le site ; robot du blog sur Claude Sonnet 5.5, qui prend le premier sujet pas encore traité et ouvre un ticket GitHub assigné à Cédric s'il ne publie rien ; adresses de référence, images de partage des articles, données structurées, page 404 en français, en-têtes de sécurité ; lien LinkedIn.
-- **Mesure locale** (Lighthouse, mobile) : vitesse 96 à 99, accessibilité 100, bonnes pratiques 100, SEO 100.
-- **À vérifier** : le premier vrai passage du robot avec le nouveau modèle (lundi 9 novembre 2026) a bien publié un article.
-- **Reste à faire** : le lot 3 (pages services, cas concrets, FAQ, maillage, sujets du robot tournés vers les décideurs, titres d'articles de 60 caractères au plus) et le lot 4 (le visuel, avec la compétence `design-ux`). Hors du site, avec Cédric : Google Search Console, redirection www vers tirexe.com dans Vercel, profils LinkedIn et Malt qui pointent vers le site.
-- **Il manque, de la part de Cédric** : une photo professionnelle, 2 ou 3 missions racontables sans nom de client, son tarif (ou « sur devis »).
+- **Lots 1 et 2** : aucun cookie (Google Analytics retiré, pas de bandeau) et page légale exacte ; menu sur téléphone, articles lisibles ; formulaire qui vérifie la réponse de Formspree, avec anti-spam et mention RGPD ; Next.js 16 sans faille connue ; polices servies par le site ; robot du blog sur Claude Sonnet 5.5, qui prend le premier sujet pas encore traité et ouvre un ticket GitHub assigné à Cédric s'il ne publie rien ; adresses de référence, images de partage des articles, données structurées, page 404 en français, en-têtes de sécurité ; lien LinkedIn.
+- **Lot 3** (fusionné seulement avec le « OK » de Cédric) : 4 pages services (`/services/…`, textes dans `lib/services.js`) reliées depuis l'accueil, le pied de page et chaque article ; FAQ de l'accueil ; en bas de chaque article, encadré auteur, service lié et 3 articles proches ; vrais intertitres sur l'accueil et le blog ; 11 titres d'articles ramenés à 60 caractères (adresses inchangées) ; chiffres et anecdotes de mission inventés par le robot retirés des articles ; robot : sujets de décideurs en tête, interdiction d'inventer, titres de 60 caractères ; bouton d'action visible sans défiler sur téléphone.
+- **Mesure locale** (Lighthouse, mobile) : vitesse 95 à 99, accessibilité 100, bonnes pratiques 100, SEO 100.
+- **À vérifier** : le premier vrai passage du robot avec le nouveau modèle (lundi 9 novembre 2026) a bien publié un article, sans anecdote de mission.
+- **Reste à faire** : le lot 4 (le visuel, avec la compétence `design-ux`). Hors du site, avec Cédric : Google Search Console (envoyer le plan du site, qui contient les pages services), redirection www vers tirexe.com dans Vercel, profils LinkedIn et Malt qui pointent vers le site.
+- **Acquis, de la part de Cédric** : tarif sur devis ; missions généralement longues ; il ne raconte pas ses missions (ne pas lui demander de cas concrets).
+- **Il manque, de la part de Cédric** : une photo professionnelle.
