@@ -20,7 +20,7 @@ export default function BlogPage() {
   return (
     <>
       <Nav />
-      <main id="contenu" style={{paddingTop:'68px'}}>
+      <main id="contenu">
         <div className="blog-hero">
           <div className="wrap">
             <div className="ey">Blog</div>

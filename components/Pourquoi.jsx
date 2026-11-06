@@ -1,3 +1,4 @@
+// Pourquoi Tirexe : la citation de Cédric est un commentaire de cellule, les raisons des cases cochées
 const raisons = [
   {
     title: "Vous m'avez en direct",
@@ -21,26 +22,25 @@ export default function Pourquoi() {
   return (
     <div className="section" id="pourquoi">
       <div className="wrap">
-        <div className="ey">Pourquoi Tirexe</div>
-        <h2 className="sec-h">Un expert dédié à votre projet</h2>
+        <div className="ey"><span className="ey-ref">A44</span>Pourquoi Tirexe</div>
+        <h2 className="sec-h">Un expert <em>dédié</em> à votre projet</h2>
         <div className="why-layout">
-          <div className="why-panel">
-            <div className="why-q">
-              &ldquo;<em>Je travaille seul, avec une responsabilité directe sur ce que je produis. Pas d&apos;intermédiaire, pas d&apos;ambiguïté.</em>&rdquo;
-            </div>
-            <div className="why-sig">— Cédric Femminino · Fondateur de Tirexe</div>
-          </div>
+          <figure className="why-panel">
+            <p className="why-auteur" aria-hidden="true">Cédric Femminino :</p>
+            <blockquote className="why-q">
+              &ldquo;Je travaille seul, avec une responsabilité directe sur ce que je produis. Pas d&apos;intermédiaire, pas d&apos;ambiguïté.&rdquo;
+            </blockquote>
+            <figcaption className="why-sig">— Cédric Femminino · Fondateur de Tirexe</figcaption>
+          </figure>
           <div className="why-rows">
-            {raisons.map((r, i) => (
-              <div className="why-r" key={i}>
+            {raisons.map(r => (
+              <div className="why-r" key={r.title}>
                 <div className="why-check" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--g-d)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div>
                   <h3 className="why-t">{r.title}</h3>
-                  <div className="why-d">{r.desc}</div>
+                  <p className="why-d">{r.desc}</p>
                 </div>
               </div>
             ))}

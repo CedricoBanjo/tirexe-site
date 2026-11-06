@@ -89,7 +89,7 @@ export default async function PageService({ params }) {
   return (
     <>
       <Nav />
-      <main id="contenu" style={{paddingTop:'68px'}}>
+      <main id="contenu">
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(donnees)} />
 
         <div className="article-hero">

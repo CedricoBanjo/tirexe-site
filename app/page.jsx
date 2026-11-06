@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main id="contenu" style={{paddingTop: '68px'}}>
+      <main id="contenu">
         <Hero />
         <hr className="sep" />
         <Expertise />

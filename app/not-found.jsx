@@ -10,7 +10,7 @@ export default function PageIntrouvable() {
   return (
     <>
       <Nav />
-      <main id="contenu" style={{paddingTop:'68px'}}>
+      <main id="contenu">
         <div className="section">
           <div className="wrap" style={{maxWidth:'720px',textAlign:'center'}}>
             <div className="ey" style={{justifyContent:'center'}}>Erreur 404</div>
