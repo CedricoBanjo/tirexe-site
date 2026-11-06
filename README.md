@@ -5,9 +5,9 @@
 1. Ouvre l'application Claude (ou claude.ai/code dans le navigateur), onglet **Code**.
 2. Environnement : **Default** (sous Cloud).
 3. Dépôt : **CedricoBanjo/tirexe-site**, seul.
-4. Écris « améliore le site », ou ce que tu veux changer, avec tes mots.
+4. Écris « améliore le site », « rends le site beau » (pour le visuel), ou ce que tu veux changer, avec tes mots.
 
-Claude fait un bilan, puis propose les améliorations par étapes, chacune avec un aperçu. Rien n'est mis en ligne sans ton « OK ». Ses consignes : `CLAUDE.md` et `.claude/skills/ameliorer-site/SKILL.md`.
+Claude fait un bilan, puis propose les améliorations par étapes, chacune avec un aperçu. Rien n'est mis en ligne sans ton « OK ». Ses consignes : `CLAUDE.md`, `.claude/skills/ameliorer-site/SKILL.md` et, pour le visuel, `.claude/skills/design-ux/SKILL.md`.
 
 ## Stack
 - Next.js 16 (App Router, pages statiques générées à chaque mise en ligne)

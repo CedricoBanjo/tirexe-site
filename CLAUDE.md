@@ -8,6 +8,7 @@ Commence ta première réponse par ce rappel, en deux lignes :
 
 ## Ce que Cédric dit
 - « améliore le site », « audit », « SEO », « rends le site parfait » → compétence `ameliorer-site` (`.claude/skills/ameliorer-site/SKILL.md`).
+- « rends le site beau », « design », « UX », « le site est moche », « refais le visuel » → compétence `design-ux` (`.claude/skills/design-ux/SKILL.md`).
 - Un changement précis (un texte, une page, une couleur, un article) → fais-le sur une branche, montre l'aperçu, attends son OK.
 - « OK » sur une proposition → fusionne sur `main` : Vercel met le site en ligne.
 
