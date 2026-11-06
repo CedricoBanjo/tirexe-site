@@ -36,7 +36,7 @@ export default function Contact() {
   return (
     <div className="contact-band" id="contact">
       <div className="wrap">
-        <div className="ey">Contact</div>
+        <div className="ey"><span className="ey-ref">A68</span>Contact</div>
         <h2 className="sec-h">Parlons de votre <em>projet</em></h2>
         <p className="sec-sub">Décrivez votre contexte, la nature de la mission et la durée envisagée. Je reviendrai vers vous.</p>
         <div className="contact-grid">

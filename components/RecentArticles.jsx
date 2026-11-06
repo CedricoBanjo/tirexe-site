@@ -12,10 +12,10 @@ export default function RecentArticles() {
   return (
     <div className="section" id="blog">
       <div className="wrap">
-        <div className="ey">Blog</div>
+        <div className="ey"><span className="ey-ref">A60</span>Blog</div>
         <h2 className="sec-h">Derniers <em>articles</em></h2>
         <p className="sec-sub">Tutoriels VBA Excel, bonnes pratiques et conseils pour vos projets.</p>
-        <div className="blog-grid" style={{marginTop:'52px'}}>
+        <div className="blog-grid">
           {articles.map(article => (
             <Link href={`/blog/${article.slug}`} key={article.slug} className="blog-card">
               <div className="blog-card-date">{formatDate(article.date)}</div>
@@ -25,7 +25,7 @@ export default function RecentArticles() {
             </Link>
           ))}
         </div>
-        <div style={{textAlign:'center',marginTop:'36px'}}>
+        <div className="blog-tous">
           <Link href="/blog" className="btn-ghost">Voir tous les articles</Link>
         </div>
       </div>

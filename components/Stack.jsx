@@ -1,3 +1,4 @@
+// Outils et technologies : un tableau Outil | Ce que j'en fais | Niveau
 const outils = [
   { name: 'VBA Excel', desc: "Macros avancées, automatisation complète, API Windows, gestion d'événements", level: 'Expert', cls: 'b-exp' },
   { name: 'Excel avancé', desc: "Formules matricielles, tableaux croisés, fonctions avancées — maîtrise totale", level: 'Expert', cls: 'b-exp' },
@@ -13,19 +14,20 @@ export default function Stack() {
       <div className="wrap">
         <div className="stack-wrap">
           <div className="stack-sticky">
-            <div className="ey">Outils & technologies</div>
+            <div className="ey"><span className="ey-ref">A28</span>Outils &amp; technologies</div>
             <h2 className="sec-h">Maîtrise <em>complète</em> de l&apos;écosystème Office</h2>
-            <p className="sec-sub" style={{marginTop:'14px'}}>Des outils construits avec la bonne technologie et l&apos;expérience pour les combiner intelligemment.</p>
+            <p className="sec-sub">Des outils construits avec la bonne technologie et l&apos;expérience pour les combiner intelligemment.</p>
           </div>
-          <div className="stack-list">
-            {outils.map((o, i) => (
-              <div className="stack-item" key={i}>
-                <div className="s-name">{o.name}</div>
-                <div className="s-desc">{o.desc}</div>
+          <ul className="stack-table">
+            <li className="stack-tete" aria-hidden="true"><span>Outil</span><span>Ce que j&apos;en fais</span><span>Niveau</span></li>
+            {outils.map(o => (
+              <li className="stack-item" key={o.name}>
+                <span className="s-name">{o.name}</span>
+                <span className="s-desc">{o.desc}</span>
                 <span className={`s-badge ${o.cls}`}>{o.level}</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </div>

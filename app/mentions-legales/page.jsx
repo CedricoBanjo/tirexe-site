@@ -12,7 +12,7 @@ export default function MentionsLegales() {
   return (
     <>
       <Nav />
-      <main id="contenu" style={{paddingTop:'68px'}}>
+      <main id="contenu">
         <div className="section">
           <div className="wrap" style={{maxWidth:'720px'}}>
             <div className="ey">Informations légales</div>

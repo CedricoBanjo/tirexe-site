@@ -46,7 +46,7 @@ export default function Faq() {
   return (
     <div className="section section-alt" id="faq">
       <div className="wrap">
-        <div className="ey">Questions fréquentes</div>
+        <div className="ey"><span className="ey-ref">A52</span>Questions fréquentes</div>
         <h2 className="sec-h">Vos questions, <em>mes réponses</em></h2>
         <div className="faq-list">
           {QUESTIONS.map(({ q, r }) => (

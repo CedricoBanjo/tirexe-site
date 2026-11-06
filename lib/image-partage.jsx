@@ -34,7 +34,7 @@ export async function imagePartage({ titre, etiquette }) {
     (
       <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#FFFFFF', borderLeft: '20px solid #92D14F', padding: '60px 72px 56px', fontFamily: 'Manrope' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <img src={chargerLogo()} width={262} height={68} alt="" />
+          <img src={chargerLogo()} width={261} height={68} alt="" />
           <div style={{ display: 'flex', fontSize: 24, fontWeight: 600, color: '#3F7A14', background: '#F0F9E4', border: '2px solid #C8E99A', borderRadius: 100, padding: '10px 26px' }}>
             {etiquette}
           </div>
