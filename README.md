@@ -69,4 +69,7 @@ npm run dev
 4. Si un lundi le robot échoue ou ne publie rien, il ouvre un ticket GitHub qui t'est assigné : tu reçois un e-mail.
 
 ### Ajouter des sujets
-Dans `scripts/generate-article.js`, ajoute tes sujets dans le tableau `TOPICS`. Le robot prend le premier sujet de la liste qui n'a pas encore d'article ; quand la liste est épuisée, Claude propose lui-même un nouveau sujet.
+Dans `scripts/generate-article.js`, ajoute tes sujets dans le tableau `TOPICS`, dans la partie « Prochains sujets ». Le robot prend le premier sujet de la liste qui n'a pas encore d'article ; quand la liste est épuisée, Claude propose lui-même un nouveau sujet. Les consignes d'écriture lui interdisent d'inventer des chiffres ou de raconter des missions.
+
+## Pages services
+Les 4 pages `/services/…` (une par expertise de l'accueil) sont écrites dans `lib/services.js` : textes, secteurs, outils. Un article du blog est relié au service le plus proche grâce aux `motsCles` de chaque service.
