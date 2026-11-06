@@ -21,7 +21,7 @@ Commence ta première réponse par ce rappel, en deux lignes :
 - Vérifie avant de dire que c'est fait : `npm run build`, captures ordinateur et téléphone (Playwright), Lighthouse.
 
 ## Où sont les choses
-- Accueil : `app/page.jsx`, sections dans `components/` ; styles : `app/globals.css` (CSS pur, système de design « Tableur » : jetons en tête de fichier) ; métadonnées et scripts communs : `app/layout.jsx`.
+- Accueil : `app/page.jsx`, sections dans `components/` (haut de page : `Hero.jsx`, logo en sable 3D : `LogoSable.jsx`) ; styles : `app/globals.css` (CSS pur, jetons en tête de fichier) ; logo : `public/logo-tirexe.svg` (vectoriel, à utiliser partout) ; métadonnées et scripts communs : `app/layout.jsx`.
 - Services : textes dans `lib/services.js`, page `app/services/[slug]/page.jsx` ; FAQ de l'accueil : `components/Faq.jsx`.
 - Blog : `app/blog/`, `lib/blog.js`, articles dans `content/blog/` (champ facultatif `updated` : date de mise à jour) ; liens entre articles et services : `lib/maillage.js`.
 - Contact (Formspree) : `components/Contact.jsx` ; page légale : `app/mentions-legales/page.jsx` ; plan du site : `app/sitemap.js`.

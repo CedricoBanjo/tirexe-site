@@ -1,8 +1,8 @@
+import Hero from '../components/Hero'
+import Expertise from '../components/Expertise'
 import CtaBand from '../components/CtaBand'
 import RecentArticles from '../components/RecentArticles'
 import Nav from '../components/Nav'
-import Hero from '../components/Hero'
-import Expertise from '../components/Expertise'
 import Secteurs from '../components/Secteurs'
 import Stack from '../components/Stack'
 import Process from '../components/Process'
@@ -19,17 +19,14 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main id="contenu">
+      <main id="contenu" className="accueil">
         <Hero />
-        <hr className="sep" />
         <Expertise />
         <CtaBand />
         <Secteurs />
-        <hr className="sep" />
         <Stack />
         <hr className="sep" />
         <Process />
-        <hr className="sep" />
         <Pourquoi />
         <Faq />
         <CtaBand />
