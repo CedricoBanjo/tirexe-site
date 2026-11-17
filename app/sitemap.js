@@ -4,10 +4,10 @@ import { getAllArticles } from '../lib/blog'
 import { SERVICES } from '../lib/services'
 import { SITE_URL } from '../lib/seo'
 
-const MAJ_MENTIONS_LEGALES = '2026-11-06'
+const MAJ_MENTIONS_LEGALES = '2026-11-17'
 // Dernière modification de l'accueil (hors nouveaux articles) et des pages services
-const MAJ_ACCUEIL = '2026-11-06'
-const MAJ_SERVICES = '2026-11-06'
+const MAJ_ACCUEIL = '2026-11-17'
+const MAJ_SERVICES = '2026-11-17'
 
 // La plus récente de plusieurs dates « AAAA-MM-JJ »
 const plusRecente = (...dates) => dates.filter(Boolean).sort().at(-1)

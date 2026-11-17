@@ -1,56 +1,63 @@
-// Haut de l'accueil (piste A, version claire) : le texte à gauche ; à droite, le logo Tirexe en sable fin,
-// en volume, qu'on fait tourner en 3D (components/LogoSable.jsx), et une fenêtre d'éditeur VBA « En bref ».
+// Haut de l'accueil, centré et aéré, avec les textes du premier site (titre, phrase, repères) et le bouton
+// d'action visible sans défiler. Les mots du grand titre arrivent un à un, flous puis nets (CSS seul, dès le
+// premier affichage : le titre est lisible tout de suite). En dessous, le logo Tirexe en sable fin (LogoSable).
 import LogoSable from './LogoSable'
+import Fleche from './Fleche'
 
-// L'essentiel, écrit comme des constantes VBA. C'est du vrai texte : Google et les lecteurs d'écran le lisent.
-const EN_BREF = [
-  ['BASE', 'Martigues (13)'],
-  ['ZONE', 'PACA · remote France'],
-  ['MODE', 'Régie, à la journée'],
-  ['MISSIONS', 'Généralement longues'],
-  ['TARIF', 'Sur devis'],
-  ['EXPERIENCE', '10 ans et plus'],
+// Le grand titre, ligne par ligne ; « Développeur » est mis en valeur
+const LIGNES = [['Consultant', '&', 'Développeur'], ['VBA', 'Excel', 'Senior']]
+const ACCENT = 'Développeur'
+
+// Les repères du premier site
+const REPERES = [
+  [<>10<span className="plus">+</span></>, 'Ans d’expérience', 'experience'],
+  ['Multi-secteurs', 'Industrie · Finance · BTP', 'secteurs'],
+  ['Régie', 'À la journée', 'regie'],
 ]
 
 export default function Hero() {
+  let rang = 0
   return (
-    <section className="hero">
-      <div className="hero-grille" aria-hidden="true" />
+    <section className="hero" id="haut">
+      <div className="hero-aurore" aria-hidden="true"><span /><span /><span /></div>
       <div className="hero-in">
-        <div className="hero-texte">
-          <p className="hero-eyebrow"><span className="hero-curseur" aria-hidden="true" />Consultant VBA Excel · Missions longues en régie</p>
-          <h1>
-            Consultant &amp; <span className="accent">Développeur</span><br />
-            VBA Excel Senior
-          </h1>
-          <p className="hero-desc">
-            Je conçois des <strong>outils métier sur mesure</strong> et des{' '}
-            <strong>algorithmes de contrôle complexes</strong> pour de grands projets
-            industriels et financiers — en régie, à la journée. Basé à Martigues, disponible sur toute la région PACA et en remote France entière.
-          </p>
-          <div className="hero-btns">
-            <a href="/#contact" className="btn-g">Discutons de votre projet</a>
-            <a href="/#expertise" className="btn-ghost">Voir l&apos;expertise</a>
-          </div>
-        </div>
-
-        <div className="hero-visuel">
-          <LogoSable />
-          <figure className="editeur">
-            <div className="editeur-barre" aria-hidden="true">
-              <span>Tirexe.xlsm – EnBref (Code)</span>
-              <span className="editeur-ok">● compilé</span>
-            </div>
-            <pre className="editeur-code"><code>
-              <span className="vb-l vb-c">{"' En bref\n"}</span>
-              {EN_BREF.map(([nom, valeur]) => (
-                <span className="vb-l" key={nom}>
-                  <span className="vb-k">Const</span> {nom} = <span className="vb-s">&quot;{valeur}&quot;</span>{'\n'}
+        <p className="hero-pastille"><span className="point-vivant" aria-hidden="true" />Consultant VBA Excel · Missions longues en régie</p>
+        <h1 className="hero-titre">
+          {LIGNES.map((mots, l) => (
+            <span className="hero-ligne" key={l}>
+              {mots.map((mot, i) => (
+                <span key={mot}>
+                  <span className="mot" style={{ '--i': rang++ }}>
+                    {mot === ACCENT ? <em className="hero-accent">{mot}</em> : mot}
+                  </span>
+                  {i < mots.length - 1 ? ' ' : ''}
                 </span>
               ))}
-            </code></pre>
-          </figure>
+              {l < LIGNES.length - 1 ? ' ' : ''}
+            </span>
+          ))}
+        </h1>
+        <p className="hero-sous">
+          Je conçois des <strong>outils métier sur mesure</strong> et des{' '}
+          <strong>algorithmes de contrôle complexes</strong> pour de grands projets
+          industriels et financiers — en régie, à la journée. Basé à Martigues, disponible sur toute la région PACA et en remote France entière.
+        </p>
+        <div className="hero-actions">
+          <a href="#contact" className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
+          <a href="#expertises" className="btn btn-second btn-grand">Voir l&apos;expertise</a>
         </div>
+        <ul className="hero-reperes">
+          {REPERES.map(([fort, texte, cle]) => (
+            <li key={cle}>
+              <strong>{fort}</strong>
+              <span className="hero-repere-sep" aria-hidden="true" />
+              <span>{texte}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="hero-scene">
+        <LogoSable />
       </div>
     </section>
   )

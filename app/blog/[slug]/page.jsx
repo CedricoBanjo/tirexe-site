@@ -6,10 +6,15 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import CopyButton from '../../../components/CopyButton'
+import CarteArticle from '../../../components/CarteArticle'
+import Fleche from '../../../components/Fleche'
 import { LINKEDIN_URL } from '../../../lib/site'
 import { SITE_URL, ID_CEDRIC, ID_TIREXE, jsonLd } from '../../../lib/seo'
 import { serviceDeLArticle } from '../../../lib/services'
 import { articlesProches, tempsDeLecture } from '../../../lib/maillage'
+import { formatDate } from '../../../lib/dates'
+import { colorerVBA, colorerFormule } from '../../../lib/coloration'
+import { typo, typoEnfants } from '../../../lib/typo'
 
 // Les articles sont générés en pages statiques au moment de la construction du site
 // (le robot du blog pousse sur main, ce qui relance la construction sur Vercel).
@@ -55,13 +60,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('fr-FR', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  })
-}
-
-// Texte brut d'un élément de l'article (bloc de code)
+// Texte brut d'un élément de l'article (bloc de code, intertitre)
 function texteDe(noeud) {
   if (!noeud) return ''
   if (noeud.type === 'text') return noeud.value
@@ -70,9 +69,34 @@ function texteDe(noeud) {
 
 // Étiquette d'un bloc de code : VBA (```vba ou code VBA reconnu), formules Excel, sinon « Code »
 function etiquetteCode(texte, langage) {
-  if (langage === 'vba' || /^\s*(Option Explicit|Sub |Function |Private |Public |Dim )/m.test(texte)) return 'VBA'
+  if (langage === 'vba' || langage === 'vb' || /^\s*(Option Explicit|Sub |Function |Private |Public |Dim )/m.test(texte)) return 'VBA'
   if (/=\s*[A-Z][A-Z.]*\(/.test(texte)) return 'Formules Excel'
   return langage ? langage.toUpperCase() : 'Code'
+}
+const colorer = (texte, etiquette) => etiquette === 'VBA' ? colorerVBA(texte) : etiquette === 'Formules Excel' ? colorerFormule(texte) : texte
+
+// Ancre d'un intertitre : « Pourquoi automatiser ? » devient « pourquoi-automatiser »
+function ancre(texte) {
+  return texte.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 64) || 'partie'
+}
+// Les mêmes ancres, dans l'ordre, pour le sommaire et pour les intertitres (une ancre déjà prise reçoit -2, -3…)
+function fabriqueAncres() {
+  const vues = new Map()
+  return (texte) => {
+    const base = ancre(texte), n = (vues.get(base) || 0) + 1
+    vues.set(base, n)
+    return n === 1 ? base : `${base}-${n}`
+  }
+}
+// Les intertitres de l'article (« # » et « ## », hors blocs de code), en texte brut
+function intertitres(corps) {
+  const sansCode = corps.replace(/^```[\s\S]*?^```/gm, '')
+  const nouvelleAncre = fabriqueAncres()
+  return [...sansCode.matchAll(/^#{1,2}[ \t]+(.+?)[ \t#]*$/gm)].map(([, md]) => {
+    const texte = md.replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*`]/g, '').trim()
+    return { texte, id: nouvelleAncre(texte) }
+  })
 }
 
 export default async function ArticlePage({ params }) {
@@ -87,6 +111,8 @@ export default async function ArticlePage({ params }) {
   // Le service lié à l'article et 3 articles proches, pour aller plus loin
   const service = serviceDeLArticle(article)
   const proches = articlesProches(article)
+  const sommaire = intertitres(corps)
+  const ancreSuivante = fabriqueAncres()
 
   const url = `${SITE_URL}/blog/${article.slug}`
   const donnees = {
@@ -117,133 +143,150 @@ export default async function ArticlePage({ params }) {
     ],
   }
 
+  const listeSommaire = (
+    <ol>
+      {sommaire.map(({ texte, id }) => <li key={id}><a href={`#${id}`}>{typo(texte)}</a></li>)}
+    </ol>
+  )
+  const intertitre = ({ node, children }) => <h2 id={ancreSuivante(texteDe(node).trim())}>{typoEnfants(children)}</h2>
+
   return (
     <>
       <Nav />
       <main id="contenu">
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(donnees)} />
 
-        <div className="article-hero">
+        <header className="page-tete">
           <div className="wrap">
-            <Link href="/blog" className="article-back">← Tous les articles</Link>
-            <div className="article-date">
+            <nav className="ariane" aria-label="Fil d'Ariane">
+              <Link href="/">Accueil</Link><span aria-hidden="true">/</span><Link href="/blog">Blog</Link>
+            </nav>
+            <p className="article-meta">
               <time dateTime={article.date}>{formatDate(article.date)}</time>
               {article.updated && article.updated !== article.date && (
                 <> · mis à jour le <time dateTime={article.updated}>{formatDate(article.updated)}</time></>
               )}
               {' '}· {minutes} min de lecture
-            </div>
-            <h1 className="article-title">{article.title}</h1>
-            <div className="article-author">Par <strong>Cédric Femminino</strong> · Consultant VBA Excel Senior</div>
+            </p>
+            <h1 className="page-titre article-titre">{typo(article.title)}</h1>
+            <p className="article-auteur">
+              <span className="avatar" aria-hidden="true">CF</span>
+              <span>Par <strong>Cédric Femminino</strong>, consultant VBA Excel senior</span>
+            </p>
           </div>
-        </div>
+        </header>
 
-        <div className="section">
-          <div className="wrap">
-            <div className="article-layout">
-              <article className="article-body">
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    // Bloc de code (entre ```) : une ligne seule (une formule) tient dans une barre compacte
-                    // qui défile au lieu d'élargir la page ; plusieurs lignes ont un en-tête avec leur langage.
-                    pre({ node }) {
-                      const code = node?.children?.find(c => c.tagName === 'code')
-                      const texte = texteDe(code || node).replace(/\n$/, '')
-                      const langage = [].concat(code?.properties?.className || []).map(String)
-                        .find(c => c.startsWith('language-'))?.slice('language-'.length)
-                      if (!texte.includes('\n')) {
-                        return (
-                          <div className="code-ligne">
-                            <pre><code>{texte}</code></pre>
-                            <CopyButton code={texte} />
-                          </div>
-                        )
-                      }
+        <div className="section section-serree">
+          <div className="wrap article-grille">
+            <article className="article-corps">
+              {sommaire.length >= 3 && (
+                <details className="sommaire-mobile">
+                  <summary>Sommaire</summary>
+                  {listeSommaire}
+                </details>
+              )}
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  // Bloc de code (entre ```) : une ligne seule (une formule) tient dans une barre compacte
+                  // qui défile au lieu d'élargir la page ; plusieurs lignes ont un en-tête avec leur langage.
+                  // Le code VBA et les formules sont colorés à la construction du site.
+                  pre({ node }) {
+                    const code = node?.children?.find(c => c.tagName === 'code')
+                    const texte = texteDe(code || node).replace(/\n$/, '')
+                    const langage = [].concat(code?.properties?.className || []).map(String)
+                      .find(c => c.startsWith('language-'))?.slice('language-'.length)
+                    const etiquette = etiquetteCode(texte, langage)
+                    if (!texte.includes('\n')) {
                       return (
-                        <div className="code-block">
-                          <div className="code-header">
-                            <span className="code-lang">{etiquetteCode(texte, langage)}</span>
-                            <CopyButton code={texte} />
-                          </div>
-                          <pre><code>{texte}</code></pre>
+                        <div className="code-ligne">
+                          <pre tabIndex={0}><code>{colorer(texte, texte.trim().startsWith('=') ? 'Formules Excel' : etiquette)}</code></pre>
+                          <CopyButton code={texte} />
                         </div>
                       )
-                    },
-                    // Code dans une phrase (entre `)
-                    code({ node, className, children, ...props }) {
-                      return <code className="inline-code" {...props}>{children}</code>
-                    },
-                    // Un tableau large défile dans son cadre au lieu d'élargir la page sur téléphone
-                    table: ({ children }) => <div className="table-defile"><table>{children}</table></div>,
-                    h1: ({ children }) => <h2>{children}</h2>,
-                    h2: ({ children }) => <h2>{children}</h2>,
-                    h3: ({ children }) => <h3>{children}</h3>,
-                  }}
-                >
-                  {corps}
-                </ReactMarkdown>
+                    }
+                    return (
+                      <div className="code-bloc">
+                        <div className="code-tete">
+                          <span className="code-langue">{etiquette}</span>
+                          <CopyButton code={texte} />
+                        </div>
+                        <pre tabIndex={0}><code>{colorer(texte, etiquette)}</code></pre>
+                      </div>
+                    )
+                  },
+                  // Code dans une phrase (entre `)
+                  code({ node, className, children, ...props }) {
+                    return <code className="inline-code" {...props}>{children}</code>
+                  },
+                  // Un tableau large défile dans son cadre au lieu d'élargir la page sur téléphone
+                  table: ({ children }) => <div className="table-defile"><table>{children}</table></div>,
+                  h1: intertitre,
+                  h2: intertitre,
+                  h3: ({ children }) => <h3>{typoEnfants(children)}</h3>,
+                  // espaces insécables avant « : ; ! ? » dans le texte des articles
+                  p: ({ node, children, ...props }) => <p {...props}>{typoEnfants(children)}</p>,
+                  li: ({ node, children, ...props }) => <li {...props}>{typoEnfants(children)}</li>,
+                  td: ({ node, children, ...props }) => <td {...props}>{typoEnfants(children)}</td>,
+                }}
+              >
+                {corps}
+              </ReactMarkdown>
 
-                {/* Encadré auteur : visible aussi sur téléphone (la colonne de droite y est masquée) */}
-                <aside className="auteur" aria-label="À propos de l'auteur">
-                  <div className="auteur-ini" aria-hidden="true">CF</div>
-                  <div>
-                    <p className="auteur-nom">Cédric Femminino</p>
-                    <p className="auteur-bio">
-                      Consultant et développeur VBA Excel senior, plus de 10 ans d&apos;expérience sur des projets
-                      industriels et financiers. Missions en régie, en région PACA ou à distance.
-                    </p>
-                    <p className="auteur-liens">
-                      <a href={`/services/${service.slug}`}>Mon service&nbsp;: {service.titreCarte}</a>
-                      <a href={LINKEDIN_URL} target="_blank" rel="me noopener">LinkedIn</a>
-                    </p>
-                  </div>
-                </aside>
-              </article>
-
-              <aside className="article-sidebar">
-                <div className="sidebar-card">
-                  <div className="sidebar-title">Besoin d&apos;un expert VBA ?</div>
-                  <p className="sidebar-desc">Je travaille en régie sur des missions longues — en PACA ou full remote.</p>
-                  <Link href="/#contact" className="sidebar-cta">Me contacter</Link>
-                </div>
-                <div className="sidebar-card" style={{marginTop:'16px'}}>
-                  <div className="sidebar-title">Sur ce sujet</div>
-                  <p className="sidebar-desc">{service.titreCarte}&nbsp;: ce que je fais pour vous, et comment se passe une mission.</p>
-                  <a href={`/services/${service.slug}`} className="sidebar-link">Découvrir ce service →</a>
+              {/* Encadré auteur */}
+              <aside className="auteur" aria-label="À propos de l'auteur">
+                <span className="avatar" aria-hidden="true">CF</span>
+                <div>
+                  <p className="auteur-nom">Cédric Femminino</p>
+                  <p className="auteur-bio">
+                    Consultant et développeur VBA Excel senior, plus de 10 ans d&apos;expérience sur des projets
+                    industriels et financiers. Missions en régie, en région PACA ou à distance.
+                  </p>
+                  <p className="auteur-liens">
+                    <a href={`/services/${service.slug}`}>Mon service&nbsp;: {service.titreCarte}</a>
+                    <a href={LINKEDIN_URL} target="_blank" rel="me noopener">LinkedIn</a>
+                  </p>
                 </div>
               </aside>
-            </div>
+            </article>
+
+            <aside className="article-cote" aria-label="Sommaire et contact">
+              {sommaire.length >= 3 && (
+                <nav className="sommaire" aria-label="Sommaire de l'article">
+                  <p className="sommaire-titre">Sommaire</p>
+                  {listeSommaire}
+                </nav>
+              )}
+              <div className="cote-carte">
+                <p className="cote-titre">Besoin d&apos;un expert VBA&nbsp;?</p>
+                <p className="cote-texte">Je travaille en régie sur des missions longues — en PACA ou full remote.</p>
+                <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal">Me contacter <Fleche /></a>
+              </div>
+            </aside>
           </div>
         </div>
 
         {proches.length > 0 && (
-          <div className="section section-alt">
+          <section className="section section-douce" aria-labelledby="a-lire-aussi">
             <div className="wrap">
-              <div className="ey">Blog</div>
-              <h2 className="sec-h">À lire <em>aussi</em></h2>
-              <div className="blog-grid">
-                {proches.map(a => (
-                  <Link href={`/blog/${a.slug}`} key={a.slug} className="blog-card">
-                    <div className="blog-card-date">{formatDate(a.date)}</div>
-                    <h3 className="blog-card-title">{a.title}</h3>
-                    <p className="blog-card-desc">{a.description}</p>
-                    <div className="blog-card-cta">Lire l&apos;article →</div>
-                  </Link>
-                ))}
-              </div>
+              <header className="sec-tete revele">
+                <p className="ey">Blog</p>
+                <h2 className="sec-h" id="a-lire-aussi">À lire aussi</h2>
+              </header>
+              <ul className="articles-grille">
+                {proches.map((a, i) => <li key={a.slug} className="revele" style={{ '--d': i }}><CarteArticle article={a} /></li>)}
+              </ul>
             </div>
-          </div>
+          </section>
         )}
 
-        <div className="contact-band" style={{padding:'64px 0'}}>
-          <div className="wrap" style={{textAlign:'center'}}>
-            <div className="sec-h" style={{marginBottom:'16px',color:'var(--ink)'}}>Un projet Excel à automatiser ?</div>
-            <p style={{color:'var(--soft)',fontSize:'16px',marginBottom:'32px'}}>Décrivez votre besoin — je reviens vers vous.</p>
-            <Link href="/#contact" className="btn-g">Discutons de votre projet</Link>
+        <section className="bande-cta" aria-labelledby="appel-final">
+          <div className="wrap">
+            <h2 className="bande-cta-titre" id="appel-final">Un projet Excel à automatiser&nbsp;?</h2>
+            <p className="bande-cta-texte">Décrivez votre besoin — je reviens vers vous.</p>
+            <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
           </div>
-        </div>
-
+        </section>
       </main>
       <Footer />
     </>

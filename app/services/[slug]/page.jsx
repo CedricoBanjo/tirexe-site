@@ -1,8 +1,9 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Nav from '../../../components/Nav'
 import Footer from '../../../components/Footer'
 import TexteRiche from '../../../components/TexteRiche'
+import CarteArticle from '../../../components/CarteArticle'
+import Fleche from '../../../components/Fleche'
 import { typo } from '../../../lib/typo'
 import { SERVICES, getService } from '../../../lib/services'
 import { articlesDuService } from '../../../lib/maillage'
@@ -47,10 +48,6 @@ const ETAPES = [
   ['Intégration et livraison', "Je rejoins votre équipe et reste votre seul interlocuteur, du cadrage jusqu'à la livraison finale."],
 ]
 
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
 export default async function PageService({ params }) {
   const { slug } = await params
   const service = getService(slug)
@@ -92,20 +89,23 @@ export default async function PageService({ params }) {
       <main id="contenu">
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(donnees)} />
 
-        <div className="article-hero">
+        <header className="page-tete">
           <div className="wrap">
-            <a href="/#expertise" className="article-back">← Toutes les expertises</a>
-            <div className="ey">{service.etiquette}</div>
-            <h1 className="article-title">{service.titre}</h1>
+            <nav className="ariane" aria-label="Fil d'Ariane">
+              <a href="/">Accueil</a><span aria-hidden="true">/</span><a href="/#expertises">Expertises</a>
+            </nav>
+            <p className="ey">{service.etiquette}</p>
+            <h1 className="page-titre">{service.titre}</h1>
             <p className="service-accroche">{typo(service.accroche)}</p>
-            <div className="service-btns">
-              <a href="/#contact" className="btn-g">Discutons de votre projet</a>
+            <div className="page-boutons">
+              <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
+              <a href="/#faq" className="btn btn-second btn-grand">Questions fréquentes</a>
             </div>
           </div>
-        </div>
+        </header>
 
-        <div className="section">
-          <div className="wrap">
+        <div className="section section-serree">
+          <div className="wrap service-grille">
             <div className="service-corps">
               <h2>{service.besoin.titre}</h2>
               <p>{typo(service.besoin.intro)}</p>
@@ -149,51 +149,58 @@ export default async function PageService({ params }) {
                 ))}
               </ul>
             </div>
+
+            <aside className="article-cote" aria-label="Contact">
+              <div className="cote-carte">
+                <p className="cote-titre">Un projet de ce type&nbsp;?</p>
+                <p className="cote-texte">Décrivez votre besoin — je reviens vers vous. Tarif sur devis.</p>
+                <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal">Me contacter <Fleche /></a>
+              </div>
+            </aside>
           </div>
         </div>
 
         {articles.length > 0 && (
-          <div className="section section-alt">
+          <section className="section section-douce" aria-labelledby="articles-sujet">
             <div className="wrap">
-              <div className="ey">Blog</div>
-              <h2 className="sec-h">Articles sur ce <em>sujet</em></h2>
-              <div className="blog-grid">
-                {articles.map(article => (
-                  <Link href={`/blog/${article.slug}`} key={article.slug} className="blog-card">
-                    <div className="blog-card-date">{formatDate(article.date)}</div>
-                    <h3 className="blog-card-title">{article.title}</h3>
-                    <p className="blog-card-desc">{article.description}</p>
-                    <div className="blog-card-cta">Lire l&apos;article →</div>
-                  </Link>
-                ))}
-              </div>
+              <header className="sec-tete revele">
+                <p className="ey">Blog</p>
+                <h2 className="sec-h" id="articles-sujet">Articles sur ce sujet</h2>
+              </header>
+              <ul className="articles-grille">
+                {articles.map((article, i) => <li key={article.slug} className="revele" style={{ '--d': i }}><CarteArticle article={article} /></li>)}
+              </ul>
             </div>
-          </div>
+          </section>
         )}
 
-        <div className="section">
+        <section className="section" aria-labelledby="autres-expertises">
           <div className="wrap">
-            <div className="ey">Expertise</div>
-            <h2 className="sec-h">Mes autres <em>expertises</em></h2>
-            <div className="autres-grid">
-              {autres.map(s => (
-                <a href={`/services/${s.slug}`} key={s.slug} className="autre-card">
-                  <span className="exp-tag">{s.etiquette}</span>
-                  <h3 className="autre-h">{s.titreCarte}</h3>
-                  <span className="autre-cta">Découvrir →</span>
-                </a>
+            <header className="sec-tete revele">
+              <p className="ey">Expertises</p>
+              <h2 className="sec-h" id="autres-expertises">Mes autres expertises</h2>
+            </header>
+            <ul className="autres-grille">
+              {autres.map((s, i) => (
+                <li key={s.slug} className="revele" style={{ '--d': i }}>
+                  <a href={`/services/${s.slug}`} className="autre-carte lumiere">
+                    <span className="autre-etiquette">{s.etiquette}</span>
+                    <span className="autre-titre">{s.titreCarte}</span>
+                    <span className="autre-plus">Découvrir <Fleche /></span>
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-        </div>
+        </section>
 
-        <div className="contact-band" style={{padding:'64px 0'}}>
-          <div className="wrap" style={{textAlign:'center'}}>
-            <h2 className="sec-h" style={{marginBottom:'16px',color:'var(--ink)'}}>Un projet de ce type&nbsp;?</h2>
-            <p style={{color:'var(--soft)',fontSize:'16px',marginBottom:'32px'}}>Décrivez votre besoin — je reviens vers vous.</p>
-            <a href="/#contact" className="btn-g">Discutons de votre projet</a>
+        <section className="bande-cta" aria-labelledby="appel-final">
+          <div className="wrap">
+            <h2 className="bande-cta-titre" id="appel-final">Un projet de ce type&nbsp;?</h2>
+            <p className="bande-cta-texte">Décrivez votre besoin — je reviens vers vous.</p>
+            <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </>

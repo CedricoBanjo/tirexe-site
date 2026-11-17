@@ -21,7 +21,8 @@ Commence ta première réponse par ce rappel, en deux lignes :
 - Vérifie avant de dire que c'est fait : `npm run build`, captures ordinateur et téléphone (Playwright), Lighthouse.
 
 ## Où sont les choses
-- Accueil : `app/page.jsx`, sections dans `components/` (haut de page : `Hero.jsx`, logo en sable 3D : `LogoSable.jsx`) ; styles : `app/globals.css` (CSS pur, jetons en tête de fichier) ; logo : `public/logo-tirexe.svg` (vectoriel, à utiliser partout) ; métadonnées et scripts communs : `app/layout.jsx`.
+- Accueil : `app/page.jsx`, sections dans `components/` (haut de page : `Hero.jsx`, logo en sable 3D : `LogoSable.jsx` ; méthode et sable qui change de forme : `Methode.jsx`, `SableMethode.jsx` ; bandeau des secteurs : `Bandeau.jsx` ; illustrations des expertises : `Illustrations.jsx`) ; apparitions au défilement et halo des cartes : `components/Effets.jsx` ; barre d'appel sur téléphone : `components/CtaMobile.jsx` ; styles : `app/globals.css` (CSS pur, jetons en tête de fichier) ; logo : `public/logo-tirexe.svg` (vectoriel, à utiliser partout) ; métadonnées et scripts communs : `app/layout.jsx`.
 - Services : textes dans `lib/services.js`, page `app/services/[slug]/page.jsx` ; FAQ de l'accueil : `components/Faq.jsx`.
 - Blog : `app/blog/`, `lib/blog.js`, articles dans `content/blog/` (champ facultatif `updated` : date de mise à jour) ; liens entre articles et services : `lib/maillage.js`.
-- Contact (Formspree) : `components/Contact.jsx` ; page légale : `app/mentions-legales/page.jsx` ; plan du site : `app/sitemap.js`.
+- Contact (Formspree, formulaire en 3 étapes ; `?besoin=<service>` dans l'adresse préremplit le besoin) : `components/Contact.jsx` ; page légale : `app/mentions-legales/page.jsx` ; plan du site : `app/sitemap.js`.
+- Code coloré (VBA, formules) des articles et de l'accueil : `lib/coloration.jsx` ; sommaire des articles : `app/blog/[slug]/page.jsx`.

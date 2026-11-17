@@ -1,5 +1,5 @@
 'use client'
-// Le logo Tirexe en sable fin et en volume, à côté du texte du haut de l'accueil.
+// Le logo Tirexe en sable fin et en volume, sous le texte du haut de l'accueil (la « scène »).
 // - Au chargement, le sable s'assemble de gauche à droite.
 // - On le fait tourner en 3D en glissant, dans tous les sens : le logo a une épaisseur ; chaque face
 //   prend la lumière selon l'angle, celles vues de dos pâlissent.
@@ -111,7 +111,7 @@ export default function LogoSable() {
 
   useEffect(() => {
     const canvas = ref.current
-    const zoneVisuel = canvas.closest('.hero-visuel')
+    const zoneVisuel = canvas.closest('.hero-scene')
     const ctx = canvas.getContext('2d')
     const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const petit = window.innerWidth < 760
@@ -123,7 +123,7 @@ export default function LogoSable() {
     const logo = new Image()
 
     // en deux temps, pour ne pas bloquer un téléphone lent : d'abord le dessin du logo en points, puis l'installation des grains
-    const echantillonner = () => formeLogo(W, H, petit ? 22000 : 52000, logo)
+    const echantillonner = () => formeLogo(W, H, petit ? 18000 : 50000, logo)
     function construire(pts = echantillonner()) {
       N = pts.length
       px = new Float32Array(N); py = new Float32Array(N); pz = new Float32Array(N)
@@ -322,7 +322,7 @@ export default function LogoSable() {
         relancer()
       })
     }
-    function attendre(cb) { if (window.requestIdleCallback) window.requestIdleCallback(cb, { timeout: 700 }); else setTimeout(cb, 150) }
+    function attendre(cb) { if (window.requestIdleCallback) window.requestIdleCallback(cb, { timeout: 1800 }); else setTimeout(cb, 150) }
     logo.onload = () => { logoCharge = true; essayer() }
     logo.src = '/logo-sable.svg'
 

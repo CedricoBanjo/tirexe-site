@@ -1,6 +1,7 @@
 import { EMAIL } from '../lib/site'
 import { SERVICES } from '../lib/services'
 import { typo } from '../lib/typo'
+import Fleche from './Fleche'
 
 // Questions fréquentes de l'accueil. Les réponses reprennent ce que le site dit déjà
 // (fonctionnement, zone, outils, secteurs) : rien d'inventé. Pas de balisage « FAQ » pour
@@ -44,19 +45,23 @@ const QUESTIONS = [
 
 export default function Faq() {
   return (
-    <div className="section section-alt" id="faq">
-      <div className="wrap">
-        <div className="ey"><span className="ey-ref">A52</span>Questions fréquentes</div>
-        <h2 className="sec-h">Vos questions, <em>mes réponses</em></h2>
-        <div className="faq-list">
+    <section className="section section-douce" id="faq">
+      <div className="wrap faq-grille">
+        <header className="sec-tete faq-tete revele">
+          <p className="ey">Questions fréquentes</p>
+          <h2 className="sec-h">Vos questions, mes réponses</h2>
+          <p className="sec-sub">Une autre question&nbsp;? Posez-la directement, je vous réponds personnellement.</p>
+          <a href="#contact" className="btn btn-second">Poser ma question <Fleche /></a>
+        </header>
+        <div className="faq-liste revele">
           {QUESTIONS.map(({ q, r }) => (
             <details className="faq-item" key={q}>
-              <summary>{typo(q)}</summary>
-              <p>{r}</p>
+              <summary>{typo(q)}<span className="faq-signe" aria-hidden="true" /></summary>
+              <div className="faq-reponse"><p>{r}</p></div>
             </details>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   )
 }

@@ -1,34 +1,29 @@
 import { getAllArticles } from '../lib/blog'
-import Link from 'next/link'
+import CarteArticle from './CarteArticle'
+import Fleche from './Fleche'
 
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
+// Les 3 derniers articles du blog (le robot en publie un chaque lundi)
 export default function RecentArticles() {
   const articles = getAllArticles().slice(0, 3)
   if (articles.length === 0) return null
 
   return (
-    <div className="section" id="blog">
+    <section className="section" id="blog">
       <div className="wrap">
-        <div className="ey"><span className="ey-ref">A60</span>Blog</div>
-        <h2 className="sec-h">Derniers <em>articles</em></h2>
-        <p className="sec-sub">Tutoriels VBA Excel, bonnes pratiques et conseils pour vos projets.</p>
-        <div className="blog-grid">
-          {articles.map(article => (
-            <Link href={`/blog/${article.slug}`} key={article.slug} className="blog-card">
-              <div className="blog-card-date">{formatDate(article.date)}</div>
-              <h3 className="blog-card-title">{article.title}</h3>
-              <p className="blog-card-desc">{article.description}</p>
-              <div className="blog-card-cta">Lire l&apos;article →</div>
-            </Link>
+        <header className="sec-tete sec-tete-ligne revele">
+          <div>
+            <p className="ey">Blog</p>
+            <h2 className="sec-h">Derniers articles</h2>
+            <p className="sec-sub">Tutoriels VBA Excel, bonnes pratiques et conseils pour vos projets.</p>
+          </div>
+          <a href="/blog" className="btn btn-second">Tous les articles <Fleche /></a>
+        </header>
+        <ul className="articles-grille">
+          {articles.map((article, i) => (
+            <li key={article.slug} className="revele" style={{ '--d': i }}><CarteArticle article={article} /></li>
           ))}
-        </div>
-        <div className="blog-tous">
-          <Link href="/blog" className="btn-ghost">Voir tous les articles</Link>
-        </div>
+        </ul>
       </div>
-    </div>
+    </section>
   )
 }
