@@ -1,5 +1,5 @@
 'use client'
-// Sur téléphone : une barre « Parler de votre projet » collée en bas de l'écran, dès qu'on a quitté le haut
+// Sur téléphone : une barre « Discutons de votre projet » collée en bas de l'écran, dès qu'on a quitté le haut
 // de l'accueil (ou après un premier défilement sur les autres pages). Elle s'efface quand le formulaire de
 // contact ou le pied de page arrivent à l'écran. Masquée sur ordinateur (voir .cta-mobile dans globals.css).
 import { useEffect, useState } from 'react'
@@ -35,7 +35,7 @@ export default function CtaMobile() {
 
   return (
     <div className="cta-mobile" data-visible={visible ? 'oui' : 'non'} inert={!visible}>
-      <a href="/#contact" className="btn btn-principal btn-grand">Parler de votre projet <Fleche /></a>
+      <a href="/#contact" className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
     </div>
   )
 }

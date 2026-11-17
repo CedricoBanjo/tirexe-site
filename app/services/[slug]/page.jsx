@@ -98,7 +98,7 @@ export default async function PageService({ params }) {
             <h1 className="page-titre">{service.titre}</h1>
             <p className="service-accroche">{typo(service.accroche)}</p>
             <div className="page-boutons">
-              <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Parler de ce besoin <Fleche /></a>
+              <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
               <a href="/#faq" className="btn btn-second btn-grand">Questions fréquentes</a>
             </div>
           </div>
@@ -152,9 +152,9 @@ export default async function PageService({ params }) {
 
             <aside className="article-cote" aria-label="Contact">
               <div className="cote-carte">
-                <p className="cote-titre">Un besoin de ce type&nbsp;?</p>
-                <p className="cote-texte">Trois questions, moins d&apos;une minute&nbsp;: je vous réponds personnellement. Tarif sur devis.</p>
-                <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal">Parler de votre projet <Fleche /></a>
+                <p className="cote-titre">Un projet de ce type&nbsp;?</p>
+                <p className="cote-texte">Décrivez votre besoin — je reviens vers vous. Tarif sur devis.</p>
+                <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal">Me contacter <Fleche /></a>
               </div>
             </aside>
           </div>
@@ -197,8 +197,8 @@ export default async function PageService({ params }) {
         <section className="bande-cta" aria-labelledby="appel-final">
           <div className="wrap">
             <h2 className="bande-cta-titre" id="appel-final">Un projet de ce type&nbsp;?</h2>
-            <p className="bande-cta-texte">Décrivez votre besoin en trois questions&nbsp;: je vous réponds personnellement.</p>
-            <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Parler de votre projet <Fleche /></a>
+            <p className="bande-cta-texte">Décrivez votre besoin — je reviens vers vous.</p>
+            <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
           </div>
         </section>
       </main>

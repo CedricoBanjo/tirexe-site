@@ -259,8 +259,8 @@ export default async function ArticlePage({ params }) {
               )}
               <div className="cote-carte">
                 <p className="cote-titre">Besoin d&apos;un expert VBA&nbsp;?</p>
-                <p className="cote-texte">{service.titreCarte}&nbsp;: je travaille en régie, sur des missions longues, en PACA ou à distance.</p>
-                <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal">Parler de votre projet <Fleche /></a>
+                <p className="cote-texte">Je travaille en régie sur des missions longues — en PACA ou full remote.</p>
+                <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal">Me contacter <Fleche /></a>
               </div>
             </aside>
           </div>
@@ -283,8 +283,8 @@ export default async function ArticlePage({ params }) {
         <section className="bande-cta" aria-labelledby="appel-final">
           <div className="wrap">
             <h2 className="bande-cta-titre" id="appel-final">Un projet Excel à automatiser&nbsp;?</h2>
-            <p className="bande-cta-texte">Décrivez votre besoin en trois questions&nbsp;: je vous réponds personnellement.</p>
-            <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Parler de votre projet <Fleche /></a>
+            <p className="bande-cta-texte">Décrivez votre besoin — je reviens vers vous.</p>
+            <a href={`/?besoin=${service.slug}#contact`} className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
           </div>
         </section>
       </main>

@@ -150,7 +150,7 @@ img, svg { display: block; max-width: 100%; }
 @keyframes derive-2 { to { transform: translate(-6vw, 8vw) scale(.92); } }
 @keyframes derive-3 { to { transform: translate(-8vw, -4vw) scale(1.1); } }
 
-.hero-in { position: relative; max-width: 1040px; margin: 0 auto; padding: 56px 32px 0; text-align: center; }
+.hero-in { position: relative; max-width: 1160px; margin: 0 auto; padding: 56px 32px 0; text-align: center; }
 .hero-pastille {
   display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px 7px 12px;
   background: rgba(255,255,255,.8); border: 1px solid var(--trait-2); border-radius: 999px;
@@ -159,18 +159,19 @@ img, svg { display: block; max-width: 100%; }
 .point-vivant { position: relative; width: 9px; height: 9px; border-radius: 50%; background: var(--vert); }
 .point-vivant::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--vert); opacity: 0; animation: pulsation 2.4s ease-out infinite; }
 @keyframes pulsation { 0% { transform: scale(.5); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
-.hero-titre { margin-top: 26px; color: var(--encre); }
-.hero-sur { display: block; font-size: 18px; font-weight: 750; letter-spacing: .01em; color: var(--vert-texte); }
-.hero-phrase { display: block; margin-top: 14px; font-size: clamp(42px, 7.1vw, 104px); font-weight: 780; line-height: .98; letter-spacing: -.048em; }
+.hero-titre { margin-top: 26px; font-size: clamp(38px, 6vw, 84px); font-weight: 780; line-height: 1.1; letter-spacing: -.045em; color: var(--encre); text-wrap: balance; }
 .hero-ligne { display: block; }
 .mot { display: inline-block; }
-.hero-fiable { position: relative; z-index: 0; font-style: normal; color: var(--vert-grand); }
-.hero-fiable::after { content: ''; position: absolute; z-index: -1; left: -.03em; right: -.03em; bottom: .02em; height: .14em; border-radius: .07em; background: var(--or); transform-origin: left center; }
+.hero-accent { position: relative; z-index: 0; font-style: normal; color: var(--vert-grand); }
+.hero-accent::after { content: ''; position: absolute; z-index: -1; left: -.02em; right: -.02em; bottom: .04em; height: .1em; border-radius: .05em; background: var(--or); transform-origin: left center; }
 .hero-sous { max-width: 720px; margin: 26px auto 0; font-size: 20px; line-height: 1.6; color: var(--texte); text-wrap: pretty; }
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
-.hero-preuves { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; margin-top: 28px; list-style: none; font-size: 15px; font-weight: 650; color: var(--gris); }
-.hero-preuves li { display: inline-flex; align-items: center; gap: 8px; }
-.hero-preuves svg { flex: none; }
+/* les repères du premier site, en pilules : valeur forte | libellé */
+.hero-reperes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px; list-style: none; }
+.hero-reperes li { display: inline-flex; align-items: center; gap: 12px; padding: 9px 18px; background: rgba(255,255,255,.85); border: 1px solid var(--trait-2); border-radius: 999px; box-shadow: var(--ombre-1); font-size: 14.5px; font-weight: 600; color: var(--gris); }
+.hero-reperes strong { font-size: 17px; font-weight: 800; letter-spacing: -.02em; color: var(--encre); }
+.hero-reperes .plus { color: var(--vert-texte); }
+.hero-repere-sep { width: 1px; height: 18px; background: var(--trait-2); }
 /* la scène : le logo en sable fin, qu'on fait tourner ; décoratif */
 .hero-scene { position: relative; height: clamp(190px, 22vw, 300px); margin-top: 14px; }
 .sable-forme {
@@ -305,7 +306,7 @@ img, svg { display: block; max-width: 100%; }
 /* ============================================================================
    POURQUOI TIREXE : les raisons, la fenêtre de code, les outils
    ========================================================================== */
-.pourquoi-grille { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 64px; align-items: center; }
+.pourquoi-grille { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr); gap: 64px; align-items: center; }
 .pourquoi-texte .sec-tete { margin-bottom: 36px; }
 .raisons { list-style: none; }
 .raison { display: flex; gap: 18px; padding: 20px 0; border-top: 1px solid var(--trait-2); }
@@ -320,11 +321,12 @@ img, svg { display: block; max-width: 100%; }
 .fenetre-code-points i:nth-child(1) { background: var(--vert); }
 .fenetre-code-points i:nth-child(2) { background: var(--or); }
 .fenetre-code-etat { margin-left: auto; padding: 2px 10px; border-radius: 999px; background: var(--vert-pale); color: var(--vert-texte); font-weight: 700; }
-.fenetre-code-pre { margin: 0; padding: 20px 22px; overflow-x: auto; font-family: var(--mono); font-size: 13.5px; line-height: 1.75; color: var(--encre); tab-size: 4; }
+.fenetre-code-pre { margin: 0; padding: 20px 22px; overflow-x: auto; font-family: var(--mono); font-size: 13px; line-height: 1.75; color: var(--encre); tab-size: 4; }
 .fenetre-code-pre:focus-visible { outline-offset: -3px; }
 .fenetre-code-legende { padding: 14px 22px 18px; border-top: 1px solid var(--trait); font-size: 14.5px; line-height: 1.6; color: var(--gris); }
 .outils { margin-top: 80px; }
-.outils-titre { font-size: 14px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.outils-titre { font-size: clamp(24px, 2.4vw, 32px); font-weight: 780; line-height: 1.15; letter-spacing: -.03em; color: var(--encre); }
+.outils-sous { max-width: 620px; margin-top: 10px; font-size: 17px; line-height: 1.6; color: var(--gris); }
 .outils-liste { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
 .outil { display: grid; grid-template-columns: 1fr auto; align-content: start; gap: 8px 12px; padding: 22px; background: var(--fond); border: 1px solid var(--trait); border-radius: var(--r-m); }
 .outil-nom { font-size: 17px; font-weight: 800; color: var(--encre); }
@@ -631,11 +633,11 @@ img, svg { display: block; max-width: 100%; }
 /* le haut de l'accueil : les mots arrivent flous puis nets (jamais invisibles : le titre est lisible dès l'affichage) */
 @media (prefers-reduced-motion: no-preference) {
   .hero .mot { animation: mot-arrive 1s var(--doux) both; animation-delay: calc(.08s + var(--i) * .075s); }
-  .hero-fiable::after { transform: scaleX(0); animation: trait-or .9s var(--doux) .95s forwards; }
-  .hero-sur, .hero-pastille { animation: monte-doux .8s var(--doux) both; }
+  .hero-accent::after { transform: scaleX(0); animation: trait-or .9s var(--doux) .95s forwards; }
+  .hero-pastille { animation: monte-doux .8s var(--doux) both; }
   .hero-sous { animation: monte-doux .9s var(--doux) .45s both; }
   .hero-actions { animation: monte-doux .9s var(--doux) .55s both; }
-  .hero-preuves { animation: monte-doux .9s var(--doux) .65s both; }
+  .hero-reperes { animation: monte-doux .9s var(--doux) .65s both; }
 }
 @keyframes mot-arrive { from { opacity: .12; transform: translateY(.3em); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes trait-or { to { transform: scaleX(1); } }
@@ -682,13 +684,13 @@ img, svg { display: block; max-width: 100%; }
   .sec-sub { font-size: 17.5px; }
   .hero { margin-top: 4px; }
   .hero-in { padding: 40px 20px 0; }
-  .hero-pastille { font-size: 13px; }
+  .hero-pastille { gap: 8px; padding: 6px 13px 6px 10px; font-size: 12.5px; letter-spacing: -.01em; white-space: nowrap; }
   .hero-titre { margin-top: 20px; }
-  .hero-sur { font-size: 16px; }
-  .hero-phrase { margin-top: 10px; }
   .hero-sous { margin-top: 20px; font-size: 17.5px; }
   .hero-actions { margin-top: 26px; }
-  .hero-preuves { gap: 8px 18px; margin-top: 22px; font-size: 14px; }
+  .hero-reperes { gap: 8px; margin-top: 22px; }
+  .hero-reperes li { padding: 8px 14px; gap: 10px; font-size: 13.5px; }
+  .hero-reperes strong { font-size: 15.5px; }
   .hero-scene { margin-top: 8px; }
   .bandeau { padding: 52px 0 8px; }
   .bandeau-titre { font-size: 13px; }
@@ -767,7 +769,7 @@ img, svg { display: block; max-width: 100%; }
 }
 @media (max-width: 380px) {
   .nav-actions .btn-petit { display: none; }
-  .hero-pastille { font-size: 12px; padding-right: 12px; }
+  .hero-pastille { font-size: 11.5px; padding-right: 11px; }
   .wrap, .hero-in { padding-left: 16px; padding-right: 16px; }
 }
 

@@ -1,12 +1,12 @@
 import SableMethode from './SableMethode'
 import Fleche from './Fleche'
 
-// Méthode : 3 étapes (les textes du « fonctionnement » déjà validés), et à côté le sable qui change de forme
+// Méthode : les 3 étapes du premier site (« Fonctionnement »), et à côté le sable qui change de forme
 // à chaque étape : du vrac au tableau, puis à la case cochée (components/SableMethode.jsx).
 const ETAPES = [
-  ['On part de votre besoin', 'Premier échange sur le besoin, le contexte et la durée envisagée, par appel ou par e-mail, sans formalité.'],
-  ['On cadre la mission', 'Je vous envoie une proposition : tarif, durée et organisation du travail, sur site ou en remote selon vos contraintes.'],
-  ['Je livre un outil fiable', "Je rejoins votre équipe et reste votre seul interlocuteur, du cadrage jusqu'à la livraison finale."],
+  ['Premier échange', 'On discute du besoin, du contexte et de la durée envisagée — par appel ou email, sans formalité.'],
+  ['Proposition de mission', "Un devis : tarif, durée, organisation du travail — sur site ou en remote selon vos contraintes. Je m'adapte."],
+  ['Intégration & livraison', "Je rejoins votre équipe et suis votre seul interlocuteur, du cadrage jusqu'à la livraison finale."],
 ]
 
 export default function Methode() {
@@ -34,7 +34,7 @@ export default function Methode() {
           </ol>
         </div>
         <p className="methode-fin">
-          <a href="#contact" className="btn btn-principal btn-grand">Commencer par un premier échange <Fleche /></a>
+          <a href="#contact" className="btn btn-principal btn-grand">Discutons de votre projet <Fleche /></a>
         </p>
       </div>
     </section>

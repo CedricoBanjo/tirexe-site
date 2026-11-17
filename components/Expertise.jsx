@@ -11,7 +11,7 @@ export default function Expertise() {
         <header className="sec-tete revele">
           <p className="ey">Expertises</p>
           <h2 className="sec-h">Ce que je construis pour vous</h2>
-          <p className="sec-sub">Des solutions robustes pour des environnements exigeants, du contrôle industriel à la finance de grands groupes.</p>
+          <p className="sec-sub">Des solutions robustes pour des environnements exigeants — du contrôle industriel à la finance de grands groupes.</p>
         </header>
         <ul className="bento">
           {SERVICES.map((s, i) => {

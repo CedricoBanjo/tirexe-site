@@ -1,16 +1,16 @@
-// Pourquoi Tirexe : quatre raisons (textes déjà validés sur le site), un exemple de code VBA écrit
+// Pourquoi Tirexe : les quatre raisons du premier site, un exemple de code VBA écrit
 // comme Cédric l'écrit, et les outils maîtrisés. L'exemple est un cas type, pas une mission réelle.
 import { colorerVBA } from '../lib/coloration'
 
 const RAISONS = [
-  ["Vous m'avez en direct", 'De la première discussion à la livraison finale, c’est moi, sans relais ni intermédiaire.',
+  ["Vous m'avez en direct", "De la première discussion à la livraison finale — c'est moi, sans relai ni intermédiaire.",
     <path key="p" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0" />],
-  ['Des environnements exigeants', 'Projets industriels critiques, finance de grands groupes, BTP : des contextes où la précision est une priorité absolue.',
+  ['Expérience en environnements exigeants', 'Projets industriels critiques, finance de grands groupes, BTP — des contextes où la précision est une priorité absolue.',
     <path key="p" d="M12 3l8 4v5c0 4.6-3.3 8.2-8 9-4.7-.8-8-4.4-8-9V7z M8.5 12l2.4 2.4 4.6-4.8" />],
-  ['Des traitements écrits, reproductibles', "Le contrôle ne repose plus sur la mémoire d'une personne : il est écrit, reproductible et rapide à relancer.",
-    <path key="p" d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16" />],
-  ['Des missions longues', 'Je m’intègre dans vos équipes sur la durée, avec une vraie connaissance de votre contexte métier.',
+  ['Spécialiste des missions longues', "Je m'intègre dans vos équipes sur la durée, avec une vraie connaissance de votre contexte métier.",
     <path key="p" d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />],
+  ['Flexible géographiquement', 'Sur site en région PACA ou en full remote partout en France, selon vos contraintes.',
+    <path key="p" d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21zM12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />],
 ]
 
 // Exemple type : repérer les doublons d'une colonne, sur toutes les lignes, en une seule lecture de la feuille
@@ -88,7 +88,8 @@ export default function Pourquoi() {
         </div>
 
         <div className="outils revele" id="outils">
-          <h3 className="outils-titre">Outils maîtrisés</h3>
+          <h3 className="outils-titre">Maîtrise complète de l&apos;écosystème Office</h3>
+          <p className="outils-sous">Des outils construits avec la bonne technologie et l&apos;expérience pour les combiner intelligemment.</p>
           <ul className="outils-liste">
             {OUTILS.map(([nom, usage, niveau]) => (
               <li className="outil" key={nom}>

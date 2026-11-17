@@ -116,9 +116,9 @@ export default function Contact() {
         <div className="contact-texte revele">
           <p className="ey">Contact</p>
           <h2 className="sec-h">Parlons de votre projet</h2>
-          <p className="sec-sub">Trois questions, moins d&apos;une minute. Je vous réponds personnellement.</p>
+          <p className="sec-sub">Décrivez votre contexte, la nature de la mission et la durée envisagée. Je reviendrai vers vous.</p>
           <ul className="contact-garanties">
-            <li><Icone d={COCHE} />Premier échange sans engagement</li>
+            <li><Icone d={COCHE} />Premier échange sans formalité</li>
             <li><Icone d={COCHE} />Tarif sur devis, à la journée</li>
             <li><Icone d={COCHE} />Vos informations ne sont ni vendues ni cédées</li>
           </ul>

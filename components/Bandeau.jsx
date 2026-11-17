@@ -21,7 +21,7 @@ function Etoile() {
 export default function Bandeau() {
   return (
     <section className="bandeau" aria-labelledby="bandeau-titre">
-      <p className="bandeau-titre" id="bandeau-titre">Des projets dans des secteurs où la précision est une priorité</p>
+      <p className="bandeau-titre" id="bandeau-titre">Des projets dans des secteurs variés</p>
       <div className="bandeau-fenetre">
         <div className="bandeau-piste">
           {[0, 1].map(copie => (

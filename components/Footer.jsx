@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="pied-marque">
             <img src="/logo-tirexe.svg" alt="Tirexe" width="131" height="34" loading="lazy" />
             <p>Consultant et développeur VBA Excel senior. Basé à Martigues, en régie dans toute la région PACA ou à distance partout en France.</p>
-            <a href="/#contact" className="btn btn-principal">Parler de votre projet <Fleche /></a>
+            <a href="/#contact" className="btn btn-principal">Discutons de votre projet <Fleche /></a>
           </div>
           <nav className="pied-colonne" aria-label="Expertises">
             <p className="pied-titre">Expertises</p>
