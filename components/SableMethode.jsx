@@ -1,238 +1,217 @@
 'use client'
-// Le sable de la méthode : les mêmes grains changent de forme à chaque étape, comme un nuage qui prend
-// figure. 1 « vrac » : des données éparpillées ; 2 « grille » : un tableau bien rangé ; 3 « coche » : un outil
-// validé. L'étape active est celle dont le texte passe au milieu de l'écran (sur ordinateur comme au doigt).
-// La souris ou le doigt écartent le sable, qui revient à sa place.
+// Le sable de la méthode, dessiné par la carte graphique (WebGL) : des dizaines de milliers de grains très fins
+// qui changent de forme à chaque étape, portés par un tourbillon. 1 « vrac » : des données éparpillées ;
+// 2 « grille » : un tableau bien rangé ; 3 « coche » : un outil validé, avec l'étoile d'or du logo.
+// L'étape active est celle dont le texte passe au milieu de l'écran (sur ordinateur comme au doigt).
+// La scène s'incline doucement vers le pointeur ; la souris ou le doigt creusent un sillon qui se referme.
+// Sans WebGL, la version de repli (components/SableMethodeCanvas.jsx) prend le relais.
 // Décoratif (aria-hidden). « Réduire les animations » : les formes changent sans mouvement.
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { contexteGL, programme, chargerGrains, reglages, rvb, Trace, GLSL_TRACE, GLSL_VENT, GLSL_PIXELS } from './sable/gl'
+import { COULEURS, hasard, vrac, grille, coche } from './sable/formes'
 
-// 6 verts (du plus sombre au plus clair) puis 2 ors : les couleurs du logo
-const COULEURS = ['#3D7015', '#4F8A1E', '#64A12A', '#7AB838', '#92D050', '#A9DC70', '#E6A400', '#FFC000']
+const Repli = dynamic(() => import('./SableMethodeCanvas'), { ssr: false })
 
-// hasard reproductible : les formes sont les mêmes à chaque visite
-function hasard(graine) {
-  let s = graine >>> 0
-  return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296 }
+const DUREE_FORME = 1800   // ms pour passer d'une forme à l'autre
+const DUREE_ARRIVEE = 2000 // ms pour la première apparition
+
+// Valeurs par grain : les 3 formes (x, y), leurs 3 couleurs, retard (0 à 1), taille, graine, éclat, profondeur, départ (x, y)
+const SCHEMA = [
+  { nom: 'a_p0', taille: 2 }, { nom: 'a_p1', taille: 2 }, { nom: 'a_p2', taille: 2 },
+  { nom: 'a_couleurs', taille: 3 },
+  { nom: 'a_grain', taille: 4 },
+  { nom: 'a_z', taille: 1 },
+  { nom: 'a_depart', taille: 2 },
+]
+const V = 16
+
+const SOMMETS = `
+precision highp float;
+attribute vec2 a_p0;
+attribute vec2 a_p1;
+attribute vec2 a_p2;
+attribute vec3 a_couleurs;
+attribute vec4 a_grain;   // retard (0 à 1), taille (px), graine, éclat
+attribute float a_z;
+attribute vec2 a_depart;
+uniform vec2 u_ecran;
+uniform float u_cote;     // côté de la scène (px CSS)
+uniform float u_dpr;
+uniform float u_horloge;
+uniform vec3 u_de;        // poids des 3 formes au départ de la transition
+uniform vec3 u_vers;      // poids des 3 formes à l'arrivée
+uniform float u_progres;  // 0 à 1 : avancée de la transition
+uniform float u_arrivee;  // 0 à 1 : première apparition
+uniform vec2 u_incline;   // inclinaison vers le pointeur (radians)
+uniform float u_calme;
+uniform vec3 u_couleur[8];
+varying vec3 v_couleur;
+varying float v_alpha;
+${GLSL_TRACE}
+${GLSL_VENT}
+vec2 forme(vec3 w) { return a_p0 * w.x + a_p1 * w.y + a_p2 * w.z; }
+float dominante(vec3 w) { return (w.x >= w.y && w.x >= w.z) ? a_couleurs.x : (w.y >= w.z ? a_couleurs.y : a_couleurs.z); }
+
+void main() {
+  float g = a_grain.z;
+  float anime = 1.0 - u_calme;
+  // chaque grain part à son tour
+  float t = u_calme > 0.5 ? 1.0 : clamp(u_progres * 1.6 - a_grain.x * 0.6, 0.0, 1.0);
+  float e = t * t * (3.0 - 2.0 * t);
+  vec3 q = vec3(mix(forme(u_de), forme(u_vers), e) * u_cote, a_z * u_cote);
+  q += tourbillon(q, u_horloge * 0.001, g) * vec3(30.0, 22.0, 46.0) * sin(3.14159 * e) * anime;
+  // au repos, le vrac s'agite ; le tableau et la coche respirent à peine
+  float enVrac = mix(u_de.x, u_vers.x, e);
+  q.xy += vec2(sin(u_horloge * 0.0011 + g * 60.0), cos(u_horloge * 0.0009 + g * 41.0)) * (0.5 + enVrac * 4.0) * anime;
+  // première apparition : les grains arrivent de tout le cadre
+  float ta = u_calme > 0.5 ? 1.0 : clamp(u_arrivee * 1.5 - a_grain.x * 0.5, 0.0, 1.0);
+  float ea = 1.0 - pow(1.0 - ta, 3.0);
+  q.xy = mix(a_depart * u_ecran, q.xy, ea);
+  q += tourbillon(q, u_horloge * 0.001 + 7.0, g) * vec3(44.0, 32.0, 60.0) * sin(3.14159 * ea) * anime;
+  // la scène s'incline doucement vers le pointeur
+  float cy = cos(u_incline.x), sy = sin(u_incline.x), cx = cos(u_incline.y), sx = sin(u_incline.y);
+  float x1 = q.x * cy + q.z * sy, z1 = -q.x * sy + q.z * cy;
+  float y2 = q.y * cx - z1 * sx, z2 = q.y * sx + z1 * cx;
+  float f = 900.0 / (900.0 + z2);
+  vec2 ecran = vec2(x1, y2) * f + u_ecran * 0.5;
+  ecran += ecarter(ecran);
+  gl_Position = vec4(ecran.x / u_ecran.x * 2.0 - 1.0, 1.0 - ecran.y / u_ecran.y * 2.0, clamp(z2 / 1200.0, -0.99, 0.99), 1.0);
+  gl_PointSize = max(1.0, a_grain.y * u_dpr * f);
+  // couleur : celle de la forme d'arrivée dès la moitié du trajet
+  float ci = e < 0.5 ? dominante(u_de) : dominante(u_vers);
+  float v = fract(g * 91.7);
+  vec3 c = u_couleur[int(ci + 0.5)] * (v < 0.07 ? 0.74 : 0.86 + v * 0.24);
+  float eclat = a_grain.w * (0.55 + 0.45 * sin(u_horloge * 0.0035 + g * 120.0));
+  v_couleur = mix(c, vec3(1.0, 0.97, 0.86), max(eclat * 0.7, soulevement * 0.22));
+  v_alpha = smoothstep(0.0, 0.25, ta);
 }
-const gauss = r => Math.sqrt(-2 * Math.log(r() + 1e-9)) * Math.cos(2 * Math.PI * r())
-const entre = (a, b, r) => a + Math.floor(r() * (b - a + 1))
+`
 
-// n grains le long de segments [x1, y1, x2, y2], sur une épaisseur e ; à partir du grain k0
-function surSegments(f, segs, n, e, couleur, r, k0) {
-  const longueurs = segs.map(([a, b, c, d]) => Math.hypot(c - a, d - b))
-  const total = longueurs.reduce((s, l) => s + l, 0)
-  for (let k = 0; k < n; k++) {
-    let t = r() * total, j = 0
-    while (t > longueurs[j] && j < segs.length - 1) { t -= longueurs[j]; j++ }
-    const [a, b, c, d] = segs[j], l = longueurs[j] || 1, u = t / l, ecart = (r() - 0.5) * e
-    f.x[k0 + k] = a + (c - a) * u - ((d - b) / l) * ecart
-    f.y[k0 + k] = b + (d - b) * u + ((c - a) / l) * ecart
-    f.c[k0 + k] = couleur(r)
+// Les 3 formes, rangées pour la carte graphique (un grain par ligne de V valeurs)
+function preparerGrains(N) {
+  const r = hasard(20261117)
+  const [a, b, c] = [vrac(N, r), grille(N, r), coche(N, r)]
+  const out = new Float32Array(N * V)
+  for (let i = 0; i < N; i++) {
+    const o = i * V
+    out[o] = a.x[i]; out[o + 1] = a.y[i]; out[o + 2] = b.x[i]; out[o + 3] = b.y[i]; out[o + 4] = c.x[i]; out[o + 5] = c.y[i]
+    out[o + 6] = a.c[i]; out[o + 7] = b.c[i]; out[o + 8] = c.c[i]
+    out[o + 9] = r()                                    // retard
+    out[o + 10] = 0.75 + Math.pow(r(), 2.4) * 1.1       // taille (px) : surtout très fins
+    out[o + 11] = r()                                   // graine
+    out[o + 12] = r() < 0.03 ? 0.55 + r() * 0.45 : 0    // éclat
+    out[o + 13] = (r() - 0.5) * 0.06                    // profondeur
+    out[o + 14] = (r() - 0.5) * 1.1; out[o + 15] = (r() - 0.5) * 1.1 // départ, en part du cadre
   }
-  return k0 + n
-}
-// n grains semés dans un rectangle
-function dansRectangle(f, x1, y1, x2, y2, n, couleur, r, k0) {
-  for (let k = 0; k < n; k++) {
-    f.x[k0 + k] = x1 + r() * (x2 - x1); f.y[k0 + k] = y1 + r() * (y2 - y1); f.c[k0 + k] = couleur(r)
-  }
-  return k0 + n
-}
-// n grains semés dans une étoile à 4 branches (rayon R, creux ri), centrée en (cx, cy)
-function dansEtoile(f, cx, cy, R, ri, n, couleur, r, k0) {
-  const sommets = Array.from({ length: 8 }, (_, k) => {
-    const a = (k * Math.PI) / 4 - Math.PI / 2, d = k % 2 ? ri : R
-    return [cx + Math.cos(a) * d, cy + Math.sin(a) * d]
-  })
-  const dedans = (x, y) => {
-    let oui = false
-    for (let i = 0, j = sommets.length - 1; i < sommets.length; j = i++) {
-      const [xi, yi] = sommets[i], [xj, yj] = sommets[j]
-      if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) oui = !oui
-    }
-    return oui
-  }
-  for (let k = 0; k < n; k++) {
-    let x, y
-    do { x = cx + (r() * 2 - 1) * R; y = cy + (r() * 2 - 1) * R } while (!dedans(x, y))
-    f.x[k0 + k] = x; f.y[k0 + k] = y; f.c[k0 + k] = couleur(r)
-  }
-  return k0 + n
-}
-const nouvelle = N => ({ x: new Float32Array(N), y: new Float32Array(N), c: new Uint8Array(N) })
-const vertSombre = r => entre(0, 2, r), vertClair = r => entre(3, 5, r), or = r => entre(6, 7, r)
-
-// Forme 1 : des données en vrac, en amas et en morceaux de tableau cassés
-function vrac(N, r) {
-  const f = nouvelle(N)
-  const amas = Array.from({ length: 7 }, () => [(r() - 0.5) * 0.72, (r() - 0.5) * 0.62, 0.035 + r() * 0.06])
-  let k = 0
-  const nMorceaux = Math.round(N * 0.3)
-  const morceaux = Array.from({ length: 9 }, () => {
-    const x = (r() - 0.5) * 0.8, y = (r() - 0.5) * 0.7, a = r() * Math.PI, l = 0.07 + r() * 0.1
-    return [x, y, x + Math.cos(a) * l, y + Math.sin(a) * l]
-  })
-  k = surSegments(f, morceaux, nMorceaux, 0.012, r2 => (r2() < 0.15 ? or(r2) : entre(0, 5, r2)), r, k)
-  for (; k < N; k++) {
-    if (r() < 0.7) {
-      const [ax, ay, s] = amas[Math.floor(r() * amas.length)]
-      f.x[k] = ax + gauss(r) * s; f.y[k] = ay + gauss(r) * s * 0.8
-    } else {
-      f.x[k] = Math.max(-0.47, Math.min(0.47, gauss(r) * 0.2)); f.y[k] = Math.max(-0.45, Math.min(0.45, gauss(r) * 0.17))
-    }
-    f.c[k] = r() < 0.12 ? or(r) : entre(0, 5, r)
-  }
-  return f
-}
-
-// Forme 2 : un tableau bien rangé, en-tête rempli
-function grille(N, r) {
-  const f = nouvelle(N)
-  const x1 = -0.42, x2 = 0.42, y1 = -0.31, y2 = 0.31, colonnes = 5, rangs = 5
-  const segs = []
-  for (let j = 0; j <= rangs; j++) { const y = y1 + ((y2 - y1) * j) / rangs; segs.push([x1, y, x2, y]) }
-  for (let i = 0; i <= colonnes; i++) { const x = x1 + ((x2 - x1) * i) / colonnes; segs.push([x, y1, x, y2]) }
-  let k = surSegments(f, segs, Math.round(N * 0.6), 0.007, vertSombre, r, 0)
-  k = dansRectangle(f, x1, y1, x2, y1 + (y2 - y1) / rangs, Math.round(N * 0.28), vertClair, r, k)
-  dansRectangle(f, x1, y1 + (y2 - y1) / rangs, x1 + (x2 - x1) / colonnes, y2, N - k, r2 => entre(4, 5, r2), r, k)
-  return f
-}
-
-// Forme 3 : la case cochée, avec l'étoile d'or du logo
-function coche(N, r) {
-  const f = nouvelle(N)
-  const c = 0.3, rayon = 0.08, segs = []
-  // carré aux coins arrondis : 4 côtés et 4 quarts de cercle (en petits segments)
-  segs.push([-c + rayon, -c, c - rayon, -c], [c, -c + rayon, c, c - rayon], [c - rayon, c, -c + rayon, c], [-c, c - rayon, -c, -c + rayon])
-  for (const [cx, cy, a0] of [[c - rayon, -c + rayon, -Math.PI / 2], [c - rayon, c - rayon, 0], [-c + rayon, c - rayon, Math.PI / 2], [-c + rayon, -c + rayon, Math.PI]]) {
-    for (let s = 0; s < 6; s++) {
-      const a = a0 + (s * Math.PI) / 12, b = a0 + ((s + 1) * Math.PI) / 12
-      segs.push([cx + Math.cos(a) * rayon, cy + Math.sin(a) * rayon, cx + Math.cos(b) * rayon, cy + Math.sin(b) * rayon])
-    }
-  }
-  let k = surSegments(f, segs, Math.round(N * 0.34), 0.036, vertSombre, r, 0)
-  k = surSegments(f, [[-0.165, 0.0, -0.045, 0.125], [-0.045, 0.125, 0.185, -0.13]], Math.round(N * 0.5), 0.09, vertClair, r, k)
-  // l'étoile d'or du logo, posée sur le coin du carré
-  dansEtoile(f, 0.3, -0.3, 0.12, 0.032, N - k, or, r, k)
-  return f
-}
-
-// Les grains de chaque couleur, pour ne changer de couleur de pinceau que 8 fois par image
-function grouper(f) {
-  const g = COULEURS.map(() => [])
-  for (let i = 0; i < f.c.length; i++) g[f.c[i]].push(i)
-  f.groupes = g.map(a => Uint32Array.from(a))
-  return f
+  return out
 }
 
 export default function SableMethode() {
   const ref = useRef(null)
+  const [repli, setRepli] = useState(false)
 
   useEffect(() => {
     const canvas = ref.current
-    const ctx = canvas.getContext('2d')
+    const gl = contexteGL(canvas)
+    const prog = gl && programme(gl, SOMMETS, GLSL_PIXELS)
+    if (!prog) { setRepli(true); return }
+    const u = reglages(gl, prog, ['u_ecran', 'u_cote', 'u_dpr', 'u_horloge', 'u_de', 'u_vers', 'u_progres', 'u_arrivee', 'u_incline', 'u_calme', 'u_couleur', 'u_trace', 'u_rayon'])
+    gl.useProgram(prog)
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+    gl.enable(gl.DEPTH_TEST)
+    gl.depthFunc(gl.LEQUAL)
+    gl.clearColor(0, 0, 0, 0)
+    gl.uniform3fv(u.u_couleur, new Float32Array(COULEURS.flatMap(rvb)))
+
     const section = canvas.closest('.methode')
     const etapes = section ? [...section.querySelectorAll('[data-etape]')] : []
     const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const N = window.innerWidth < 760 ? 1700 : 3200
-    const r = hasard(20261117)
-    const formes = [vrac(N, r), grille(N, r), coche(N, r)].map(grouper)
+    const petit = window.innerWidth < 760
+    const leger = (navigator.hardwareConcurrency || 8) <= 4
+    const N = Math.round((petit ? 22000 : 52000) * (leger ? 0.65 : 1))
+    const trace = new Trace()
 
-    const px = new Float32Array(N), py = new Float32Array(N), vx = new Float32Array(N), vy = new Float32Array(N)
-    const depart = new Float64Array(N), phase = new Float32Array(N), taille = new Float32Array(N)
-    for (let i = 0; i < N; i++) { phase[i] = r() * 6.283; taille[i] = (N < 2000 ? 1.7 : 1.9) + r() * 0.9 }
-
-    let W = 0, H = 0, S = 0, dpr = 1, forme = 0, anim = 0, visible = false, arrive = false, souris = null
+    let W = 0, H = 0, dpr = 1, pret = false, visible = false, anim = 0, forme = 0
+    let de = [1, 0, 0], vers = [1, 0, 0], debutForme = -1e9, debutArrivee = 0
+    let incline = [0, 0], cible = [0, 0], souris = null
 
     function dimensionner() {
       const w = canvas.clientWidth, h = canvas.clientHeight
       if (!w || !h) return
-      const ancien = S
-      W = w; H = h; S = Math.min(W, H) * 0.94
+      W = w; H = h
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr)
-      if (ancien && arrive) for (let i = 0; i < N; i++) { px[i] *= S / ancien; py[i] *= S / ancien }
+      gl.viewport(0, 0, canvas.width, canvas.height)
     }
 
-    function dessiner() {
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      ctx.clearRect(0, 0, W, H)
-      const cx = W / 2, cy = H / 2, f = formes[forme]
-      for (let c = 0; c < COULEURS.length; c++) {
-        const g = f.groupes[c]
-        if (!g.length) continue
-        ctx.fillStyle = COULEURS[c]
-        for (let k = 0; k < g.length; k++) { const i = g[k]; ctx.fillRect(cx + px[i], cy + py[i], taille[i], taille[i]) }
-      }
-    }
+    const lisse = x => x * x * (3 - 2 * x)
+    const progres = t => Math.max(0, Math.min(1, (t - debutForme) / DUREE_FORME))
 
-    // sans animation : chaque grain directement à sa place
-    function poser() {
-      const f = formes[forme]
-      for (let i = 0; i < N; i++) { px[i] = f.x[i] * S; py[i] = f.y[i] * S }
-      dessiner()
+    function dessiner(t) {
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+      gl.uniform2f(u.u_ecran, W, H)
+      gl.uniform1f(u.u_cote, Math.min(W, H) * 0.94)
+      gl.uniform1f(u.u_dpr, dpr)
+      gl.uniform1f(u.u_horloge, t)
+      gl.uniform3fv(u.u_de, de)
+      gl.uniform3fv(u.u_vers, vers)
+      gl.uniform1f(u.u_progres, reduit ? 1 : progres(t))
+      gl.uniform1f(u.u_arrivee, reduit ? 1 : Math.min(1, (t - debutArrivee) / DUREE_ARRIVEE))
+      gl.uniform2f(u.u_incline, incline[0], incline[1])
+      gl.uniform1f(u.u_calme, reduit ? 1 : 0)
+      gl.uniform3fv(u.u_trace, trace.points)
+      gl.uniform1f(u.u_rayon, petit ? 34 : 46)
+      gl.drawArrays(gl.POINTS, 0, N)
     }
 
     function image(t) {
       anim = requestAnimationFrame(image)
-      const f = formes[forme]
-      // au repos, le vrac s'agite ; le tableau et la coche respirent à peine
-      const agitation = forme === 0 ? 4.5 : 0.9
-      let R2 = 0, mx = 0, my = 0
-      if (souris) { R2 = 54 * 54; mx = souris.x - W / 2; my = souris.y - H / 2 }
-      for (let i = 0; i < N; i++) {
-        if (t >= depart[i]) {
-          const tx = f.x[i] * S + Math.sin(t * 0.0011 + phase[i]) * agitation
-          const ty = f.y[i] * S + Math.cos(t * 0.0009 + phase[i] * 1.3) * agitation
-          vx[i] = (vx[i] + (tx - px[i]) * 0.05) * 0.86
-          vy[i] = (vy[i] + (ty - py[i]) * 0.05) * 0.86
-        } else { vx[i] *= 0.95; vy[i] *= 0.95 }
-        if (R2) {
-          const dx = px[i] - mx, dy = py[i] - my, d2 = dx * dx + dy * dy
-          if (d2 < R2) { const k = ((1 - d2 / R2) * 2.6) / (Math.sqrt(d2) + 1); vx[i] += dx * k; vy[i] += dy * k }
-        }
-        px[i] += vx[i]; py[i] += vy[i]
-      }
-      dessiner()
+      incline[0] += (cible[0] - incline[0]) * 0.05; incline[1] += (cible[1] - incline[1]) * 0.05
+      if (souris) trace.ajouter(souris.x, souris.y, t)
+      trace.vieillir(t)
+      dessiner(t)
     }
 
     function relancer() {
-      const doit = arrive && visible && !reduit && !document.hidden
+      const doit = pret && visible && !reduit && !document.hidden
       if (doit && !anim) anim = requestAnimationFrame(image)
       else if (!doit && anim) { cancelAnimationFrame(anim); anim = 0 }
     }
 
-    // première apparition : les grains arrivent de tout le cadre et se rassemblent
-    function arriver() {
-      arrive = true
-      dimensionner()
-      if (reduit) { poser(); return }
-      const t = performance.now()
-      for (let i = 0; i < N; i++) {
-        px[i] = (r() - 0.5) * W * 1.1; py[i] = (r() - 0.5) * H * 1.1
-        vx[i] = 0; vy[i] = 0; depart[i] = t + 120 + r() * 700
-      }
-    }
-
     function choisir(k) {
-      if (k === forme || !formes[k]) return
+      if (k === forme) return
       forme = k
       canvas.dataset.forme = String(k) // utile aux vérifications automatiques
       etapes.forEach((e, j) => e.classList.toggle('est-active', j === k))
-      if (!arrive) return
-      if (reduit) { poser(); return }
-      const t = performance.now()
-      for (let i = 0; i < N; i++) {
-        depart[i] = t + r() * 420
-        vx[i] += (r() - 0.5) * 3; vy[i] += (r() - 0.5) * 3 - 1.2
-      }
+      const t = performance.now(), p = lisse(progres(t))
+      // on repart de l'état présent (un mélange, si la transition précédente n'était pas finie)
+      de = de.map((v, i) => v + (vers[i] - v) * p)
+      vers = [0, 0, 0]; vers[k] = 1
+      debutForme = t
+      if (pret && reduit) dessiner(t)
     }
 
+    // la préparation des grains se fait quand le navigateur souffle, à la première apparition de la scène
+    function preparer() {
+      dimensionner()
+      chargerGrains(gl, prog, preparerGrains(N), SCHEMA)
+      pret = true
+      debutArrivee = performance.now()
+      canvas.dataset.grains = String(N)
+      if (reduit) dessiner(performance.now())
+      relancer()
+    }
+    let prevu = false
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting
-      if (visible && !arrive) arriver()
+      if (visible && !prevu) {
+        prevu = true
+        if (window.requestIdleCallback) window.requestIdleCallback(preparer, { timeout: 600 }); else setTimeout(preparer, 60)
+      }
       relancer()
-    }, { threshold: 0.15 })
+    }, { threshold: 0.1 })
     io.observe(canvas)
 
     // l'étape dont le texte traverse le milieu de l'écran devient l'étape active
@@ -241,13 +220,15 @@ export default function SableMethode() {
     }, { rootMargin: '-46% 0px -46% 0px' })
     etapes.forEach(e => ioEtapes.observe(e))
 
-    const ro = new ResizeObserver(() => { dimensionner(); if (reduit && arrive) poser() })
+    const ro = new ResizeObserver(() => { dimensionner(); if (pret && reduit) dessiner(performance.now()) })
     ro.observe(canvas)
 
     const position = e => { const b = canvas.getBoundingClientRect(); return { x: e.clientX - b.left, y: e.clientY - b.top } }
-    const bouge = e => { souris = position(e) }
-    const quitte = () => { souris = null }
-    // au doigt, le sable revient dès qu'on lève le doigt ; à la souris, quand elle quitte le cadre
+    const bouge = e => {
+      souris = position(e)
+      if (!reduit) cible = [(souris.x / (W || 1) - 0.5) * 0.5, -(souris.y / (H || 1) - 0.5) * 0.4]
+    }
+    const quitte = () => { souris = null; cible = [0, 0]; trace.lever() }
     const leve = e => { if (e.pointerType !== 'mouse') quitte() }
     canvas.addEventListener('pointermove', bouge, { passive: true })
     canvas.addEventListener('pointerdown', bouge, { passive: true })
@@ -255,8 +236,9 @@ export default function SableMethode() {
     canvas.addEventListener('pointerup', leve)
     canvas.addEventListener('pointercancel', quitte)
     document.addEventListener('visibilitychange', relancer)
+    const perdu = e => { e.preventDefault(); cancelAnimationFrame(anim); anim = 0; setRepli(true) }
+    canvas.addEventListener('webglcontextlost', perdu)
     canvas.dataset.forme = '0'
-    canvas.dataset.grains = String(N)
 
     return () => {
       cancelAnimationFrame(anim)
@@ -266,9 +248,11 @@ export default function SableMethode() {
       canvas.removeEventListener('pointerleave', quitte)
       canvas.removeEventListener('pointerup', leve)
       canvas.removeEventListener('pointercancel', quitte)
+      canvas.removeEventListener('webglcontextlost', perdu)
       document.removeEventListener('visibilitychange', relancer)
     }
   }, [])
 
+  if (repli) return <Repli />
   return <canvas ref={ref} className="sable-methode" aria-hidden="true" />
 }
