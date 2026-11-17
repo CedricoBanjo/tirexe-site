@@ -182,17 +182,20 @@ img, svg { display: block; max-width: 100%; }
 .sable-forme:active { cursor: grabbing; }
 
 /* ============================================================================
-   BANDEAU DES SECTEURS : défilement lent, bords fondus
+   SECTEURS : les 6 secteurs visibles d'un coup, pictogramme et nom
    ========================================================================== */
-.bandeau { padding: 64px 0 24px; text-align: center; }
-.bandeau-titre { padding: 0 20px; font-size: 14px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
-.bandeau-fenetre { margin-top: 26px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-.bandeau-piste { display: flex; width: max-content; animation: defile 48s linear infinite; }
-.bandeau-fenetre:hover .bandeau-piste { animation-play-state: paused; }
-.bandeau-liste { display: flex; list-style: none; }
-.bandeau-liste li { display: inline-flex; align-items: center; gap: 34px; padding-right: 34px; font-size: clamp(26px, 3.2vw, 42px); font-weight: 760; letter-spacing: -.035em; color: var(--eteint); white-space: nowrap; }
-.bandeau-etoile { color: var(--or); }
-@keyframes defile { to { transform: translateX(-50%); } }
+.secteurs { padding: 64px 0 16px; }
+.secteurs-titre { text-align: center; font-size: 14px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; color: var(--gris); }
+.secteurs-liste { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 1040px; margin: 28px auto 0; }
+.secteur {
+  display: flex; align-items: center; gap: 14px; min-height: 76px; padding: 14px 20px;
+  background: var(--fond); border: 1px solid var(--trait); border-radius: var(--r-m);
+  transition: border-color var(--moyen), box-shadow var(--moyen), transform var(--moyen) var(--doux);
+}
+.secteur:hover { border-color: var(--trait-2); box-shadow: var(--ombre-2); transform: translateY(-2px); }
+.secteur-ico { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--vert-pale); color: var(--vert-texte); transition: background var(--moyen), color var(--moyen); }
+.secteur:hover .secteur-ico { background: var(--vert); color: var(--encre); }
+.secteur-nom { font-size: 17px; font-weight: 750; line-height: 1.3; letter-spacing: -.01em; color: var(--encre); }
 
 /* ============================================================================
    EXPERTISES : grille « bento » de 4 cartes illustrées
@@ -692,8 +695,13 @@ img, svg { display: block; max-width: 100%; }
   .hero-reperes li { padding: 8px 14px; gap: 10px; font-size: 13.5px; }
   .hero-reperes strong { font-size: 15.5px; }
   .hero-scene { margin-top: 8px; }
-  .bandeau { padding: 52px 0 8px; }
-  .bandeau-titre { font-size: 13px; }
+  .secteurs { padding: 52px 0 8px; }
+  .secteurs-titre { font-size: 13px; }
+  .secteurs-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+  .secteur { gap: 12px; min-height: 68px; padding: 12px 14px; }
+  .secteur-ico { width: 38px; height: 38px; border-radius: 12px; }
+  .secteur-ico svg { width: 19px; height: 19px; }
+  .secteur-nom { font-size: 15px; }
   .methode-grille { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'scene' 'etapes'; gap: 0; }
   .methode-scene { top: 72px; z-index: 2; height: 34vh; min-height: 220px; max-height: 320px; border-radius: var(--r-l); box-shadow: 0 10px 24px -14px rgba(15,19,14,.25); }
   .methode-etapes { gap: 10px; padding: 24px 0 8vh; }
@@ -767,6 +775,11 @@ img, svg { display: block; max-width: 100%; }
   .legal-carte { padding: 24px 20px; }
   .service-etapes li { padding: 74px 20px 20px; }
 }
+@media (max-width: 420px) {
+  /* petits téléphones : pictogramme au-dessus du nom, pour que les mots longs tiennent */
+  .secteur { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px; }
+  .secteur-nom { font-size: 14.5px; overflow-wrap: anywhere; }
+}
 @media (max-width: 380px) {
   .nav-actions .btn-petit { display: none; }
   .hero-pastille { font-size: 11.5px; padding-right: 11px; }
@@ -777,10 +790,5 @@ img, svg { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
-  .bandeau-piste { animation: none; width: auto; justify-content: center; }
-  .bandeau-liste { flex-wrap: wrap; justify-content: center; }
-  .bandeau-liste[aria-hidden] { display: none; }
-  .bandeau-fenetre { -webkit-mask-image: none; mask-image: none; }
-  .bandeau-liste li { font-size: 24px; padding: 4px 14px; gap: 14px; }
   .hero-aurore span { animation: none; }
 }
