@@ -1,7 +1,7 @@
 import { getAllArticles } from '../../lib/blog'
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
-import Link from 'next/link'
+import CarteArticle from '../../components/CarteArticle'
 import { metadonneesPage } from '../../lib/seo'
 
 export const metadata = metadonneesPage({
@@ -10,10 +10,6 @@ export const metadata = metadonneesPage({
   chemin: '/blog',
 })
 
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
 export default function BlogPage() {
   const articles = getAllArticles()
 
@@ -21,31 +17,28 @@ export default function BlogPage() {
     <>
       <Nav />
       <main id="contenu">
-        <div className="blog-hero">
+        <header className="page-tete">
           <div className="wrap">
-            <div className="ey">Blog</div>
-            <h1 className="sec-h">Tutoriels & <em>conseils VBA Excel</em></h1>
-            <p className="sec-sub">Cas pratiques, exemples de code, bonnes pratiques — par Cédric Femminino, consultant VBA Excel senior.</p>
+            <p className="ey">Blog</p>
+            <h1 className="page-titre">Tutoriels &amp; conseils VBA Excel</h1>
+            <p className="page-sous">Cas pratiques, exemples de code, bonnes pratiques&nbsp;: par Cédric Femminino, consultant VBA Excel senior.</p>
           </div>
-        </div>
-        <div className="section">
+        </header>
+        <section className="section section-serree" aria-label="Tous les articles">
           <div className="wrap">
             {articles.length === 0 ? (
-              <p style={{color:'var(--soft)',fontSize:'15px'}}>Les premiers articles arrivent prochainement.</p>
+              <p className="page-sous">Les premiers articles arrivent prochainement.</p>
             ) : (
-              <div className="blog-grid">
-                {articles.map(article => (
-                  <Link href={`/blog/${article.slug}`} key={article.slug} className="blog-card">
-                    <div className="blog-card-date">{formatDate(article.date)}</div>
-                    <h2 className="blog-card-title">{article.title}</h2>
-                    <p className="blog-card-desc">{article.description}</p>
-                    <div className="blog-card-cta">Lire l&apos;article →</div>
-                  </Link>
+              <ul className="articles-grille">
+                {articles.map((article, i) => (
+                  <li key={article.slug} className={i === 0 ? 'article-une' : 'revele'} style={i ? { '--d': (i - 1) % 3 } : undefined}>
+                    <CarteArticle article={article} niveau="h2" une={i === 0} />
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
     </>

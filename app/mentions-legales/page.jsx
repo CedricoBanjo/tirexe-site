@@ -1,5 +1,6 @@
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
+import { EMAIL } from '../../lib/site'
 import { metadonneesPage } from '../../lib/seo'
 
 export const metadata = metadonneesPage({
@@ -8,69 +9,77 @@ export const metadata = metadonneesPage({
   chemin: '/mentions-legales',
 })
 
+const Mail = () => <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+
 export default function MentionsLegales() {
   return (
     <>
       <Nav />
       <main id="contenu">
-        <div className="section">
-          <div className="wrap" style={{maxWidth:'720px'}}>
-            <div className="ey">Informations légales</div>
-            <h1 className="sec-h" style={{marginBottom:'52px'}}>Mentions légales</h1>
+        <header className="page-tete">
+          <div className="wrap">
+            <p className="ey">Informations légales</p>
+            <h1 className="page-titre">Mentions légales</h1>
+          </div>
+        </header>
 
-            <div style={{display:'flex',flexDirection:'column',gap:'40px',fontSize:'15px',color:'var(--ink3)',lineHeight:'1.85'}}>
+        <div className="section section-serree">
+          <div className="wrap legal">
+            <section className="legal-carte" aria-labelledby="editeur">
+              <h2 id="editeur">Éditeur du site</h2>
+              <p>
+                <strong>Cédric Femminino</strong><br />
+                Consultant &amp; Développeur VBA Excel Senior<br />
+                Entreprise individuelle — régime BNC<br />
+                SIREN&nbsp;: 883 193 054<br />
+                Martigues, Provence-Alpes-Côte d&apos;Azur, France
+              </p>
+              <p>
+                <strong>Email&nbsp;:</strong> <Mail /><br />
+                <strong>Site&nbsp;:</strong> <a href="https://tirexe.com">tirexe.com</a>
+              </p>
+            </section>
 
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Éditeur du site</h2>
-                <p><strong style={{color:'var(--ink)'}}>Cédric Femminino</strong><br/>
-                Consultant & Développeur VBA Excel Senior<br/>
-                Entreprise individuelle — régime BNC<br/>
-                SIREN : 883 193 054<br/>
-                Martigues, Provence-Alpes-Côte d&apos;Azur, France<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Email :</strong> <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>cedric@tirexe.com</a><br/>
-                <strong style={{color:'var(--ink)'}}>Site :</strong> <a href="https://tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>tirexe.com</a></p>
-              </div>
+            <section className="legal-carte" aria-labelledby="hebergement">
+              <h2 id="hebergement">Hébergement</h2>
+              <p>
+                <strong>Vercel Inc.</strong><br />
+                440 N Barranca Ave #4133<br />
+                Covina, CA 91723, États-Unis
+              </p>
+              <p><a href="https://vercel.com" target="_blank" rel="noreferrer">vercel.com</a></p>
+            </section>
 
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Hébergement</h2>
-                <p><strong style={{color:'var(--ink)'}}>Vercel Inc.</strong><br/>
-                440 N Barranca Ave #4133<br/>
-                Covina, CA 91723, États-Unis<br/><br/>
-                <a href="https://vercel.com" style={{color:'var(--g-txt)',fontWeight:600}} target="_blank" rel="noreferrer">vercel.com</a></p>
-              </div>
+            <section className="legal-carte" aria-labelledby="propriete">
+              <h2 id="propriete">Propriété intellectuelle</h2>
+              <p>L&apos;ensemble du contenu de ce site — textes, structure, logo, visuels — est la propriété exclusive de Cédric Femminino. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle.</p>
+            </section>
 
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Propriété intellectuelle</h2>
-                <p>L&apos;ensemble du contenu de ce site — textes, structure, logo, visuels — est la propriété exclusive de Cédric Femminino. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle.</p>
-              </div>
+            <section id="donnees-personnelles" className="legal-carte" aria-labelledby="rgpd">
+              <h2 id="rgpd">Données personnelles (RGPD)</h2>
+              <p><strong>Responsable&nbsp;:</strong> Cédric Femminino (Tirexe), <Mail />.</p>
+              <p><strong>Formulaire de contact.</strong> Les informations que vous saisissez (besoin, délai souhaité, nom, société, e-mail, message) servent uniquement à répondre à votre demande et à échanger sur une éventuelle mission, à votre initiative. Elles ne sont ni vendues ni cédées.</p>
+              <p>Le formulaire passe par le service Formspree (Formspree, Inc., États-Unis), qui me transmet votre message par e-mail et en garde une copie dans mon espace Formspree. Vos données sont donc traitées aux États-Unis.</p>
+              <p><strong>Durée de conservation&nbsp;:</strong> 3 ans après notre dernier échange, puis suppression.</p>
+              <p><strong>Hébergement&nbsp;:</strong> l&apos;hébergeur Vercel enregistre des journaux techniques (dont l&apos;adresse IP) pour la sécurité et le bon fonctionnement du site.</p>
+              <p><strong>Vos droits&nbsp;:</strong> vous pouvez demander l&apos;accès à vos données, leur rectification, leur effacement, leur portabilité, ou vous opposer à leur traitement, en écrivant à <Mail />. Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noreferrer">cnil.fr</a>).</p>
+            </section>
 
-              <div id="donnees-personnelles" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Données personnelles (RGPD)</h2>
-                <p><strong style={{color:'var(--ink)'}}>Responsable :</strong> Cédric Femminino (Tirexe), <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>cedric@tirexe.com</a>.<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Formulaire de contact.</strong> Les informations que vous saisissez (nom, société, e-mail, type de mission, besoin) servent uniquement à répondre à votre demande et à échanger sur une éventuelle mission, à votre initiative. Elles ne sont ni vendues ni cédées.<br/><br/>
-                Le formulaire passe par le service Formspree (Formspree, Inc., États-Unis), qui me transmet votre message par e-mail et en garde une copie dans mon espace Formspree. Vos données sont donc traitées aux États-Unis.<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Durée de conservation :</strong> 3 ans après notre dernier échange, puis suppression.<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Hébergement :</strong> l&apos;hébergeur Vercel enregistre des journaux techniques (dont l&apos;adresse IP) pour la sécurité et le bon fonctionnement du site.<br/><br/>
-                <strong style={{color:'var(--ink)'}}>Vos droits :</strong> vous pouvez demander l&apos;accès à vos données, leur rectification, leur effacement, leur portabilité, ou vous opposer à leur traitement, en écrivant à <a href="mailto:cedric@tirexe.com" style={{color:'var(--g-txt)',fontWeight:600}}>cedric@tirexe.com</a>. Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" style={{color:'var(--g-txt)',fontWeight:600}} target="_blank" rel="noreferrer">cnil.fr</a>).</p>
-              </div>
+            <section id="cookies" className="legal-carte" aria-labelledby="titre-cookies">
+              <h2 id="titre-cookies">Cookies</h2>
+              <p>Ce site ne dépose aucun cookie et n&apos;utilise aucun outil de mesure d&apos;audience ni de publicité&nbsp;: aucun suivi de votre navigation.</p>
+              <p>Les polices de caractères sont hébergées par le site lui-même&nbsp;: leur affichage ne fait appel à aucun service tiers.</p>
+            </section>
 
-              <div id="cookies" className="legal-card" style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Cookies</h2>
-                <p>Ce site ne dépose aucun cookie et n&apos;utilise aucun outil de mesure d&apos;audience ni de publicité : aucun suivi de votre navigation.<br/><br/>
-                Les polices de caractères sont hébergées par le site lui-même : leur affichage ne fait appel à aucun service tiers.</p>
-              </div>
+            <section className="legal-carte" aria-labelledby="responsabilite">
+              <h2 id="responsabilite">Responsabilité</h2>
+              <p>Cédric Femminino s&apos;efforce de maintenir les informations publiées sur ce site aussi précises et à jour que possible. Toutefois, il ne saurait être tenu responsable des omissions, inexactitudes ou carences dans la mise à jour des informations. Les liens hypertextes pointant vers d&apos;autres sites ne sauraient engager la responsabilité de l&apos;éditeur.</p>
+            </section>
 
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Responsabilité</h2>
-                <p>Cédric Femminino s&apos;efforce de maintenir les informations publiées sur ce site aussi précises et à jour que possible. Toutefois, il ne saurait être tenu responsable des omissions, inexactitudes ou carences dans la mise à jour des informations. Les liens hypertextes pointant vers d&apos;autres sites ne sauraient engager la responsabilité de l&apos;éditeur.</p>
-              </div>
-
-              <div style={{background:'var(--bg3)',border:'1px solid var(--line)',borderRadius:'16px',padding:'32px'}}>
-                <h2 style={{fontSize:'15px',fontWeight:800,color:'var(--ink)',marginBottom:'16px',letterSpacing:'-.2px'}}>Droit applicable</h2>
-                <p>Le présent site et ses mentions légales sont soumis au droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.</p>
-              </div>
-
-            </div>
+            <section className="legal-carte" aria-labelledby="droit">
+              <h2 id="droit">Droit applicable</h2>
+              <p>Le présent site et ses mentions légales sont soumis au droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.</p>
+            </section>
           </div>
         </div>
       </main>

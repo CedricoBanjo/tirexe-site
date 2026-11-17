@@ -1,5 +1,6 @@
 import './globals.css'
 import { Manrope } from 'next/font/google'
+import Effets from '../components/Effets'
 import { SITE_URL, IMAGE_PARTAGE, DONNEES_SITE, jsonLd } from '../lib/seo'
 
 // Police servie par le site lui-même (téléchargée une fois à la construction) :
@@ -10,18 +11,21 @@ const manrope = Manrope({
   variable: '--font-manrope',
 })
 
-const TITRE = 'Cédric Femminino · Consultant & Développeur VBA Excel Senior'
-const DESCRIPTION = 'Consultant et développeur VBA Excel senior à Martigues : outils métier, automatisation et contrôle de données. En régie en PACA ou à distance.'
+// Titre et description de l'accueil (les mots que tapent les clients en tête)
+const TITRE = 'Développeur VBA Excel freelance · Consultant senior | Tirexe'
+const DESCRIPTION = 'Développeur VBA Excel senior à Martigues : outils sur mesure, automatisation de reporting, contrôle de données. En régie, en PACA ou à distance.'
+const PARTAGE = 'Je conçois vos outils Excel sur mesure, j’automatise vos reportings et je fiabilise vos données. Missions longues en régie, PACA et remote France.'
 
 // Valeurs par défaut (celles de l'accueil). Chaque page fixe sa propre adresse de référence.
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITRE,
   description: DESCRIPTION,
-  keywords: 'Cédric Femminino, consultant VBA Excel, développeur VBA freelance, expert Excel, automatisation Excel, missions longues régie, PACA, Martigues, Marseille, Fos-sur-Mer, Vitrolles, Aix-en-Provence, Istres, Port-de-Bouc, Salon-de-Provence',
+  keywords: 'développeur VBA, développeur VBA freelance, consultant VBA Excel, expert VBA Excel, développeur Excel, automatisation Excel, macro Excel, Cédric Femminino, Tirexe, Martigues, Marseille, Aix-en-Provence, Fos-sur-Mer, Vitrolles, Istres, PACA',
+  authors: [{ name: 'Cédric Femminino', url: SITE_URL }],
   openGraph: {
-    title: TITRE,
-    description: 'Cédric Femminino conçoit des outils métier sur mesure et des algorithmes de contrôle complexes pour de grands projets industriels et financiers.',
+    title: 'Cédric Femminino · Développeur VBA Excel senior',
+    description: PARTAGE,
     url: '/',
     siteName: 'Tirexe',
     locale: 'fr_FR',
@@ -30,8 +34,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: TITRE,
-    description: 'Consultant et développeur VBA Excel senior. Missions longues en régie, région PACA et remote France.',
+    title: 'Cédric Femminino · Développeur VBA Excel senior',
+    description: PARTAGE,
     images: [IMAGE_PARTAGE.url],
   },
 }
@@ -50,6 +54,7 @@ export default function RootLayout({ children }) {
       <body>
         <a href="#contenu" className="skip-link">Aller au contenu</a>
         {children}
+        <Effets />
       </body>
     </html>
   )

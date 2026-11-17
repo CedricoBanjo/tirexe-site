@@ -1,52 +1,105 @@
-// Pourquoi Tirexe : la citation de Cédric est un commentaire de cellule, les raisons des cases cochées
-const raisons = [
-  {
-    title: "Vous m'avez en direct",
-    desc: "De la première discussion à la livraison finale — c'est moi, sans relai ni intermédiaire.",
-  },
-  {
-    title: 'Expérience en environnements exigeants',
-    desc: "Projets industriels critiques, finance de grands groupes, BTP — des contextes où la précision est une priorité absolue.",
-  },
-  {
-    title: 'Spécialiste des missions longues',
-    desc: "Je m'intègre dans vos équipes sur la durée, avec une vraie connaissance de votre contexte métier.",
-  },
-  {
-    title: 'Flexible géographiquement',
-    desc: "Sur site en région PACA ou en full remote partout en France, selon vos contraintes.",
-  },
+// Pourquoi Tirexe : quatre raisons (textes déjà validés sur le site), un exemple de code VBA écrit
+// comme Cédric l'écrit, et les outils maîtrisés. L'exemple est un cas type, pas une mission réelle.
+import { colorerVBA } from '../lib/coloration'
+
+const RAISONS = [
+  ["Vous m'avez en direct", 'De la première discussion à la livraison finale, c’est moi, sans relais ni intermédiaire.',
+    <path key="p" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0" />],
+  ['Des environnements exigeants', 'Projets industriels critiques, finance de grands groupes, BTP : des contextes où la précision est une priorité absolue.',
+    <path key="p" d="M12 3l8 4v5c0 4.6-3.3 8.2-8 9-4.7-.8-8-4.4-8-9V7z M8.5 12l2.4 2.4 4.6-4.8" />],
+  ['Des traitements écrits, reproductibles', "Le contrôle ne repose plus sur la mémoire d'une personne : il est écrit, reproductible et rapide à relancer.",
+    <path key="p" d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16" />],
+  ['Des missions longues', 'Je m’intègre dans vos équipes sur la durée, avec une vraie connaissance de votre contexte métier.',
+    <path key="p" d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />],
+]
+
+// Exemple type : repérer les doublons d'une colonne, sur toutes les lignes, en une seule lecture de la feuille
+const EXEMPLE = `Option Explicit
+
+' Contrôle : liste les références en double, avec leur ligne
+Public Function Doublons(ByVal plage As Range) As Collection
+    Dim valeurs As Variant, vues As Object
+    Dim i As Long, cle As String
+
+    Set Doublons = New Collection
+    If plage.Rows.Count < 2 Then Exit Function
+
+    Set vues = CreateObject("Scripting.Dictionary")
+    valeurs = plage.Columns(1).Value2   ' une seule lecture
+
+    For i = 1 To UBound(valeurs, 1)
+        cle = ""
+        If Not IsError(valeurs(i, 1)) Then cle = CStr(valeurs(i, 1))
+        If Len(cle) = 0 Then
+            ' cellule vide ou en erreur : rien à comparer
+        ElseIf vues.Exists(cle) Then
+            Doublons.Add "Ligne " & plage.Row + i - 1 & " : " & cle
+        Else
+            vues.Add cle, i
+        End If
+    Next i
+End Function`
+
+const OUTILS = [
+  ['VBA Excel', "Macros avancées, automatisation complète, API Windows, gestion d'événements", 'Expert'],
+  ['Excel avancé', 'Formules matricielles, tableaux croisés, fonctions avancées', 'Expert'],
+  ['Power Query', 'ETL natif Excel, transformations complexes, connexions multi-sources', 'Expert'],
+  ['Word & PowerPoint', 'Génération automatique de documents et de présentations depuis Excel', 'Expert'],
+  ['Outlook VBA', "Automatisation d'envois, gestion d'agenda, traitement de messagerie", 'Expert'],
+  ['Access / SQL', 'Bases .mdb, .accdb, .mde : requêtes SQL depuis VBA, liaisons multi-tables', 'Avancé'],
 ]
 
 export default function Pourquoi() {
   return (
-    <div className="section" id="pourquoi">
+    <section className="section section-douce" id="pourquoi">
       <div className="wrap">
-        <div className="ey"><span className="ey-ref">A44</span>Pourquoi Tirexe</div>
-        <h2 className="sec-h">Un expert <em>dédié</em> à votre projet</h2>
-        <div className="why-layout">
-          <figure className="why-panel">
-            <p className="why-auteur" aria-hidden="true">Cédric Femminino :</p>
-            <blockquote className="why-q">
-              &ldquo;Je travaille seul, avec une responsabilité directe sur ce que je produis. Pas d&apos;intermédiaire, pas d&apos;ambiguïté.&rdquo;
-            </blockquote>
-            <figcaption className="why-sig">— Cédric Femminino · Fondateur de Tirexe</figcaption>
-          </figure>
-          <div className="why-rows">
-            {raisons.map(r => (
-              <div className="why-r" key={r.title}>
-                <div className="why-check" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-                <div>
-                  <h3 className="why-t">{r.title}</h3>
-                  <p className="why-d">{r.desc}</p>
-                </div>
-              </div>
-            ))}
+        <div className="pourquoi-grille">
+          <div className="pourquoi-texte">
+            <header className="sec-tete revele">
+              <p className="ey">Pourquoi Tirexe</p>
+              <h2 className="sec-h">Un expert dédié à votre projet</h2>
+            </header>
+            <ul className="raisons">
+              {RAISONS.map(([titre, texte, icone], i) => (
+                <li className="raison revele" style={{ '--d': i }} key={titre}>
+                  <span className="raison-ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" focusable="false">{icone}</svg>
+                  </span>
+                  <div>
+                    <h3 className="raison-titre">{titre}</h3>
+                    <p className="raison-texte">{texte}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
+          <figure className="fenetre-code revele">
+            <div className="fenetre-code-barre">
+              <span className="fenetre-code-points" aria-hidden="true"><i /><i /><i /></span>
+              <span className="fenetre-code-nom">Controles.bas</span>
+              <span className="fenetre-code-etat">VBA</span>
+            </div>
+            <pre className="fenetre-code-pre" tabIndex={0} aria-label="Exemple de code VBA : lister les doublons d'une colonne"><code>{colorerVBA(EXEMPLE)}</code></pre>
+            <figcaption className="fenetre-code-legende">
+              Exemple type&nbsp;: une seule lecture de la feuille, un dictionnaire, et les cellules en erreur écartées.
+              Rapide sur de gros volumes.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="outils revele" id="outils">
+          <h3 className="outils-titre">Outils maîtrisés</h3>
+          <ul className="outils-liste">
+            {OUTILS.map(([nom, usage, niveau]) => (
+              <li className="outil" key={nom}>
+                <span className="outil-nom">{nom}</span>
+                <span className="outil-usage">{usage}</span>
+                <span className={`outil-niveau${niveau === 'Expert' ? ' est-expert' : ''}`}>{niveau}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

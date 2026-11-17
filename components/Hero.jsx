@@ -1,56 +1,61 @@
-// Haut de l'accueil (piste A, version claire) : le texte à gauche ; à droite, le logo Tirexe en sable fin,
-// en volume, qu'on fait tourner en 3D (components/LogoSable.jsx), et une fenêtre d'éditeur VBA « En bref ».
+// Haut de l'accueil, centré et aéré : qui, quoi, pour qui, où, et le bouton d'action visible sans défiler.
+// Les mots du grand titre arrivent un à un, flous puis nets (CSS seul, dès le premier affichage : le texte est
+// lisible tout de suite). En dessous, la scène : le logo Tirexe en sable fin, qu'on fait tourner en 3D (LogoSable).
 import LogoSable from './LogoSable'
+import Fleche from './Fleche'
 
-// L'essentiel, écrit comme des constantes VBA. C'est du vrai texte : Google et les lecteurs d'écran le lisent.
-const EN_BREF = [
-  ['BASE', 'Martigues (13)'],
-  ['ZONE', 'PACA · remote France'],
-  ['MODE', 'Régie, à la journée'],
-  ['MISSIONS', 'Généralement longues'],
-  ['TARIF', 'Sur devis'],
-  ['EXPERIENCE', '10 ans et plus'],
-]
+// Le grand titre, ligne par ligne ; le dernier mot est mis en valeur
+const LIGNES = [['Du', 'fichier', 'fragile'], ['à', 'l’outil', 'fiable']]
+
+const PREUVES = ['10 ans et plus d’expérience', 'Missions longues en régie', 'Tarif sur devis']
 
 export default function Hero() {
+  let rang = 0
   return (
-    <section className="hero">
-      <div className="hero-grille" aria-hidden="true" />
+    <section className="hero" id="haut">
+      <div className="hero-aurore" aria-hidden="true"><span /><span /><span /></div>
       <div className="hero-in">
-        <div className="hero-texte">
-          <p className="hero-eyebrow"><span className="hero-curseur" aria-hidden="true" />Consultant VBA Excel · Missions longues en régie</p>
-          <h1>
-            Consultant &amp; <span className="accent">Développeur</span><br />
-            VBA Excel Senior
-          </h1>
-          <p className="hero-desc">
-            Je conçois des <strong>outils métier sur mesure</strong> et des{' '}
-            <strong>algorithmes de contrôle complexes</strong> pour de grands projets
-            industriels et financiers — en régie, à la journée. Basé à Martigues, disponible sur toute la région PACA et en remote France entière.
-          </p>
-          <div className="hero-btns">
-            <a href="/#contact" className="btn-g">Discutons de votre projet</a>
-            <a href="/#expertise" className="btn-ghost">Voir l&apos;expertise</a>
-          </div>
+        <p className="hero-pastille"><span className="point-vivant" aria-hidden="true" />Martigues · PACA · Remote France</p>
+        <h1 className="hero-titre">
+          <span className="hero-sur">Développeur VBA Excel senior<span className="sr">. </span></span>
+          <span className="hero-phrase">
+            {LIGNES.map((mots, l) => (
+              <span className="hero-ligne" key={l}>
+                {mots.map((mot, i) => {
+                  const dernier = l === LIGNES.length - 1 && i === mots.length - 1
+                  return (
+                    <span key={mot}>
+                      <span className="mot" style={{ '--i': rang++ }}>
+                        {dernier ? <><em className="hero-fiable">{mot}</em>.</> : mot}
+                      </span>
+                      {i < mots.length - 1 ? ' ' : ''}
+                    </span>
+                  )
+                })}
+                {l < LIGNES.length - 1 ? ' ' : ''}
+              </span>
+            ))}
+          </span>
+        </h1>
+        <p className="hero-sous">
+          J&apos;automatise vos reportings, je fiabilise vos données et je conçois vos outils Excel sur mesure,
+          pour de grands projets industriels et financiers.
+        </p>
+        <div className="hero-actions">
+          <a href="#contact" className="btn btn-principal btn-grand">Parler de votre projet <Fleche /></a>
+          <a href="#expertises" className="btn btn-second btn-grand">Voir mes expertises</a>
         </div>
-
-        <div className="hero-visuel">
-          <LogoSable />
-          <figure className="editeur">
-            <div className="editeur-barre" aria-hidden="true">
-              <span>Tirexe.xlsm – EnBref (Code)</span>
-              <span className="editeur-ok">● compilé</span>
-            </div>
-            <pre className="editeur-code"><code>
-              <span className="vb-l vb-c">{"' En bref\n"}</span>
-              {EN_BREF.map(([nom, valeur]) => (
-                <span className="vb-l" key={nom}>
-                  <span className="vb-k">Const</span> {nom} = <span className="vb-s">&quot;{valeur}&quot;</span>{'\n'}
-                </span>
-              ))}
-            </code></pre>
-          </figure>
-        </div>
+        <ul className="hero-preuves">
+          {PREUVES.map(p => (
+            <li key={p}>
+              <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="10" fill="var(--vert)" /><path d="M6 10.4l2.6 2.5L14.2 7.6" fill="none" stroke="var(--encre)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              {p}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="hero-scene">
+        <LogoSable />
       </div>
     </section>
   )
